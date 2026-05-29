@@ -9,8 +9,9 @@ function GlobeSkeleton() {
   return (
     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{
-        width: "80%", height: "80%", borderRadius: "50%",
-        background: "radial-gradient(circle at 38% 38%, #1e2d40 0%, #0a0e18 65%, transparent 100%)",
+        width: "90%", height: "90%", borderRadius: "50%",
+        background: "radial-gradient(circle at 35% 35%, #2a3a50 0%, #0f1520 55%, #080c14 100%)",
+        boxShadow: "0 0 32px rgba(212,136,32,0.35), inset 0 0 20px rgba(0,0,0,0.5)",
       }} />
     </div>
   )
@@ -113,7 +114,7 @@ export default function HeroSection() {
         style={{
           position: "relative",
           zIndex:   2,
-          width:    isMobile ? "92%" : "80%",
+          width:    isMobile ? "98%" : "80%",
           maxWidth: 1000,
           margin:   isMobile ? "-2rem auto 0" : "-3rem auto 0",
         }}
@@ -137,8 +138,8 @@ export default function HeroSection() {
           top:           "50%",
           left:          "46%",
           transform:     "translate(-50%, -50%)",
-          width:         isMobile ? "clamp(85px, 18vw, 115px)" : "clamp(160px, 16vw, 280px)",
-          height:        isMobile ? "clamp(85px, 18vw, 115px)" : "clamp(160px, 16vw, 280px)",
+          width:         isMobile ? "clamp(110px, 24vw, 150px)" : "clamp(160px, 16vw, 280px)",
+          height:        isMobile ? "clamp(110px, 24vw, 150px)" : "clamp(160px, 16vw, 280px)",
           zIndex:        4,
           pointerEvents: "auto",
         }}>
