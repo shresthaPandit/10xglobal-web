@@ -1,5 +1,6 @@
 import { Playfair_Display, Manrope } from "next/font/google"
 import "./globals.css"
+import PageLoader from "@/components/PageLoader"
 
 const playfair = Playfair_Display({
   subsets:  ["latin"],
@@ -24,7 +25,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${playfair.variable} ${manrope.variable}`}>
-      <body style={{ margin: 0, padding: 0, backgroundColor: "#F7F3EE" }}>{children}</body>
+      <body style={{ margin: 0, padding: 0, backgroundColor: "#F7F3EE" }}>
+        <PageLoader />
+        {children}
+      </body>
     </html>
   )
 }
