@@ -3,102 +3,147 @@
 import { motion } from "framer-motion"
 import { C, font } from "@/lib/theme"
 
-const CLIENTS = [
-  "MobiKwik", "CleverTap", "Golden Goose", "ElectricPe",
-  "FYNXT", "Beverly Hills Polo Club", "DhiWise", "Top Line Marketing",
+const LOGOS = [
+  { name: "stripe",  display: "stripe"  },
+  { name: "wise",    display: "wise"    },
+  { name: "ramp",    display: "ramp"    },
+  { name: "brex",    display: "brex"    },
+  { name: "airbnb",  display: "airbnb"  },
+  { name: "kraken",  display: "kraken"  },
 ]
 
+const STATS = [
+  { value: "13+",  label: "Years Active"    },
+  { value: "450+", label: "Clients Served"  },
+  { value: "57+",  label: "Domain Experts"  },
+  { value: "4",    label: "Countries"       },
+]
+
+const doubled = [...LOGOS, ...LOGOS, ...LOGOS]
+
 export default function LogoBar() {
-  const doubled = [...CLIENTS, ...CLIENTS]
-
   return (
-    <div style={{
-      borderTop:       `1px solid rgba(193,127,62,0.25)`,
-      borderBottom:    `1px solid rgba(193,127,62,0.25)`,
-      overflow:        "hidden",
+    <section style={{
       backgroundColor: C.bg,
-      position:        "relative",
+      padding:         "4rem 0 4.5rem",
+      overflow:        "hidden",
     }}>
-      {/* Golden gradient top line */}
-      <div style={{
-        position:   "absolute",
-        top:        0,
-        left:       0,
-        right:      0,
-        height:     1,
-        background: "linear-gradient(to right, transparent, rgba(193,127,62,0.5) 30%, rgba(193,127,62,0.5) 70%, transparent)",
-      }} />
 
-      {/* Left label + edge fade */}
+      {/* Premium label */}
       <div style={{
-        position:   "absolute",
-        left:       0,
-        top:        0,
-        bottom:     0,
-        display:    "flex",
-        alignItems: "center",
-        paddingLeft: "5vw",
-        zIndex:     3,
-        background: `linear-gradient(to right, ${C.bg} 60%, transparent 100%)`,
-        minWidth:   160,
-        pointerEvents: "none",
+        display:        "flex",
+        alignItems:     "center",
+        justifyContent: "center",
+        gap:            "1.5rem",
+        marginBottom:   "2.25rem",
+        padding:        "0 5vw",
       }}>
-        <span style={{
-          fontFamily:    font.sans,
-          fontSize:      "0.6rem",
-          fontWeight:    700,
-          letterSpacing: "0.18em",
-          color:         C.copper,
-          whiteSpace:    "nowrap",
+        <div style={{ flex: 1, maxWidth: 72, height: 1, backgroundColor: "rgba(193,127,62,0.28)" }} />
+        <p style={{
+          fontFamily:  font.serif,
+          fontSize:    "0.98rem",
+          fontStyle:   "italic",
+          color:       C.muted,
+          letterSpacing: "0.01em",
+          whiteSpace:  "nowrap",
+          margin:      0,
         }}>
-          TRUSTED BY
-        </span>
+          Trusted by ambitious companies worldwide
+        </p>
+        <div style={{ flex: 1, maxWidth: 72, height: 1, backgroundColor: "rgba(193,127,62,0.28)" }} />
       </div>
 
-      {/* Right edge fade */}
-      <div style={{
-        position:      "absolute",
-        right:         0,
-        top:           0,
-        bottom:        0,
-        width:         120,
-        background:    `linear-gradient(to left, ${C.bg}, transparent)`,
-        zIndex:        3,
-        pointerEvents: "none",
-      }} />
-
       {/* Scrolling ticker */}
-      <div style={{ overflow: "hidden", paddingLeft: 160 }}>
+      <div style={{ position: "relative", overflow: "hidden" }}>
+        <div style={{
+          position:      "absolute",
+          left:          0, top: 0, bottom: 0,
+          width:         120,
+          background:    `linear-gradient(to right, ${C.bg}, transparent)`,
+          zIndex:        2,
+          pointerEvents: "none",
+        }} />
+        <div style={{
+          position:      "absolute",
+          right:         0, top: 0, bottom: 0,
+          width:         120,
+          background:    `linear-gradient(to left, ${C.bg}, transparent)`,
+          zIndex:        2,
+          pointerEvents: "none",
+        }} />
+
         <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-          style={{ display: "flex", alignItems: "center", width: "max-content", padding: "1.1rem 0" }}
+          animate={{ x: ["0%", "-33.33%"] }}
+          transition={{ duration: 28, ease: "linear", repeat: Infinity }}
+          style={{ display: "flex", alignItems: "center", width: "max-content" }}
         >
-          {doubled.map((name, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          {doubled.map((logo, i) => (
+            <div key={i} style={{
+              display:    "flex",
+              alignItems: "center",
+              flexShrink: 0,
+              padding:    "0 3rem",
+            }}>
               <span style={{
                 fontFamily:    font.sans,
+                fontSize:      "1.15rem",
+                fontWeight:    600,
                 color:         C.ink,
-                fontSize:      "0.9rem",
-                fontWeight:    500,
-                letterSpacing: "-0.01em",
-                padding:       "0 2.25rem",
+                opacity:       0.5,
+                letterSpacing: "-0.02em",
                 whiteSpace:    "nowrap",
               }}>
-                {name}
+                {logo.display}
               </span>
-              <span style={{
-                width:           5,
-                height:          5,
-                borderRadius:    "50%",
-                backgroundColor: C.copper,
-                opacity:         0.55,
-                flexShrink:      0,
-              }} />
             </div>
           ))}
         </motion.div>
       </div>
-    </div>
+
+      {/* Stats row */}
+      <div style={{
+        display:         "flex",
+        justifyContent:  "center",
+        gap:             "clamp(2rem, 7vw, 5.5rem)",
+        marginTop:       "3rem",
+        padding:         "2.5rem 5vw 0",
+        borderTop:       `1px solid rgba(193,127,62,0.12)`,
+        flexWrap:        "wrap",
+      }}>
+        {STATS.map((s, i) => (
+          <motion.div
+            key={s.label}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            style={{ textAlign: "center" }}
+          >
+            <div style={{
+              fontFamily:    font.serif,
+              fontSize:      "clamp(1.9rem, 3vw, 2.5rem)",
+              fontWeight:    700,
+              color:         C.ink,
+              lineHeight:    1,
+              letterSpacing: "-0.02em",
+              marginBottom:  "0.45rem",
+            }}>
+              {s.value}
+            </div>
+            <div style={{
+              fontFamily:    font.sans,
+              fontSize:      "0.6rem",
+              color:         C.copper,
+              fontWeight:    700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+            }}>
+              {s.label}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+    </section>
   )
 }
