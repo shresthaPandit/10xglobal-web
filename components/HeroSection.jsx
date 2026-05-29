@@ -30,6 +30,7 @@ export default function HeroSection() {
       backgroundColor: C.bg,
       position:        "relative",
       overflow:        "hidden",
+      height:          "100vh",
       display:         "flex",
       flexDirection:   "column",
       alignItems:      "center",
@@ -54,12 +55,12 @@ export default function HeroSection() {
           position:   "relative",
           zIndex:     2,
           textAlign:  "center",
-          padding:    "3rem 5vw 0",
+          padding:    "2rem 5vw 0",
           width:      "100%",
           maxWidth:   860,
         }}
       >
-        <motion.div variants={fadeUp} style={{ marginBottom: "1.25rem" }}>
+        <motion.div variants={fadeUp} style={{ marginBottom: "1rem" }}>
           <span style={{
             fontFamily:    font.sans,
             color:         C.copper,
@@ -77,7 +78,7 @@ export default function HeroSection() {
           lineHeight:    1.08,
           color:         C.ink,
           fontWeight:    700,
-          marginBottom:  "1rem",
+          marginBottom:  "0.75rem",
           letterSpacing: "-0.025em",
         }}>
           The{" "}
@@ -86,12 +87,12 @@ export default function HeroSection() {
         </motion.h1>
 
         <motion.p variants={fadeUp} style={{
-          fontFamily:   font.sans,
-          color:        "#6a6360",
-          fontSize:     "0.975rem",
-          lineHeight:   1.9,
-          maxWidth:     520,
-          margin:       "0 auto 1.5rem",
+          fontFamily: font.sans,
+          color:      "#6a6360",
+          fontSize:   "0.975rem",
+          lineHeight: 1.9,
+          maxWidth:   520,
+          margin:     "0 auto 1.25rem",
         }}>
           Advisory expertise. Technology-led delivery. One team across India, UAE,
           Singapore, and the US — handling your{" "}
@@ -152,17 +153,16 @@ export default function HeroSection() {
           alignItems:     "flex-end",
           justifyContent: "center",
           width:          "100%",
-          marginTop:      "-3rem",
-          paddingBottom:  "2rem",
+          marginTop:      "-4rem",
           userSelect:     "none",
           pointerEvents:  "none",
         }}
       >
-        {/* "1" — tall serif character */}
+        {/* "1" */}
         <span style={{
           fontFamily:    font.serif,
           fontWeight:    700,
-          fontSize:      "clamp(280px, 40vw, 620px)",
+          fontSize:      "clamp(180px, 26vw, 400px)",
           lineHeight:    1,
           letterSpacing: "-0.05em",
           color:         "rgba(180, 135, 45, 0.28)",
@@ -176,8 +176,8 @@ export default function HeroSection() {
         {/* Globe */}
         <div style={{
           position:      "relative",
-          width:         "clamp(300px, 36vw, 540px)",
-          height:        "clamp(300px, 36vw, 540px)",
+          width:         "clamp(200px, 26vw, 380px)",
+          height:        "clamp(200px, 26vw, 380px)",
           flexShrink:    0,
           pointerEvents: "auto",
         }}>
@@ -215,7 +215,7 @@ export default function HeroSection() {
         <span style={{
           fontFamily:    font.serif,
           fontWeight:    700,
-          fontSize:      "clamp(220px, 32vw, 500px)",
+          fontSize:      "clamp(140px, 20vw, 320px)",
           lineHeight:    1,
           letterSpacing: "-0.05em",
           color:         "rgba(180, 135, 45, 0.28)",
@@ -227,7 +227,7 @@ export default function HeroSection() {
         </span>
       </motion.div>
 
-      {/* Bottom fade — smooths glow into next section */}
+      {/* Bottom fade */}
       <div style={{
         position:      "absolute",
         bottom:        0,
