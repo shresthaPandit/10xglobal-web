@@ -59,9 +59,9 @@ export default function WhyUsSection() {
             fill
             style={{ objectFit: "cover" }}
           />
-          <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", backgroundColor: C.copper, color: "#fff", padding: "0.875rem 1.25rem", borderRadius: 12, fontFamily: font.sans }}>
-            <CountUp value="450+" style={{ fontSize: "1.6rem", fontWeight: 700, lineHeight: 1, display: "block" }} />
-            <p style={{ fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.1em", marginTop: 4, opacity: 0.9 }}>CLIENTS SERVED</p>
+          <div style={{ position: "absolute", bottom: isMobile ? "1rem" : "1.5rem", left: isMobile ? "1rem" : "1.5rem", backgroundColor: C.copper, color: "#fff", padding: isMobile ? "0.5rem 0.75rem" : "0.875rem 1.25rem", borderRadius: isMobile ? 8 : 12, fontFamily: font.sans }}>
+            <CountUp value="450+" style={{ fontSize: isMobile ? "1rem" : "1.6rem", fontWeight: 700, lineHeight: 1, display: "block" }} />
+            <p style={{ fontSize: isMobile ? "0.55rem" : "0.7rem", fontWeight: 500, letterSpacing: "0.1em", marginTop: isMobile ? 2 : 4, opacity: 0.9 }}>CLIENTS SERVED</p>
           </div>
         </motion.div>
 
