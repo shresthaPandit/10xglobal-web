@@ -1,6 +1,7 @@
 "use client"
 
 import { C, font } from "@/lib/theme"
+import { useIsMobile } from "@/lib/useIsMobile"
 
 const SERVICES = [
   "Global Business Setup", "Managed Services", "Risk & Assurance",
@@ -8,12 +9,20 @@ const SERVICES = [
 ]
 
 export default function Footer() {
+  const isMobile = useIsMobile()
+
   return (
-    <footer style={{ backgroundColor: C.ink, color: C.bg, padding: "4rem 1.5rem 2rem" }}>
+    <footer style={{ backgroundColor: C.ink, color: C.bg, padding: isMobile ? "3rem 1.25rem 1.5rem" : "4rem 1.5rem 2rem" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
 
         {/* Top row */}
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "3rem", paddingBottom: "3rem", borderBottom: `1px solid rgba(247,243,238,0.1)` }}>
+        <div style={{
+          display:             "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr 1fr",
+          gap:                 isMobile ? "2rem" : "3rem",
+          paddingBottom:       "2rem",
+          borderBottom:        `1px solid rgba(247,243,238,0.1)`,
+        }}>
 
           {/* Brand */}
           <div>
@@ -35,51 +44,53 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Services */}
-          <div>
-            <p style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.12em", color: "rgba(247,243,238,0.4)", marginBottom: "1rem" }}>
-              SERVICES
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              {SERVICES.map(s => (
-                <a key={s} href="#services" style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.6)", fontSize: "0.85rem", textDecoration: "none", transition: "color 0.2s" }}
-                  onMouseEnter={e => e.currentTarget.style.color = C.bg}
-                  onMouseLeave={e => e.currentTarget.style.color = "rgba(247,243,238,0.6)"}
-                >
-                  {s}
-                </a>
-              ))}
+          {/* Services + Company in a row on mobile */}
+          <div style={{ display: isMobile ? "grid" : "contents", gridTemplateColumns: isMobile ? "1fr 1fr" : undefined, gap: isMobile ? "1.5rem" : undefined }}>
+            <div>
+              <p style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.12em", color: "rgba(247,243,238,0.4)", marginBottom: "1rem" }}>SERVICES</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                {SERVICES.map(s => (
+                  <a key={s} href="#services" style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.6)", fontSize: "0.85rem", textDecoration: "none", transition: "color 0.2s" }}
+                    onMouseEnter={e => e.currentTarget.style.color = C.bg}
+                    onMouseLeave={e => e.currentTarget.style.color = "rgba(247,243,238,0.6)"}
+                  >
+                    {s}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Company */}
-          <div>
-            <p style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.12em", color: "rgba(247,243,238,0.4)", marginBottom: "1rem" }}>
-              COMPANY
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              {["Our Firm", "Insights & Updates", "Book a Consultation", "Careers"].map(l => (
-                <a key={l} href="#" style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.6)", fontSize: "0.85rem", textDecoration: "none", transition: "color 0.2s" }}
-                  onMouseEnter={e => e.currentTarget.style.color = C.bg}
-                  onMouseLeave={e => e.currentTarget.style.color = "rgba(247,243,238,0.6)"}
-                >
-                  {l}
-                </a>
-              ))}
+            <div>
+              <p style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.12em", color: "rgba(247,243,238,0.4)", marginBottom: "1rem" }}>COMPANY</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                {["Our Firm", "Insights & Updates", "Book a Consultation", "Careers"].map(l => (
+                  <a key={l} href="#" style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.6)", fontSize: "0.85rem", textDecoration: "none", transition: "color 0.2s" }}
+                    onMouseEnter={e => e.currentTarget.style.color = C.bg}
+                    onMouseLeave={e => e.currentTarget.style.color = "rgba(247,243,238,0.6)"}
+                  >
+                    {l}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "1.5rem" }}>
+        <div style={{
+          display:        "flex",
+          justifyContent: "space-between",
+          alignItems:     isMobile ? "flex-start" : "center",
+          flexDirection:  isMobile ? "column" : "row",
+          gap:            isMobile ? "0.75rem" : 0,
+          paddingTop:     "1.5rem",
+        }}>
           <p style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.3)", fontSize: "0.8rem" }}>
             © {new Date().getFullYear()} 10X Global. All rights reserved.
           </p>
           <div style={{ display: "flex", gap: "1.5rem" }}>
             {["Terms of Service", "Privacy Policy"].map(l => (
-              <a key={l} href="#" style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.3)", fontSize: "0.8rem", textDecoration: "none" }}>
-                {l}
-              </a>
+              <a key={l} href="#" style={{ fontFamily: font.sans, color: "rgba(247,243,238,0.3)", fontSize: "0.8rem", textDecoration: "none" }}>{l}</a>
             ))}
           </div>
         </div>

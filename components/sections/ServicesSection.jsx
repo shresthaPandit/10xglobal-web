@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { C, font } from "@/lib/theme"
+import { useIsMobile } from "@/lib/useIsMobile"
 
 const SERVICES = [
   {
@@ -50,48 +51,31 @@ const SERVICES = [
 ]
 
 export default function ServicesSection() {
+  const isMobile = useIsMobile()
+
   return (
-    <section id="services" style={{ backgroundColor: C.bg, padding: "5.5rem 5vw 6rem" }}>
+    <section id="services" style={{ backgroundColor: C.bg, padding: isMobile ? "3rem 5vw 4rem" : "3rem 5vw 5rem" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          style={{ textAlign: "center", marginBottom: "4rem" }}
+          style={{ textAlign: "center", marginBottom: isMobile ? "2.5rem" : "4rem" }}
         >
-          <span style={{
-            fontFamily:    font.sans,
-            color:         C.copper,
-            fontSize:      "0.68rem",
-            fontWeight:    700,
-            letterSpacing: "0.2em",
-            display:       "block",
-            marginBottom:  "1rem",
-          }}>
+          <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", display: "block", marginBottom: "1rem" }}>
             HOW WE HELP
           </span>
-          <h2 style={{
-            fontFamily:    font.serif,
-            fontSize:      "clamp(1.9rem, 3.5vw, 3rem)",
-            fontWeight:    700,
-            color:         C.ink,
-            lineHeight:    1.15,
-            letterSpacing: "-0.015em",
-            maxWidth:      520,
-            margin:        "0 auto",
-          }}>
+          <h2 style={{ fontFamily: font.serif, fontSize: "clamp(1.9rem, 3.5vw, 3rem)", fontWeight: 700, color: C.ink, lineHeight: 1.15, letterSpacing: "-0.015em", maxWidth: 520, margin: "0 auto" }}>
             End-to-end solutions for global business success.
           </h2>
         </motion.div>
 
-        {/* 4-column service cards */}
         <div style={{
           display:             "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap:                 "2rem",
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+          gap:                 isMobile ? "1.5rem" : "2rem",
         }}>
           {SERVICES.map((s, i) => (
             <motion.div
@@ -102,46 +86,18 @@ export default function ServicesSection() {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <div style={{ marginBottom: "1rem" }}>
-                {s.icon}
-              </div>
-              <h3 style={{
-                fontFamily:    font.serif,
-                fontSize:      "1.05rem",
-                fontWeight:    700,
-                color:         C.ink,
-                lineHeight:    1.3,
-                marginBottom:  "0.65rem",
-                letterSpacing: "-0.01em",
-              }}>
+              <div style={{ marginBottom: "1rem" }}>{s.icon}</div>
+              <h3 style={{ fontFamily: font.serif, fontSize: "1.05rem", fontWeight: 700, color: C.ink, lineHeight: 1.3, marginBottom: "0.65rem", letterSpacing: "-0.01em" }}>
                 {s.title}
               </h3>
-              <p style={{
-                fontFamily:   font.sans,
-                color:        C.muted,
-                fontSize:     "0.86rem",
-                lineHeight:   1.72,
-                marginBottom: "1.1rem",
-                flex:         1,
-              }}>
+              <p style={{ fontFamily: font.sans, color: C.muted, fontSize: "0.86rem", lineHeight: 1.72, marginBottom: "1.1rem", flex: 1 }}>
                 {s.desc}
               </p>
               <a
                 href="#cta"
-                style={{
-                  fontFamily:    font.sans,
-                  color:         C.copper,
-                  fontSize:      "0.8rem",
-                  fontWeight:    600,
-                  letterSpacing: "0.01em",
-                  display:       "inline-flex",
-                  alignItems:    "center",
-                  gap:           "0.25rem",
-                  transition:    "gap 0.2s",
-                  alignSelf:     "flex-start",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.gap = "0.5rem"; }}
-                onMouseLeave={e => { e.currentTarget.style.gap = "0.25rem"; }}
+                style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.01em", display: "inline-flex", alignItems: "center", gap: "0.25rem", transition: "gap 0.2s", alignSelf: "flex-start" }}
+                onMouseEnter={e => { e.currentTarget.style.gap = "0.5rem" }}
+                onMouseLeave={e => { e.currentTarget.style.gap = "0.25rem" }}
               >
                 Explore →
               </a>

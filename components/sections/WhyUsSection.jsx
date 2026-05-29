@@ -4,6 +4,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { C, font } from "@/lib/theme"
 import CountUp from "@/components/ui/CountUp"
+import { useIsMobile } from "@/lib/useIsMobile"
 
 const PILLARS = [
   {
@@ -24,21 +25,30 @@ const PILLARS = [
 ]
 
 export default function WhyUsSection() {
-  return (
-    <section style={{ backgroundColor: C.surface, padding: "6rem 1.5rem" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
+  const isMobile = useIsMobile()
 
-        {/* Left — image */}
+  return (
+    <section style={{ backgroundColor: C.surface, padding: isMobile ? "3rem 1.25rem" : "6rem 1.5rem" }}>
+      <div style={{
+        maxWidth:            1200,
+        margin:              "0 auto",
+        display:             "grid",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+        gap:                 isMobile ? "2.5rem" : "5rem",
+        alignItems:          "center",
+      }}>
+
+        {/* Image */}
         <motion.div
-          initial={{ opacity: 0, x: -32 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: isMobile ? 0 : -32, y: isMobile ? 16 : 0 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position:     "relative",
             borderRadius: 20,
             overflow:     "hidden",
-            aspectRatio:  "4/5",
+            aspectRatio:  isMobile ? "16/9" : "4/5",
             border:       "1px solid rgba(193,127,62,0.3)",
             boxShadow:    "0 0 0 1px rgba(193,127,62,0.1), 0 8px 48px rgba(193,127,62,0.1), 0 20px 60px rgba(20,18,16,0.1)",
           }}
@@ -49,34 +59,22 @@ export default function WhyUsSection() {
             fill
             style={{ objectFit: "cover" }}
           />
-          {/* Copper overlay badge */}
-          <div style={{
-            position:        "absolute",
-            bottom:          "1.5rem",
-            left:            "1.5rem",
-            backgroundColor: C.copper,
-            color:           "#fff",
-            padding:         "0.875rem 1.25rem",
-            borderRadius:    12,
-            fontFamily:      font.sans,
-          }}>
+          <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", backgroundColor: C.copper, color: "#fff", padding: "0.875rem 1.25rem", borderRadius: 12, fontFamily: font.sans }}>
             <CountUp value="450+" style={{ fontSize: "1.6rem", fontWeight: 700, lineHeight: 1, display: "block" }} />
             <p style={{ fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.1em", marginTop: 4, opacity: 0.9 }}>CLIENTS SERVED</p>
           </div>
         </motion.div>
 
-        {/* Right — pillars */}
+        {/* Pillars */}
         <motion.div
-          initial={{ opacity: 0, x: 32 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: isMobile ? 0 : 32, y: isMobile ? 16 : 0 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.25rem" }}>
             <div style={{ width: 28, height: 2, backgroundColor: C.copper }} />
-            <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.15em" }}>
-              WHY 10X GLOBAL
-            </span>
+            <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.15em" }}>WHY 10X GLOBAL</span>
           </div>
 
           <h2 style={{ fontFamily: font.serif, fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 700, color: C.ink, lineHeight: 1.1, marginBottom: "2.5rem" }}>
@@ -94,16 +92,10 @@ export default function WhyUsSection() {
                 transition={{ duration: 0.45, delay: i * 0.1 }}
                 style={{ display: "flex", gap: "1.25rem" }}
               >
-                <span style={{ fontFamily: font.serif, fontSize: "1.1rem", fontWeight: 700, color: C.copper, flexShrink: 0, paddingTop: 2 }}>
-                  {p.num}
-                </span>
+                <span style={{ fontFamily: font.serif, fontSize: "1.1rem", fontWeight: 700, color: C.copper, flexShrink: 0, paddingTop: 2 }}>{p.num}</span>
                 <div>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.2rem", fontWeight: 700, color: C.ink, marginBottom: "0.4rem" }}>
-                    {p.title}
-                  </h3>
-                  <p style={{ fontFamily: font.sans, color: C.muted, fontSize: "0.9rem", lineHeight: 1.7 }}>
-                    {p.desc}
-                  </p>
+                  <h3 style={{ fontFamily: font.serif, fontSize: "1.2rem", fontWeight: 700, color: C.ink, marginBottom: "0.4rem" }}>{p.title}</h3>
+                  <p style={{ fontFamily: font.sans, color: C.muted, fontSize: "0.9rem", lineHeight: 1.7 }}>{p.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -121,6 +113,7 @@ export default function WhyUsSection() {
               fontWeight:      500,
               border:          "none",
               cursor:          "pointer",
+              width:           isMobile ? "100%" : "auto",
             }}>
               Book a free consultation
             </button>

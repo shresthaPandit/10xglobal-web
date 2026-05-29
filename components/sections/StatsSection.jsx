@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { C, font } from "@/lib/theme"
+import { useIsMobile } from "@/lib/useIsMobile"
 
 const STATS = [
   {
@@ -51,18 +52,20 @@ const STATS = [
 ]
 
 export default function StatsSection() {
+  const isMobile = useIsMobile()
+
   return (
     <section style={{
       backgroundColor: C.bg,
       borderTop:       `1px solid rgba(193,127,62,0.15)`,
       borderBottom:    `1px solid rgba(193,127,62,0.15)`,
-      padding:         "3.5rem 5vw",
+      padding:         isMobile ? "2.5rem 5vw" : "3.5rem 5vw",
     }}>
       <div style={{
         maxWidth:            900,
         margin:              "0 auto",
         display:             "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
         gap:                 "1rem",
       }}>
         {STATS.map((s, i) => (
@@ -82,28 +85,11 @@ export default function StatsSection() {
               boxShadow:       "0 2px 16px rgba(20,18,16,0.04)",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.85rem" }}>
-              {s.icon}
-            </div>
-            <div style={{
-              fontFamily:    font.serif,
-              fontSize:      "2.1rem",
-              fontWeight:    700,
-              color:         C.ink,
-              lineHeight:    1,
-              letterSpacing: "-0.02em",
-              marginBottom:  "0.45rem",
-            }}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.85rem" }}>{s.icon}</div>
+            <div style={{ fontFamily: font.serif, fontSize: "2.1rem", fontWeight: 700, color: C.ink, lineHeight: 1, letterSpacing: "-0.02em", marginBottom: "0.45rem" }}>
               {s.value}
             </div>
-            <div style={{
-              fontFamily:    font.sans,
-              fontSize:      "0.58rem",
-              color:         C.copper,
-              fontWeight:    700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-            }}>
+            <div style={{ fontFamily: font.sans, fontSize: "0.58rem", color: C.copper, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
               {s.label}
             </div>
           </motion.div>
