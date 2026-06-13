@@ -137,7 +137,7 @@ export default function Navbar() {
                 </button>
               </a>
               <button
-                onClick={() => window.Calendly?.initPopupWidget({ url: "https://calendly.com/srishti-mittal-10x/30min" })}
+                onClick={() => setShowContact(true)}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#7e6232"; e.currentTarget.style.transform = "translateY(-1px)" }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.gold;    e.currentTarget.style.transform = "translateY(0)" }}
                 style={{
@@ -192,7 +192,7 @@ export default function Navbar() {
                 {label}
               </a>
             ))}
-            <button onClick={() => { setMenuOpen(false); window.Calendly?.initPopupWidget({ url: "https://calendly.com/srishti-mittal-10x/30min" }) }} style={{ width: "100%", backgroundColor: C.gold, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
+            <button onClick={() => { setMenuOpen(false); setShowContact(true) }} style={{ width: "100%", backgroundColor: C.gold, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
               Book a call
             </button>
           </div>
