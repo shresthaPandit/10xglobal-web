@@ -1,33 +1,47 @@
-import { Playfair_Display, Manrope } from "next/font/google"
+﻿import { Cormorant_Garamond, DM_Sans, Roboto } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import PageLoader from "@/components/PageLoader"
+import GlobePreloader from "@/components/GlobePreloader"
 
-const playfair = Playfair_Display({
+const playfair = Cormorant_Garamond({
   subsets:  ["latin"],
-  weight:   ["500", "600", "700"],
+  weight:   ["300", "400", "600"],
   style:    ["normal", "italic"],
   variable: "--font-playfair",
   display:  "swap",
 })
 
-const manrope = Manrope({
+const dmSans = DM_Sans({
   subsets:  ["latin"],
-  weight:   ["400", "500", "600", "700"],
-  variable: "--font-manrope",
+  weight:   ["300", "400", "500", "600"],
+  variable: "--font-dm-sans",
+  display:  "swap",
+})
+
+const roboto = Roboto({
+  subsets:  ["latin"],
+  weight:   ["400", "500", "700"],
+  variable: "--font-roboto",
   display:  "swap",
 })
 
 export const metadata = {
-  title:       "10x Global — Cross-Border Business Advisory",
-  description: "Advisory expertise. Technology-led delivery. One team across India, UAE, Singapore, and the US.",
+  title:       "10✕Global — Advisory for the Modern Business",
+  description: "Cross-border finance, legal, compliance & capital — one integrated team.",
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${manrope.variable}`}>
-      <body style={{ margin: 0, padding: 0, backgroundColor: "#F7F3EE" }}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${roboto.variable}`}>
+      <head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </head>
+      <body style={{ margin: 0, padding: 0, backgroundColor: "#FFFFFF" }}>
         <PageLoader />
+        <GlobePreloader />
         {children}
+        <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
       </body>
     </html>
   )

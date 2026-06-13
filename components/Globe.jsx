@@ -3,17 +3,16 @@
 import { useEffect, useRef } from "react"
 import createGlobe from "cobe"
 
-// 4 office cities — markers glow in copper (#C17F3E)
 const OFFICE_MARKERS = [
-  { location: [28.6139,   77.209  ], size: 0.07 }, // Delhi
-  { location: [25.2048,   55.2708 ], size: 0.07 }, // Dubai
-  { location: [ 1.3521,  103.8198 ], size: 0.07 }, // Singapore
-  { location: [40.7128,  -74.006  ], size: 0.07 }, // New York
+  { location: [28.6139,  77.2090 ], size: 0.08 }, // New Delhi
+  { location: [25.2048,  55.2708 ], size: 0.07 }, // Dubai
+  { location: [ 1.3521, 103.8198 ], size: 0.07 }, // Singapore
+  { location: [39.7447, -75.5484 ], size: 0.07 }, // Wilmington, DE
 ]
 
-export default function Globe({ size = 580 }) {
+export default function Globe({ size = 560 }) {
   const canvasRef = useRef(null)
-  const phi       = useRef(1.5) // start facing India/Middle East region
+  const phi       = useRef(1.2)
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -26,18 +25,18 @@ export default function Globe({ size = 580 }) {
       devicePixelRatio: dpr,
       width,
       height,
-      phi:           1.5,
+      phi:           1.2,
       theta:         0.2,
-      dark:          0.9,          // dark globe — continents visible, copper dots pop
-      diffuse:       1.8,
-      mapSamples:    25000,        // higher = sharper continent outlines
-      mapBrightness: 8,
-      baseColor:   [0.16, 0.14, 0.11], // deep warm dark ocean
-      markerColor: [0.757, 0.498, 0.243], // copper #C17F3E
-      glowColor:   [0.97, 0.95, 0.92],   // warm cream glow — bleeds into page bg
+      dark:          0,
+      diffuse:       1.4,
+      mapSamples:    20000,
+      mapBrightness: 5,
+      baseColor:   [0.93, 0.91, 0.87],
+      markerColor: [0.722, 0.196, 0.157],
+      glowColor:   [0.965, 0.953, 0.929],
       markers: OFFICE_MARKERS,
       onRender(state) {
-        phi.current += 0.005       // slightly faster — clearly animating
+        phi.current += 0.0025
         state.phi = phi.current
       },
     })

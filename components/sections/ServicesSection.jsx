@@ -90,7 +90,7 @@ export default function ServicesSection() {
               <h3 style={{ fontFamily: font.serif, fontSize: "1.05rem", fontWeight: 700, color: C.ink, lineHeight: 1.3, marginBottom: "0.65rem", letterSpacing: "-0.01em" }}>
                 {s.title}
               </h3>
-              <p style={{ fontFamily: font.sans, color: C.muted, fontSize: "0.86rem", lineHeight: 1.72, marginBottom: "1.1rem", flex: 1 }}>
+              <p style={{ fontFamily: font.sans, color: C.muted, fontSize: "0.875rem", lineHeight: 1.72, marginBottom: "1.1rem", flex: 1 }}>
                 {s.desc}
               </p>
               <a

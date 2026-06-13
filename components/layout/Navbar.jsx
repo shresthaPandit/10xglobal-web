@@ -1,19 +1,22 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { C, font } from "@/lib/theme"
+import ContactModal from "@/components/ContactModal"
 
 const LINKS = [
-  { label: "Global Market Entry", href: "#services" },
-  { label: "Deals & Transactions", href: "#services" },
-  { label: "Managed Services",     href: "#services" },
-  { label: "Our Firm",             href: "#team"     },
+  { label: "Our Firm",             href: "/our-firm"       },
+  { label: "Global Market Entry",  href: "/global-market-entry" },
+  { label: "Deals & Transactions", href: "/deals-transactions" },
+  { label: "Managed Services",     href: "/managed-services" },
 ]
 
 export default function Navbar() {
-  const [scrolled,  setScrolled]  = useState(false)
-  const [hovered,   setHovered]   = useState(null)
-  const [menuOpen,  setMenuOpen]  = useState(false)
+  const [scrolled,     setScrolled]     = useState(false)
+  const [hovered,      setHovered]      = useState(null)
+  const [menuOpen,     setMenuOpen]     = useState(false)
+  const [showContact,  setShowContact]  = useState(false)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24)
@@ -23,15 +26,15 @@ export default function Navbar() {
 
   return (
     <>
-      {/* CSS media queries — applied before JS hydrates, zero flash */}
+      <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
       <style>{`
-        @media (max-width: 767px) {
+        @media (max-width: 1023px) {
           .nav-desktop-links { display: none !important; }
           .nav-desktop-cta   { display: none !important; }
         }
-        @media (min-width: 768px) {
-          .nav-hamburger      { display: none !important; }
-          .nav-mobile-drawer  { display: none !important; }
+        @media (min-width: 1024px) {
+          .nav-hamburger     { display: none !important; }
+          .nav-mobile-drawer { display: none !important; }
         }
       `}</style>
 
@@ -39,18 +42,18 @@ export default function Navbar() {
         position:        "sticky",
         top:             0,
         zIndex:          50,
-        backgroundColor: scrolled ? "rgba(247,243,238,0.97)" : C.bg,
+        backgroundColor: scrolled ? "rgba(255,255,255,0.97)" : C.bg,
         backdropFilter:  scrolled ? "blur(20px)" : "none",
         transition:      "background-color 0.35s, box-shadow 0.35s",
-        boxShadow:       scrolled ? "0 1px 0 rgba(193,127,62,0.18), 0 4px 24px rgba(20,18,16,0.06)" : "0 1px 0 rgba(193,127,62,0.1)",
+        boxShadow:       scrolled ? `0 1px 0 rgba(154,123,60,0.18), 0 4px 24px rgba(12,26,39,0.06)` : `0 1px 0 rgba(154,123,60,0.1)`,
       }}>
 
-        {/* Top copper line */}
+        {/* Top gold line */}
         <div style={{
           position:   "absolute",
           top:        0, left: 0, right: 0,
           height:     2,
-          background: `linear-gradient(to right, transparent 0%, ${C.copper} 35%, rgba(193,127,62,0.7) 65%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, ${C.gold} 35%, rgba(154,123,60,0.6) 65%, transparent 100%)`,
         }} />
 
         <div style={{
@@ -64,17 +67,12 @@ export default function Navbar() {
         }}>
 
           {/* Logo */}
-          <a href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.08em", marginBottom: 3 }}>
-              <span style={{ fontFamily: font.serif, fontWeight: 700, fontSize: "1.4rem", color: C.ink, letterSpacing: "-0.03em", lineHeight: 1 }}>10</span>
-              <span style={{ fontFamily: font.serif, fontWeight: 400, fontSize: "1rem", color: C.copper, lineHeight: 1, fontStyle: "italic", margin: "0 0.05em" }}>×</span>
-              <span style={{ fontFamily: font.serif, fontWeight: 700, fontSize: "1.4rem", color: C.ink, letterSpacing: "-0.03em", lineHeight: 1 }}>Global</span>
-            </div>
-            <div style={{ height: "1px", background: `linear-gradient(to right, ${C.copper}, rgba(193,127,62,0.15))`, width: "68%" }} />
+          <a href="/" style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center", marginLeft: "-0.75rem" }}>
+            <Image src="/logo.png" alt="10✕Global" width={140} height={36} style={{ objectFit: "contain" }} priority />
           </a>
 
-          {/* Desktop nav links — hidden on mobile via CSS */}
-          <div className="nav-desktop-links" style={{ display: "flex", gap: "2.75rem", alignItems: "center" }}>
+          {/* Desktop nav — hidden on mobile via CSS */}
+          <div className="nav-desktop-links" style={{ display: "flex", gap: "2.25rem", alignItems: "center" }}>
             {LINKS.map(({ label, href }) => (
               <a
                 key={label}
@@ -86,9 +84,9 @@ export default function Navbar() {
                 <span style={{
                   fontFamily:    font.sans,
                   color:         C.ink,
-                  fontSize:      "0.83rem",
-                  fontWeight:    hovered === label ? 700 : 500,
-                  letterSpacing: "0.02em",
+                  fontSize:      "0.82rem",
+                  fontWeight:    hovered === label ? 600 : 500,
+                  letterSpacing: "0.015em",
                   transition:    "font-weight 0.1s",
                   display:       "block",
                   whiteSpace:    "nowrap",
@@ -100,7 +98,7 @@ export default function Navbar() {
                   bottom:     0, left: 0,
                   width:      hovered === label ? "100%" : "0%",
                   height:     1,
-                  background: `linear-gradient(to right, ${C.copper}, rgba(193,127,62,0.25))`,
+                  background: `linear-gradient(to right, ${C.gold}, rgba(154,123,60,0.2))`,
                   transition: "width 0.28s ease",
                   display:    "block",
                 }} />
@@ -111,34 +109,58 @@ export default function Navbar() {
           {/* Right side */}
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexShrink: 0 }}>
 
-            {/* Desktop CTA — hidden on mobile via CSS */}
-            <div className="nav-desktop-cta" style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-              <div style={{ width: 1, height: 20, backgroundColor: "rgba(193,127,62,0.25)" }} />
-              <a href="#cta" style={{ textDecoration: "none" }}>
+            {/* Desktop CTA */}
+            <div className="nav-desktop-cta" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <div style={{ width: 1, height: 20, backgroundColor: "rgba(154,123,60,0.25)" }} />
+              <a href="/#engagements" style={{ textDecoration: "none" }}>
                 <button
-                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#a86e35"; e.currentTarget.style.transform = "translateY(-1px)" }}
-                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.copper;   e.currentTarget.style.transform = "translateY(0)" }}
+                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = "rgba(154,123,60,0.08)"; e.currentTarget.style.transform = "translateY(-1px)" }}
+                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent";            e.currentTarget.style.transform = "translateY(0)" }}
                   style={{
-                    backgroundColor: C.copper,
-                    color:           "#fff",
-                    padding:         "0.65rem 1.6rem",
-                    borderRadius:    6,
-                    fontSize:        "0.83rem",
+                    backgroundColor: "transparent",
+                    color:           C.gold,
+                    padding:         "0.65rem 1.25rem",
+                    borderRadius:    4,
+                    fontSize:        "0.82rem",
                     fontFamily:      font.sans,
                     fontWeight:      600,
-                    border:          "none",
+                    border:          `1px solid ${C.gold}`,
                     cursor:          "pointer",
-                    letterSpacing:   "0.02em",
-                    boxShadow:       "0 2px 14px rgba(193,127,62,0.3)",
+                    letterSpacing:   "0.06em",
+                    textTransform:   "uppercase",
+                    fontSize:        "0.72rem",
                     transition:      "background-color 0.2s, transform 0.15s",
+                    whiteSpace:      "nowrap",
                   }}
                 >
-                  Book a call
+                  See Our Work
                 </button>
               </a>
+              <button
+                onClick={() => window.Calendly?.initPopupWidget({ url: "https://calendly.com/srishti-mittal-10x/30min" })}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#7e6232"; e.currentTarget.style.transform = "translateY(-1px)" }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.gold;    e.currentTarget.style.transform = "translateY(0)" }}
+                style={{
+                  backgroundColor: C.gold,
+                  color:           "#fff",
+                  padding:         "0.65rem 1.5rem",
+                  borderRadius:    4,
+                  fontFamily:      font.sans,
+                  fontWeight:      600,
+                  fontSize:        "0.82rem",
+                  letterSpacing:   "0.02em",
+                  boxShadow:       `0 2px 14px rgba(154,123,60,0.3)`,
+                  transition:      "background-color 0.2s, transform 0.15s",
+                  whiteSpace:      "nowrap",
+                  border:          "none",
+                  cursor:          "pointer",
+                }}
+              >
+                Book a call
+              </button>
             </div>
 
-            {/* Hamburger — hidden on desktop via CSS */}
+            {/* Hamburger */}
             <button
               className="nav-hamburger"
               onClick={() => setMenuOpen(o => !o)}
@@ -152,12 +174,12 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile drawer — hidden on desktop via CSS */}
+        {/* Mobile drawer */}
         {menuOpen && (
           <div className="nav-mobile-drawer" style={{
             backgroundColor: C.bg,
-            borderTop:       `1px solid rgba(193,127,62,0.15)`,
-            boxShadow:       "0 8px 32px rgba(20,18,16,0.1)",
+            borderTop:       `1px solid rgba(154,123,60,0.15)`,
+            boxShadow:       "0 8px 32px rgba(12,26,39,0.1)",
             padding:         "0.5rem 5vw 1.25rem",
           }}>
             {LINKS.map(({ label, href }) => (
@@ -165,16 +187,14 @@ export default function Navbar() {
                 key={label}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                style={{ display: "block", textDecoration: "none", padding: "0.875rem 0", borderBottom: `1px solid rgba(193,127,62,0.1)`, fontFamily: font.sans, color: C.ink, fontSize: "0.95rem", fontWeight: 500 }}
+                style={{ display: "block", textDecoration: "none", padding: "0.875rem 0", borderBottom: `1px solid rgba(154,123,60,0.1)`, fontFamily: font.sans, color: C.ink, fontSize: "0.95rem", fontWeight: 500 }}
               >
                 {label}
               </a>
             ))}
-            <a href="#cta" style={{ textDecoration: "none", display: "block", marginTop: "1rem" }} onClick={() => setMenuOpen(false)}>
-              <button style={{ width: "100%", backgroundColor: C.copper, color: "#fff", padding: "0.875rem", borderRadius: 8, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer" }}>
-                Book a call
-              </button>
-            </a>
+            <button onClick={() => { setMenuOpen(false); window.Calendly?.initPopupWidget({ url: "https://calendly.com/srishti-mittal-10x/30min" }) }} style={{ width: "100%", backgroundColor: C.gold, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
+              Book a call
+            </button>
           </div>
         )}
       </nav>

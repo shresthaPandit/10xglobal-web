@@ -1,0 +1,729 @@
+﻿"use client"
+
+import { useState } from "react"
+import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
+import { font } from "@/lib/theme"
+import Navbar from "@/components/layout/Navbar"
+import Footer from "@/components/layout/Footer"
+import ContactModal from "@/components/ContactModal"
+
+const RED   = "#8C1A2B"
+const CREAM = "#FFFFFF"
+const GREY  = "#F5F5F5"
+const INK   = "#1C1712"
+const MUTED = "#6B6560"
+const GOLD  = "#9A7B3C"
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+}
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } }
+
+const PRINCIPLES = [
+  { n: "01", title: "Integrity, without exception",
+    body: "We lead with transparency and trust. The counsel we give is the counsel we would act on ourselves: clear eyed, candid, and always in your interest." },
+  { n: "02", title: "One integrated team",
+    body: "Finance, legal, tax, compliance and technology under a single roof, working in concert, so nothing of consequence ever falls between the gaps." },
+  { n: "03", title: "Proximity to leadership",
+    body: "You work directly with partners, not layers of intermediaries. Senior judgement is there precisely when the decisions that matter are being made." },
+  { n: "04", title: "Measured by your outcomes",
+    body: "We define success as you do: in real results, not consulting deliverables. Productivity, savings, compliance, growth. We measure ours by yours." },
+]
+
+const PARTNERS = [
+  { initials: "SK", name: "Siddharth Kohli", role: "Founding Partner", spec: "Strategy & Transactions", bg: RED,  text: "#fff", photo: "/team/siddharth.png", linkedin: "https://www.linkedin.com/in/siddharth-kohli-a50a4037/" },
+  { initials: "AJ", name: "Ashish Jain",     role: "Founding Partner", spec: "Finance & Advisory",     bg: GOLD, text: "#fff", photo: "/team/ashish.png",    linkedin: "https://www.linkedin.com/in/ashish-jain-922b5118b/" },
+]
+
+const TEAM = [
+  { initials: "NJ", name: "Niraj Jain",         role: "Practice Lead, MENA",           bg: "#E8D4D4", text: RED,   photo: "/team/niraj.png"  },
+  { initials: "MS", name: "Megha Soni",          role: "Lead, Startups",               bg: RED,       text: "#fff", photo: "/team/megha.png"  },
+  { initials: "RG", name: "Rajat Gupta",         role: "Lead, Financial Reporting",    bg: "#C4A96A", text: "#fff", photo: "/team/rajat.png"  },
+  { initials: "PD", name: "Priya Dubey",         role: "Lead, Transaction Advisory",   bg: "#D4C9B4", text: INK,   photo: "/team/priya.png"  },
+  { initials: "TS", name: "Tarundeep Singh",     role: "Lead, Legal",                  bg: "#DDCFCF", text: RED,   photo: "/team/tarun.png"  },
+  { initials: "VG", name: "Varun Grover",        role: "Lead, Risk & Assurance · MENA",bg: RED,       text: "#fff", photo: "/team/varun.png"  },
+]
+
+const INSIGHTS_PRIMARY = [
+  {
+    tag: "Tax & Regulatory", date: "Feb 2025", read: "5 min read", featured: true,
+    title: "Advertising Services to Foreign Clients: New Tax Clarity for Indian Agencies",
+    body:  "Indian advertising agencies providing services to foreign clients can now claim export benefits with confidence. New guidelines resolve a longstanding dispute on place of supply, offering uniform treatment across jurisdictions.",
+    bg: "#C4A96A",
+  },
+  {
+    tag: "Market Insights", date: "Feb 2025",
+    title: "The Liberalised Remittance Scheme: How Liberally Can Indians Send Money Abroad?",
+    bg: "#C8D4C8",
+  },
+  {
+    tag: "Global Setup", date: "Feb 2025",
+    title: "UAE Free Zones: The Complete Guide for Businesses Expanding to the Middle East",
+    bg: "#C8D4C8",
+  },
+]
+
+const INSIGHTS_MORE = [
+  { tag: "Tax & Regulatory", date: "Feb 2025", title: "Golden Visa Residency: Securing 10-Year UAE Residency for Investors",        href: "https://www.10x.global/blog/golden-visa-guide",      img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=85" },
+  { tag: "Regulatory",       date: "Feb 2025", title: "Overseas Investment Rules 2022: A Guide to ODI and OPI for Indian Entities",  href: "https://www.10x.global/blog/fema-odi-latest",        img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=85" },
+  { tag: "Export & FEMA",    date: "Feb 2025", title: "Why Indian Exporters Are Receiving Bank Notices on Outstanding Remittances",  href: "https://www.10x.global/blog/fema-write-off-exports", img: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&q=85" },
+  { tag: "GST",              date: "Feb 2025", title: "Delhi High Court Ruling: Show Cause Notices Under the GST Regime",           href: "https://www.10x.global/blog/gst-case-law",          img: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=85" },
+]
+
+const OFFICES = [
+  {
+    code: "IN",
+    region: "India · Headquarters",
+    city: "New Delhi",
+    img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80",
+    address: "2/6 Block 2, West Patel Nagar,\nNew Delhi 110008",
+    address2: "1409, Palms Spring Plaza\nGolf Course Road, Sector 54\nGurugram 122002",
+    address2Label: "Gurgaon",
+    email: "info@10x.global",
+    phone: "+91 8800565608",
+    est: "Est. September 2012",
+    services: ["Finance & Tax", "Legal & Compliance", "Transaction Advisory", "Virtual CFO"],
+    primary: true,
+  },
+  {
+    code: "AE",
+    region: "UAE · MENA Hub",
+    city: "Dubai",
+    img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
+    address: "1607 JBC5, Cluster W,\nJumeirah Lake Towers, Dubai",
+    email: "info@10x.global",
+    phone: "+971 04 5757988",
+    est: "Est. 2022",
+    services: ["UAE Entity Formation", "VAT & Corporate Tax", "MENA Market Entry"],
+    primary: false,
+  },
+  {
+    code: "SG",
+    region: "Singapore · SE Asia",
+    city: "Singapore",
+    img: "https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=80",
+    address: "200 Jalan Sultan, #11-01,\nTextile Centre, Singapore 199018",
+    email: "info@10x.global",
+    phone: null,
+    est: "Est. 2017",
+    services: ["Singapore Incorporation", "Holding Structure", "ASEAN Compliance"],
+    primary: false,
+  },
+  {
+    code: "US",
+    region: "United States · Americas",
+    city: "Delaware",
+    img: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80",
+    address: "605 Geddes Street,\nWilmington, DE 19805",
+    email: "info@10x.global",
+    phone: null,
+    est: "Est. October 2025",
+    services: ["Delaware C-Corp", "US Market Entry", "Cross-border Transactions"],
+    primary: false,
+  },
+]
+
+const INDIA_OFFICES = [
+  {
+    city:    "New Delhi",
+    state:   "Headquarters",
+    address: "2/6 Block 2, West Patel Nagar\nNew Delhi 110008",
+    contact: "info@10x.global · +91 8800565608",
+    hq:      true,
+  },
+  {
+    city:    "Gurgaon",
+    state:   "Haryana",
+    address: "1409, Palms Spring Plaza\nGolf Course Road, Sector 54\nGurugram 122002",
+    contact: "info@10x.global · +91 8800565608",
+    hq:      false,
+  },
+  {
+    city:    "Mumbai",
+    state:   "Maharashtra",
+    address: "AK Estate, near Radisson Blu Hotel\nSwami Vivekananda Road\nGoregaon West, Mumbai 400062",
+    contact: "info@10x.global · +91 8800565608",
+    hq:      false,
+  },
+  {
+    city:    "Bangalore",
+    state:   "Karnataka",
+    address: "1781, 19th Main Road, Vanganahalli\nSector 4, HSR Layout\nBengaluru 560034",
+    contact: "info@10x.global · +91 8800565608",
+    hq:      false,
+  },
+]
+
+function OfficeFlipCard({ office, index }) {
+  const [flipped, setFlipped] = useState(false)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      style={{ perspective: "1200px", height: 240, cursor: "default" }}
+    >
+      <div style={{
+        position:       "relative",
+        width:          "100%",
+        height:         "100%",
+        transformStyle: "preserve-3d",
+        transition:     "transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)",
+        transform:      flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+      }}>
+
+        {/* Front — city photo */}
+        <div style={{
+          position:                 "absolute",
+          inset:                    0,
+          backfaceVisibility:       "hidden",
+          WebkitBackfaceVisibility: "hidden",
+          overflow:                 "hidden",
+        }}>
+          {/* Photo */}
+          <div style={{
+            position:           "absolute",
+            inset:              0,
+            backgroundImage:    `url(${office.img})`,
+            backgroundSize:     "cover",
+            backgroundPosition: "center",
+          }} />
+          {/* Gradient overlay — dark at bottom for text legibility */}
+          <div style={{
+            position:   "absolute",
+            inset:      0,
+            background: "linear-gradient(to top, rgba(12,26,39,0.88) 0%, rgba(12,26,39,0.35) 55%, rgba(12,26,39,0.1) 100%)",
+          }} />
+          {/* Text anchored to bottom */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.5rem 1.75rem" }}>
+            <p style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)", marginBottom: "0.4rem" }}>
+              {office.region}
+            </p>
+            <h3 style={{ fontFamily: font.serif, fontSize: "clamp(1.7rem, 2.4vw, 2.2rem)", fontWeight: 300, color: "#fff", lineHeight: 1.1, marginBottom: "0.75rem" }}>
+              {office.city}
+            </h3>
+          </div>
+        </div>
+
+        {/* Back — office details */}
+        <div style={{
+          position:                 "absolute",
+          inset:                    0,
+          backfaceVisibility:       "hidden",
+          WebkitBackfaceVisibility: "hidden",
+          transform:                "rotateY(180deg)",
+          backgroundColor:          RED,
+          padding:                  "1.75rem 1.75rem 1.5rem",
+          display:                  "flex",
+          flexDirection:            "column",
+        }}>
+          <p style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: GOLD, marginBottom: "0.45rem" }}>
+            {office.region}
+          </p>
+          <h3 style={{ fontFamily: font.serif, fontSize: "clamp(1.7rem, 2.2vw, 2.1rem)", fontWeight: 400, color: "#fff", lineHeight: 1.1, marginBottom: "0.85rem" }}>
+            {office.city}
+          </h3>
+          <div style={{ height: 1, backgroundColor: "rgba(255,255,255,0.15)", marginBottom: "0.85rem" }} />
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+            {office.address2 ? (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                <div>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)", marginBottom: "0.25rem" }}>New Delhi</p>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.75rem", color: "rgba(255,255,255,0.88)", lineHeight: 1.55, whiteSpace: "pre-line" }}>{office.address}</p>
+                </div>
+                <div>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)", marginBottom: "0.25rem" }}>{office.address2Label}</p>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.75rem", color: "rgba(255,255,255,0.88)", lineHeight: 1.55, whiteSpace: "pre-line" }}>{office.address2}</p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)", marginBottom: "0.25rem" }}>Address</p>
+                <p style={{ fontFamily: font.sans, fontSize: "0.78rem", color: "rgba(255,255,255,0.88)", lineHeight: 1.55, whiteSpace: "pre-line" }}>{office.address}</p>
+              </div>
+            )}
+            <div>
+              <p style={{ fontFamily: font.sans, fontSize: "0.78rem", color: "rgba(255,255,255,0.7)" }}>{office.email}</p>
+              {office.phone && (
+                <p style={{ fontFamily: font.sans, fontSize: "0.78rem", color: "rgba(255,255,255,0.7)", marginTop: "0.15rem" }}>{office.phone}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.6rem" }}>
+              {office.services.map(s => (
+                <span key={s} style={{ fontFamily: font.sans, fontSize: "0.56rem", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.1)", padding: "0.15rem 0.45rem" }}>{s}</span>
+              ))}
+            </div>
+            <p style={{ fontFamily: font.sans, fontSize: "0.54rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: GOLD }}>
+              {office.est}
+            </p>
+            {office.primary && (
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", marginTop: "0.45rem", border: "1px solid rgba(154,123,60,0.3)", padding: "0.18rem 0.5rem" }}>
+                <span style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "#5C9E5C", flexShrink: 0 }} />
+                <span style={{ fontFamily: font.sans, fontSize: "0.54rem", fontWeight: 600, color: "rgba(255,255,255,0.65)" }}>Primary operating office</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </motion.div>
+  )
+}
+
+export default function OurFirmPage() {
+  const [showMore, setShowMore] = useState(false)
+  const [showContact, setShowContact] = useState(false)
+
+  return (
+    <>
+      <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
+      <Navbar />
+      <main style={{ backgroundColor: CREAM, fontFamily: font.sans }}>
+
+        {/* ── HERO ──────────────────────────────────────────────── */}
+        <section className="inner-page-hero" style={{ padding: "7rem 0 5rem" }}>
+          <div className="page-hero-grid" style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+
+            <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}>
+              <motion.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2.5rem", paddingLeft: "0.15rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Our Firm</span>
+              </motion.div>
+              <motion.h1 variants={fadeUp} style={{ fontFamily: font.serif, fontSize: "clamp(2.8rem, 4.5vw, 4.5rem)", fontWeight: 300, lineHeight: 1.1, color: INK }}>
+                Built by founders,<br />for founders<br />going{" "}
+                <em style={{ fontStyle: "italic", color: RED }}>global.</em>
+              </motion.h1>
+            </motion.div>
+
+            <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} style={{ paddingTop: "0.5rem" }}>
+
+              <motion.p variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "1.1rem" }}>
+                10x Global was built on a simple belief: founders should focus on building, while we handle everything else required to help them scale.
+              </motion.p>
+              <motion.p variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "2rem" }}>
+                Across global expansion, transactions, legal, tax, finance and compliance we operate as a single integrated partner to ambitious companies navigating growth across borders.
+              </motion.p>
+
+              {/* Philosophy card */}
+              <motion.div variants={fadeUp} style={{ position: "relative", overflow: "hidden", padding: "2.25rem 2.5rem", border: "1px solid rgba(28,23,18,0.1)", backgroundColor: "#FAFAF8" }}>
+                {/* Ghost watermark */}
+                <span style={{
+                  position: "absolute", top: "30%", left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  fontFamily: font.serif, fontSize: "8rem", fontWeight: 300,
+                  color: "rgba(140,26,43,0.05)", lineHeight: 1,
+                  userSelect: "none", pointerEvents: "none", letterSpacing: "-0.02em",
+                  whiteSpace: "nowrap",
+                }}>10x</span>
+
+                {/* Red accent line */}
+                <div style={{ width: 32, height: 2, backgroundColor: RED, marginBottom: "1.5rem" }} />
+
+                <p style={{ fontFamily: font.serif, fontSize: "clamp(1.1rem, 1.5vw, 1.3rem)", fontStyle: "italic", color: INK, lineHeight: 1.7, marginBottom: "1.5rem" }}>
+                  Exceptional companies are not built through small incremental improvements. They are built through bold decisions, disciplined execution and the pursuit of outcomes many times larger than where they began.
+                </p>
+
+                <div style={{ borderTop: "1px solid rgba(28,23,18,0.08)", paddingTop: "1.1rem", display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                  <span style={{ color: RED, fontSize: "0.8rem", flexShrink: 0, marginTop: "0.1rem" }}>✦</span>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.78rem", fontStyle: "italic", color: "rgba(28,23,18,0.42)", lineHeight: 1.65 }}>
+                    The name 10x reflects this philosophy — and yes, it is also Maradona, Messi and Sachin Tendulkar's jersey number!!
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+          </div>
+        </section>
+
+        {/* ── DIVIDER ───────────────────────────────────────────── */}
+        <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+          <div style={{ height: 1, backgroundColor: "rgba(28,23,18,0.1)" }} />
+        </div>
+
+        {/* ── FOUNDER QUOTE ─────────────────────────────────────── */}
+        <section style={{ padding: "5rem 0" }}>
+          <div className="quote-grid" style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
+              style={{ fontFamily: font.serif, fontSize: "clamp(1.6rem, 2.6vw, 2.2rem)", fontWeight: 300, fontStyle: "italic", color: RED, lineHeight: 1.55 }}>
+              The name is our promise: every engagement should create the possibility of a 10<span style={{ color: RED }}>x</span> outcome
+            </motion.p>
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
+              <p style={{ fontFamily: font.sans, fontSize: "0.8rem", letterSpacing: "0.08em", color: MUTED, marginTop: "0.25rem" }}>
+                ~ Siddharth Kohli &amp; Ashish Jain, Co-founders, 10<span style={{ color: RED }}>x</span> Global
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── PRINCIPLES ────────────────────────────────────────── */}
+        <section style={{ backgroundColor: GREY, padding: "6rem 0" }}>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>What We Believe</span>
+              </div>
+              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, marginBottom: "1rem" }}>
+                The principles we <em style={{ fontStyle: "italic", color: RED }}>operate by.</em>
+              </h2>
+              <p style={{ fontFamily: font.serif, fontSize: "1.1rem", fontStyle: "italic", color: MUTED }}>
+                Four convictions that have guided every engagement since our very first day.
+              </p>
+            </motion.div>
+
+            <div style={{ backgroundColor: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "1rem" }}>
+              <div className="partners-grid">
+                {PRINCIPLES.map((p, i) => (
+                  <motion.div key={p.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                    style={{ backgroundColor: "#FFFFFF", borderLeft: `3px solid ${RED}`, padding: "2.5rem 2rem", position: "relative", overflow: "hidden", borderRadius: 8, boxShadow: "0 2px 18px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)" }}>
+                    <span style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.num, fontSize: "7rem", fontWeight: 300, color: "rgba(140,26,43,0.25)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{p.n}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
+                      <span style={{ fontFamily: font.num, fontSize: "0.75rem", fontWeight: 700, color: RED }}>{p.n}</span>
+                      <div style={{ flex: 1, height: 1, backgroundColor: "rgba(140,26,43,0.2)" }} />
+                    </div>
+                    <h3 style={{ fontFamily: font.serif, fontSize: "1.5rem", fontWeight: 400, color: INK, marginBottom: "1rem", lineHeight: 1.3 }}>{p.title}</h3>
+                    <p style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 450, color: MUTED, lineHeight: 1.8 }}>{p.body}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── WHERE WE OPERATE ─────────────────────────────────── */}
+        <section id="offices" style={{ backgroundColor: CREAM, padding: "6rem 0", borderTop: "1px solid rgba(28,23,18,0.08)" }}>
+          <style>{`
+            .offices-flip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+            @media (max-width: 767px) { .offices-flip-grid { grid-template-columns: 1fr; height: auto !important; } }
+          `}</style>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>Where We Operate</span>
+              </div>
+              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, marginBottom: "1rem" }}>
+                Four geographies. <em style={{ fontStyle: "italic", color: RED }}>One team.</em>
+              </h2>
+              <p style={{ fontFamily: font.serif, fontSize: "1.1rem", fontStyle: "italic", color: MUTED }}>
+                Every office is a full-service presence.
+              </p>
+            </motion.div>
+            <div className="offices-flip-grid">
+              {OFFICES.map((office, i) => (
+                <OfficeFlipCard key={office.code} office={office} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* ── WHY WE BUILT 10X GLOBAL ─────────────────────────── */}
+        <section style={{ backgroundColor: CREAM, padding: "6rem 0", borderTop: "1px solid rgba(28,23,18,0.08)" }}>
+          <style>{`
+            .why-built-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+            @media (max-width: 860px) { .why-built-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+            .why-built-scroll::-webkit-scrollbar { width: 3px; }
+            .why-built-scroll::-webkit-scrollbar-track { background: rgba(28,23,18,0.06); }
+            .why-built-scroll::-webkit-scrollbar-thumb { background: rgba(140,26,43,0.3); border-radius: 2px; }
+          `}</style>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            <div className="why-built-grid">
+
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ position: "sticky", top: "7rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem" }}>
+                  Why We Built This
+                </span>
+                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
+                  Why we built<br /><em style={{ fontStyle: "italic", color: RED }}>10x Global.</em>
+                </h2>
+                <div style={{ width: 40, height: 2, backgroundColor: RED, marginTop: "2rem" }} />
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
+                className="why-built-scroll"
+                style={{ maxHeight: 400, overflowY: "auto", paddingRight: "1.25rem" }}>
+                {[
+                  "Over the years, we realised that founders spend an incredible amount of time dealing with things that have very little to do with actually building their businesses.",
+                  "To keep a company running, a founder often ends up coordinating with lawyers, chartered accountants, company secretaries, tax advisors, bankers, compliance professionals, investors, and countless other stakeholders. They spend time reading legal documents to understand what is good for them and what is not. They worry about whether a compliance has been missed.",
+                  "They wonder which country to enter next, how to structure that entry, what entity to set up, how to hire people there, how to move money across borders, and whether everything is being done correctly.",
+                  "We always felt that this was backwards. A founder's primary job is to build. To create products. To serve customers. To hire great people. To scale. To sell. To innovate. To obsess over their craft.",
+                ].map((p, i) => (
+                  <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "1.5rem" }}>{p}</p>
+                ))}
+                <div style={{ height: 1, backgroundColor: "rgba(28,23,18,0.08)", marginBottom: "1.5rem" }} />
+                <p style={{ fontFamily: font.serif, fontSize: "1.15rem", fontStyle: "italic", color: RED, lineHeight: 1.6 }}>
+                  So we built 10x Global to handle all of it — so founders never have to.
+                </p>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ── THE PEOPLE ────────────────────────────────────────── */}
+        <section style={{ backgroundColor: CREAM, padding: "6rem 0" }}>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+
+            <div className="heading-2col" style={{ marginBottom: "3.5rem" }}>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>The People</span>
+                </div>
+                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
+                  Partners you can <em style={{ fontStyle: "italic", color: RED }}>call directly.</em>
+                </h2>
+              </motion.div>
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+                style={{ fontFamily: font.sans, fontSize: "1.05rem", fontWeight: 450, color: MUTED, lineHeight: 1.85, paddingTop: "3rem" }}>
+                More than fifty specialists across finance, legal, compliance and technology, led by partners who stay close to every engagement, from first conversation to final delivery.
+              </motion.p>
+            </div>
+
+            {/* Founding partner cards */}
+            <div className="partners-grid" style={{ marginBottom: "3rem" }}>
+              {PARTNERS.map((p, i) => (
+                <motion.div key={p.initials} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  className="partner-card" style={{ display: "flex", backgroundColor: "#fff", overflow: "hidden", borderRadius: 6, boxShadow: "0 2px 16px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)" }}>
+                  <div className="partner-photo" style={{ width: 220, flexShrink: 0, position: "relative", minHeight: 280 }}>
+                    <Image src={p.photo} alt={p.name} fill style={{ objectFit: "cover", objectPosition: "center top" }} />
+                  </div>
+                  <div style={{ padding: "2rem 1.75rem", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    <p style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: RED, marginBottom: "0.5rem" }}>{p.role}</p>
+                    <h3 style={{ fontFamily: font.serif, fontSize: "1.6rem", fontWeight: 400, color: INK, marginBottom: "0.25rem" }}>{p.name}</h3>
+                    <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: MUTED, marginBottom: "1.5rem" }}>{p.spec}</p>
+                    <div className="partner-info-row" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: RED, flexShrink: 0 }} />
+                      <span style={{ fontFamily: font.sans, fontSize: "0.85rem", fontWeight: 500, color: INK }}>Available for a direct conversation</span>
+                      <a href={p.linkedin} target="_blank" rel="noreferrer" title="LinkedIn" style={{ marginLeft: "0.5rem", color: "#0A66C2", display: "flex", alignItems: "center", flexShrink: 0 }}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Wider team — large horizontal */}
+            <div style={{ borderTop: "1px solid rgba(28,23,18,0.1)", paddingTop: "2rem" }}>
+              <p style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: MUTED, marginBottom: "1.5rem" }}>
+                The Wider Team
+              </p>
+              <div className="team-marquee-wrap" style={{ overflow: "hidden", marginLeft: "-5vw", marginRight: "-5vw" }}>
+                <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ duration: 22, ease: "linear", repeat: Infinity }} style={{ display: "flex", width: "max-content", gap: "1rem", alignItems: "flex-start", paddingLeft: "5vw" }}>
+                  {[...TEAM, ...TEAM].map((m, idx) => (
+                    <div key={idx} style={{ width: 260, flexShrink: 0, display: "flex", flexDirection: "column" }}>
+                      <div style={{ height: 300, borderRadius: 8, overflow: "hidden", boxShadow: "0 4px 22px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)", position: "relative" }}>
+                        <Image src={m.photo} alt={m.name} fill style={{ objectFit: "cover", objectPosition: "center top" }} />
+                      </div>
+                      <div style={{ padding: "0.9rem 0.25rem 0" }}>
+                        <p style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 600, color: INK, marginBottom: "0.2rem" }}>{m.name}</p>
+                        <p style={{ fontFamily: font.sans, fontSize: "0.82rem", color: MUTED }}>{m.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {/* + card (duplicate pair) */}
+                  {[0, 1].map(k => (
+                    <div key={"plus"+k} style={{ width: 260, flexShrink: 0, display: "flex", flexDirection: "column" }}>
+                      <div style={{ height: 300, backgroundColor: "#EEEEEE", borderRadius: 8, overflow: "hidden", boxShadow: "0 4px 22px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.35rem" }}>
+                        <span style={{ fontFamily: font.serif, fontSize: "2.5rem", fontWeight: 300, color: "rgba(28,23,18,0.3)" }}>+</span>
+                      </div>
+                      <div style={{ padding: "0.9rem 0.25rem 0" }}>
+                        <p style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 600, color: INK, marginBottom: "0.2rem" }}>50+ specialists</p>
+                        <p style={{ fontFamily: font.sans, fontSize: "0.82rem", color: MUTED }}>Across four geographies</p>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Book CTA strip */}
+            <div className="book-cta-strip" style={{ paddingTop: "2rem", marginTop: "2rem" }}>
+              <p style={{ fontFamily: font.serif, fontSize: "1.6rem", fontStyle: "italic", color: MUTED }}>Want to know who would handle your account?</p>
+              <button onClick={() => setShowContact(true)} style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: RED, textDecoration: "none", borderBottom: `1px solid ${RED}`, paddingBottom: "2px", whiteSpace: "nowrap", background: "none", border: "none", borderBottom: `1px solid ${RED}`, cursor: "pointer" }}>
+                Book a Conversation →
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ── INSIGHTS ──────────────────────────────────────────── */}
+        <section id="insights" style={{ backgroundColor: CREAM, padding: "5rem 0", borderTop: "1px solid rgba(28,23,18,0.08)" }}>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2.5rem" }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>Insights & Updates</span>
+                </div>
+                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 300, color: INK }}>
+                  From the desk of <em style={{ fontStyle: "italic", color: RED }}>our experts.</em>
+                </h2>
+              </div>
+              <a href="https://www.10x.global/blog" target="_blank" rel="noreferrer" style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: RED, textDecoration: "none", borderBottom: `1px solid ${RED}`, paddingBottom: "2px", whiteSpace: "nowrap" }}>
+                View All Insights →
+              </a>
+            </div>
+
+            {/* Primary articles */}
+            <div className="insights-grid" style={{ marginBottom: "2rem" }}>
+
+              {/* Featured */}
+              <a href="https://www.10x.global/blog/circular-advertisement" target="_blank" rel="noreferrer" className="insight-card" style={{ textDecoration: "none", backgroundColor: "#fff", overflow: "hidden", display: "block", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+                <div style={{ height: 280, position: "relative", overflow: "hidden" }}>
+                  <Image src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=85" alt="Tax advisory" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+                </div>
+                <div style={{ padding: "1.5rem 1.75rem 1.75rem" }}>
+                  <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.85rem", alignItems: "center" }}>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", backgroundColor: "rgba(140,26,43,0.08)", color: RED, padding: "0.28rem 0.65rem" }}>Tax &amp; Regulatory</span>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.75rem", color: MUTED }}>· Feb 2025</span>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.75rem", color: MUTED, marginLeft: "auto" }}>5 min read</span>
+                  </div>
+                  <h3 style={{ fontFamily: font.serif, fontSize: "1.45rem", fontWeight: 400, color: INK, lineHeight: 1.4, marginBottom: "0.85rem" }}>
+                    Advertising Services to Foreign Clients: New Tax Clarity for Indian Agencies
+                  </h3>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.925rem", fontWeight: 450, color: MUTED, lineHeight: 1.8, marginBottom: "1.1rem" }}>
+                    Indian advertising agencies providing services to foreign clients can now claim export benefits with confidence. New guidelines resolve a longstanding dispute on place of supply, offering uniform treatment across jurisdictions.
+                  </p>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
+                </div>
+              </a>
+
+              {/* Two smaller */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                {/* LRS article */}
+                <a href="https://www.10x.global/blog/fema-lrs" target="_blank" rel="noreferrer"
+                  className="insight-card-side" style={{ textDecoration: "none", backgroundColor: "#fff", display: "flex", overflow: "hidden", flex: 1, boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+                  <div style={{ width: 200, flexShrink: 0, position: "relative", overflow: "hidden" }}>
+                    <Image src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&q=85" alt="Financial markets" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+                  </div>
+                  <div style={{ padding: "1.25rem 1.25rem" }}>
+                    <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.65rem", alignItems: "center" }}>
+                      <span style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", backgroundColor: "rgba(140,26,43,0.08)", color: RED, padding: "0.22rem 0.55rem" }}>Market Insights</span>
+                      <span style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED }}>· Feb 2025</span>
+                    </div>
+                    <h3 style={{ fontFamily: font.serif, fontSize: "1rem", fontWeight: 400, color: INK, lineHeight: 1.5, marginBottom: "0.75rem" }}>
+                      The Liberalised Remittance Scheme: How Liberally Can Indians Send Money Abroad?
+                    </h3>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
+                  </div>
+                </a>
+
+                {/* UAE Free Zones article */}
+                <a href="https://www.10x.global/blog/freezone-guide" target="_blank" rel="noreferrer"
+                  className="insight-card-side" style={{ textDecoration: "none", backgroundColor: "#fff", display: "flex", overflow: "hidden", flex: 1, boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+                  <div style={{ width: 200, flexShrink: 0, position: "relative", overflow: "hidden" }}>
+                    <Image src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&q=85" alt="UAE Free Zones" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+                  </div>
+                  <div style={{ padding: "1.25rem 1.25rem" }}>
+                    <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.65rem", alignItems: "center" }}>
+                      <span style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", backgroundColor: "rgba(140,26,43,0.08)", color: RED, padding: "0.22rem 0.55rem" }}>Global Setup</span>
+                      <span style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED }}>· Feb 2025</span>
+                    </div>
+                    <h3 style={{ fontFamily: font.serif, fontSize: "1rem", fontWeight: 400, color: INK, lineHeight: 1.5, marginBottom: "0.75rem" }}>
+                      UAE Free Zones: The Complete Guide for Businesses Expanding to the Middle East
+                    </h3>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
+                  </div>
+                </a>
+              </div>
+
+            </div>
+
+            {/* Read more toggle */}
+            <div style={{ borderTop: "1px solid rgba(28,23,18,0.1)", paddingTop: "1.5rem", marginBottom: "1.5rem" }}>
+              <button onClick={() => setShowMore(v => !v)}
+                style={{ display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: INK }}>
+                  {showMore ? "Show Fewer" : "Read More Insights"}
+                </span>
+                <span style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid rgba(28,23,18,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: font.sans, fontSize: "0.85rem", color: INK, transform: showMore ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
+                  ↓
+                </span>
+              </button>
+            </div>
+
+            {/* Expandable articles */}
+            <AnimatePresence>
+              {showMore && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} style={{ overflow: "hidden" }}>
+                  <div className="insights-more-grid" style={{ marginBottom: "2rem" }}>
+                    {INSIGHTS_MORE.map((ins, i) => (
+                      <a key={i} href={ins.href} target="_blank" rel="noreferrer"
+                        className="insight-card" style={{ textDecoration: "none", backgroundColor: "#fff", overflow: "hidden", display: "block", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", borderRadius: 2 }}>
+                        <div style={{ height: 140, position: "relative", overflow: "hidden" }}>
+                          <Image src={ins.img} alt={ins.title} fill style={{ objectFit: "cover", objectPosition: "center" }} />
+                        </div>
+                        <div style={{ padding: "1.1rem 1.25rem 1.25rem" }}>
+                          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.6rem", alignItems: "center", flexWrap: "wrap" }}>
+                            <span style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", backgroundColor: "rgba(140,26,43,0.08)", color: RED, padding: "0.22rem 0.55rem" }}>{ins.tag}</span>
+                            <span style={{ fontFamily: font.sans, fontSize: "0.65rem", color: MUTED }}>· {ins.date}</span>
+                          </div>
+                          <p style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED, marginBottom: "0.5rem" }}>{ins.date}</p>
+                          <h3 style={{ fontFamily: font.serif, fontSize: "0.95rem", fontWeight: 400, color: INK, lineHeight: 1.5, marginBottom: "0.85rem" }}>{ins.title}</h3>
+                          <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                  <div style={{ borderTop: "1px solid rgba(28,23,18,0.1)", paddingTop: "1.5rem", textAlign: "center" }}>
+                    <a href="https://www.10x.global/insight" target="_blank" rel="noreferrer"
+                      style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.15em", color: RED, textDecoration: "none" }}>
+                      VIEW ALL INSIGHTS ON 10x.GLOBAL →
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+          </div>
+        </section>
+
+        {/* ── FINAL CTA ─────────────────────────────────────────── */}
+        <section style={{ backgroundColor: GREY, padding: "7rem 0", textAlign: "center" }}>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            style={{ maxWidth: 680, margin: "0 auto" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>Work With Us</span>
+            </div>
+            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, color: INK, marginBottom: "1.5rem", lineHeight: 1.1 }}>
+              Begin the <em style={{ fontStyle: "italic", color: RED }}>conversation.</em>
+            </h2>
+            <p style={{ fontFamily: font.sans, fontSize: "1.05rem", fontWeight: 450, color: MUTED, lineHeight: 1.85, marginBottom: "2.5rem" }}>
+              Book a 30 minute consultation with one of our partners. No cost and no obligation, simply a clear eyed conversation about where you intend to go, and how we can help you get there.
+            </p>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
+              <button onClick={() => setShowContact(true)} style={{ backgroundColor: RED, color: "#fff", padding: "1rem 2rem", border: "none", cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                Book a Free 30 Minute Consultation
+              </button>
+              <button onClick={() => setShowContact(true)} style={{ backgroundColor: "transparent", color: RED, padding: "1rem 2rem", border: `1.5px solid ${RED}`, cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                Speak to a Partner
+              </button>
+            </div>
+            <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: MUTED }}>
+              Looking to build your career with us?{" "}
+              <a href="#" style={{ color: RED, fontWeight: 600, textDecoration: "none" }}>Explore opportunities at 10x Global →</a>
+            </p>
+          </motion.div>
+          </div>
+        </section>
+
+      </main>
+      <Footer />
+    </>
+  )
+}
+

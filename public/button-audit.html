@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10x Global — Website Button Audit</title>
+  <style>
+    @page { size: A4; margin: 1.2cm 1.4cm; }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red:    #8C1A2B;
+      --ink:    #1C1712;
+      --muted:  #6B6560;
+      --bg:     #F7F3EE;
+      --white:  #ffffff;
+      --border: rgba(28,23,18,0.1);
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      background: #F0EDE8;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2rem;
+      gap: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 1rem; }
+    .topbar-logo {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #fff;
+    }
+    .topbar-logo span { color: #C9A96E; }
+    .topbar-title {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-left: 1px solid rgba(255,255,255,0.15);
+      padding-left: 1rem;
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-print {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+    .btn-print:hover { background: #6e1220; }
+    .btn-save {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.5rem 1.2rem;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+    .btn-save:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ── HEADER CARD ── */
+    .header-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .header-card h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .header-card h1 span { color: var(--red); }
+    .header-card p {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+    .header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .header-meta span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .header-meta span strong { color: var(--ink); font-weight: 600; }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border-radius: 7px;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.09); }
+    .stat-card.active { border-color: currentColor; box-shadow: 0 0 0 2px currentColor; }
+    .stat-card.all    { color: var(--ink); }
+    .stat-card.works  { color: #2E7D32; }
+    .stat-card.email  { color: #C05E00; }
+    .stat-card.dead   { color: var(--red); }
+    .stat-card.decide { color: #6A1B9A; }
+    .stat-num {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    /* ── LEGEND ── */
+    .legend-bar {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.7rem 1.2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .legend-bar-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.25rem;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 11.5px; color: var(--muted); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .badge-works  { background: #E8F5E9; color: #2E7D32; }
+    .badge-email  { background: #FFF3E0; color: #C05E00; }
+    .badge-dead   { background: #FFEBEE; color: var(--red); }
+    .badge-scroll { background: #E3F2FD; color: #1565C0; }
+    .badge-decide { background: #F3E5F5; color: #6A1B9A; }
+
+    /* ── PAGE SECTION ── */
+    .page-section { margin-bottom: 1.75rem; }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.6rem 1rem;
+      background: var(--ink);
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .page-header:hover { background: #2e2820; }
+    .page-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .page-header h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      flex: 1;
+    }
+    .page-header .page-count {
+      font-size: 10px;
+      color: rgba(255,255,255,0.45);
+    }
+    .page-chevron {
+      color: rgba(255,255,255,0.4);
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+    .page-section.collapsed .page-chevron { transform: rotate(-90deg); }
+    .page-body { display: block; }
+    .page-section.collapsed .page-body { display: none; }
+
+    /* ── SUB SECTION ── */
+    .sub-section { margin-bottom: 0.75rem; }
+    .sub-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.3rem 0.6rem;
+      margin-bottom: 0;
+      background: var(--bg);
+      border-radius: 4px 4px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+    }
+
+    /* ── TABLE ── */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 0 0 6px 6px;
+      overflow: hidden;
+      margin-bottom: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .audit-table thead th {
+      text-align: left;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.5rem 0.75rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .audit-table tbody tr {
+      border-bottom: 1px solid rgba(28,23,18,0.06);
+      transition: background 0.1s;
+    }
+    .audit-table tbody tr:last-child { border-bottom: none; }
+    .audit-table tbody tr:hover { background: rgba(247,243,238,0.7); }
+    .audit-table tbody tr.hidden-row { display: none; }
+    .audit-table tbody td {
+      padding: 0.55rem 0.75rem;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .col-label  { width: 30%; font-weight: 600; font-size: 12px; }
+    .col-status { width: 16%; }
+    .col-now    { width: 22%; color: var(--muted); font-size: 11px; }
+    .col-action { width: 32%; }
+
+    /* status row tinting */
+    tr[data-status="dead"]   td.col-label { border-left: 3px solid #8C1A2B; }
+    tr[data-status="decide"] td.col-label { border-left: 3px solid #6A1B9A; }
+    tr[data-status="works"]  td.col-label { border-left: 3px solid #2E7D32; }
+    tr[data-status="email"]  td.col-label { border-left: 3px solid #C05E00; }
+    tr[data-status="scroll"] td.col-label { border-left: 3px solid #1565C0; }
+
+    /* ── EDITABLE CELL ── */
+    .action-cell {
+      border: 1px dashed rgba(28,23,18,0.2);
+      border-radius: 4px;
+      padding: 5px 8px;
+      min-height: 28px;
+      font-size: 11px;
+      color: #bbb;
+      font-style: italic;
+      background: #FAFAFA;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      cursor: text;
+    }
+    .action-cell:focus {
+      border-color: var(--red);
+      background: #fff;
+      color: var(--ink);
+      font-style: normal;
+      box-shadow: 0 0 0 3px rgba(140,26,43,0.08);
+    }
+    .action-cell.filled {
+      color: var(--ink);
+      font-style: normal;
+      background: #fff;
+      border-color: rgba(28,23,18,0.25);
+    }
+    .action-cell.filled:empty { color: #bbb; font-style: italic; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .progress-title { font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: 0.04em; }
+    .progress-pct { font-size: 11px; color: var(--red); font-weight: 700; }
+    .progress-bar-bg {
+      height: 6px;
+      background: var(--bg);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), #c94a5a);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .progress-sub {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ── DOC FOOTER ── */
+    .doc-footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 10.5px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      body { background: #fff; }
+      .topbar { display: none; }
+      .main { padding: 0; max-width: 100%; }
+      .header-card { box-shadow: none; border-radius: 0; }
+      .stat-card { box-shadow: none; }
+      .page-section.collapsed .page-body { display: block !important; }
+      .page-header { background: #1C1712 !important; border-radius: 0; cursor: default; }
+      .page-chevron { display: none; }
+      .audit-table { box-shadow: none; }
+      .action-cell { background: #fff; }
+      table { page-break-inside: auto; }
+      tr { page-break-inside: avoid; break-inside: avoid; }
+      thead { display: table-header-group; }
+      .page-section { page-break-inside: avoid; margin-bottom: 1rem; }
+      .stats-row { grid-template-columns: repeat(5, 1fr); }
+      .progress-wrap { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar no-print">
+    <div class="topbar-left">
+      <div class="topbar-logo">10<span>✕</span>Global</div>
+      <div class="topbar-title">Website Button Audit</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-save" onclick="saveNotes()">⬇ Save Notes</button>
+      <button class="btn-print" onclick="window.print()">⎙ Print to PDF</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- HEADER -->
+    <div class="header-card">
+      <div>
+        <h1>Website Button <span>Audit</span></h1>
+        <p>Every clickable button and link on the new website, listed by page and section. Please review each item and type your decision in the last column — what should each button do?</p>
+      </div>
+      <div class="header-meta">
+        <span><strong>Prepared by:</strong> Shrestha</span>
+        <span><strong>Date:</strong> June 2026</span>
+        <span><strong>Site:</strong> 10xglobal-white.vercel.app</span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card all active" onclick="filterByStatus('all', this)">
+        <div class="stat-num" id="count-all">0</div>
+        <div class="stat-label">Total Buttons</div>
+      </div>
+      <div class="stat-card works" onclick="filterByStatus('works', this)">
+        <div class="stat-num" id="count-works">0</div>
+        <div class="stat-label">Working</div>
+      </div>
+      <div class="stat-card email" onclick="filterByStatus('email', this)">
+        <div class="stat-num" id="count-email">0</div>
+        <div class="stat-label">Email Link</div>
+      </div>
+      <div class="stat-card dead" onclick="filterByStatus('dead', this)">
+        <div class="stat-num" id="count-dead">0</div>
+        <div class="stat-label">Dead Links</div>
+      </div>
+      <div class="stat-card decide" onclick="filterByStatus('decide', this)">
+        <div class="stat-num" id="count-decide">0</div>
+        <div class="stat-label">Needs Decision</div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap no-print">
+      <div class="progress-header">
+        <span class="progress-title">Decisions filled in</span>
+        <span class="progress-pct" id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+      <div class="progress-sub" id="progress-sub">Fill in the last column to track your progress</div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend-bar">
+      <span class="legend-bar-title">Legend</span>
+      <div class="legend-item"><span class="badge badge-works">WORKING</span> Already functional</div>
+      <div class="legend-item"><span class="badge badge-email">EMAIL</span> Opens email draft</div>
+      <div class="legend-item"><span class="badge badge-scroll">SCROLL</span> Scrolls on same page</div>
+      <div class="legend-item"><span class="badge badge-dead">DEAD LINK</span> Goes nowhere</div>
+      <div class="legend-item"><span class="badge badge-decide">NEEDS DECISION</span> Client to confirm</div>
+    </div>
+
+
+    <!-- ══ GLOBAL ══ -->
+    <div class="page-section" id="section-global">
+      <div class="page-header" onclick="toggleSection('section-global')">
+        <div class="page-icon">🌐</div>
+        <h2>Global — Appears on Every Page</h2>
+        <span class="page-count">17 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+
+        <div class="sub-section">
+          <div class="sub-label">Navigation Bar (top of every page)</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">10x Global logo</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Homepage</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Global Market Entry (nav link)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Global Market Entry page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Deals & Transactions (nav link)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Deals & Transactions page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Managed Services (nav link)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Managed Services page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Geographies (nav link)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Geographies page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Our Firm (nav link)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Our Firm page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="decide"><td class="col-label">"Book a call" button (top-right)</td><td><span class="badge badge-decide">NEEDS DECISION</span></td><td>Scrolls to contact section on homepage only; broken on inner pages</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly popup? Go to contact page?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Footer (bottom of every page)</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">Global Market Entry (footer)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Global Market Entry page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Deals & Transactions (footer)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Deals & Transactions page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Managed Services (footer)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Managed Services page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Our Firm (footer)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Our Firm page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Insights (footer)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Our Firm page → scrolls to Insights & Updates section</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">Careers (footer)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere — pending client input</td><td><div class="action-cell" contenteditable="true" data-placeholder="Careers page URL or email for applications?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">India / UAE / Singapore / USA (footer)</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Geographies page → scrolls to Our Offices section</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">Terms of Service (footer)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere</td><td><div class="action-cell" contenteditable="true" data-placeholder="Do you have a Terms page or PDF?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">Privacy Policy (footer)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere</td><td><div class="action-cell" contenteditable="true" data-placeholder="Do you have a Privacy Policy page or PDF?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">LinkedIn (footer)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere</td><td><div class="action-cell" contenteditable="true" data-placeholder="Share your 10x Global LinkedIn company page URL" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ HOMEPAGE ══ -->
+    <div class="page-section" id="section-home">
+      <div class="page-header" onclick="toggleSection('section-home')">
+        <div class="page-icon">🏠</div>
+        <h2>Homepage</h2>
+        <span class="page-count">9 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+
+        <div class="sub-section">
+          <div class="sub-label">Hero — 3 CTA Buttons</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">"I'm expanding to a new region"</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Global Market Entry page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">"I'm raising or selling"</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Deals & Transactions page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">"I need ongoing support"</td><td><span class="badge badge-works">WORKING</span></td><td>Goes to Managed Services page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Services Section — Explore Links</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="scroll"><td class="col-label">"Explore →" on Global Market Entry card</td><td><span class="badge badge-scroll">SCROLL</span></td><td>Scrolls to Contact section on homepage</td><td><div class="action-cell" contenteditable="true" data-placeholder="Go to /global-market-entry page instead?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="scroll"><td class="col-label">"Explore →" on Deals & Transactions card</td><td><span class="badge badge-scroll">SCROLL</span></td><td>Scrolls to Contact section on homepage</td><td><div class="action-cell" contenteditable="true" data-placeholder="Go to /deals-transactions page instead?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="scroll"><td class="col-label">"Explore →" on Managed Services card</td><td><span class="badge badge-scroll">SCROLL</span></td><td>Scrolls to Contact section on homepage</td><td><div class="action-cell" contenteditable="true" data-placeholder="Go to /managed-services page instead?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Why Us / Team / Insights / Contact Sections</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="decide"><td class="col-label">"Book a free consultation" (Why Us section)</td><td><span class="badge badge-decide">NEEDS DECISION</span></td><td>Scrolls to Contact section on homepage</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly? Go to contact page?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="decide"><td class="col-label">"Book a conversation →" (Team section)</td><td><span class="badge badge-decide">NEEDS DECISION</span></td><td>Scrolls to Contact section on homepage</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly? Go to Our Firm page?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">"View all insights →" (Insights section)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere</td><td><div class="action-cell" contenteditable="true" data-placeholder="Go to 10x.global/blog or Our Firm page?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"Book a free consultation →" (Contact section)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">"See our work →" (Contact section)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere</td><td><div class="action-cell" contenteditable="true" data-placeholder="Where should this go? Case studies? Our Firm?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ GLOBAL MARKET ENTRY ══ -->
+    <div class="page-section" id="section-gme">
+      <div class="page-header" onclick="toggleSection('section-gme')">
+        <div class="page-icon">🌍</div>
+        <h2>Global Market Entry Page</h2>
+        <span class="page-count">7 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+
+        <div class="sub-section">
+          <div class="sub-label">Hero Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"Get a structure review →"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="scroll"><td class="col-label">"See how we work"</td><td><span class="badge badge-scroll">SCROLL</span></td><td>Scrolls to "How It Works" section on same page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Situation Selector — 3 Clickable Cards</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"I'm expanding into India"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"I'm entering UAE, Singapore or USA"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"I need to restructure across jurisdictions"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Bottom CTA</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">"Book a Structure Review →"</td><td><span class="badge badge-works">WORKING</span></td><td>Opens Calendly popup — calendly.com/msoni-10x/30min</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ MANAGED SERVICES ══ -->
+    <div class="page-section" id="section-ms">
+      <div class="page-header" onclick="toggleSection('section-ms')">
+        <div class="page-icon">⚙️</div>
+        <h2>Managed Services Page</h2>
+        <span class="page-count">6 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+
+        <div class="sub-section">
+          <div class="sub-label">Hero Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"Get a retainer proposal →"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="scroll"><td class="col-label">"See what's included"</td><td><span class="badge badge-scroll">SCROLL</span></td><td>Scrolls to "What's Included" section on same page</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Situation Selector — 3 Clickable Cards</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"I need a Virtual CFO"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"I need compliance handled"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"I need payroll & filings managed"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Bottom CTA</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">"Get a Retainer Proposal →"</td><td><span class="badge badge-works">WORKING</span></td><td>Opens Calendly popup — calendly.com/rgupta-10x/30min</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ DEALS & TRANSACTIONS ══ -->
+    <div class="page-section" id="section-dt">
+      <div class="page-header" onclick="toggleSection('section-dt')">
+        <div class="page-icon">💼</div>
+        <h2>Deals & Transactions Page</h2>
+        <span class="page-count">8 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+
+        <div class="sub-section">
+          <div class="sub-label">Hero Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"Talk to our deal team →"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">"See our work"</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Button goes nowhere — no destination set</td><td><div class="action-cell" contenteditable="true" data-placeholder="Scroll to case studies below? Remove it?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Situation Selector — 3 Clickable Cards</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"I am raising capital"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"I am acquiring or merging"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"I am preparing for exit"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Open Calendly / keep as email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Case Studies Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="dead"><td class="col-label">"Explore →" (on each case study card, ×3)</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere — 3 cards, each with this link</td><td><div class="action-cell" contenteditable="true" data-placeholder="Do case study detail pages exist? Or remove?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Bottom CTA</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">"Book a free consultation →"</td><td><span class="badge badge-works">WORKING</span></td><td>Opens Calendly popup — calendly.com/pdubey-10x/30min</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ GEOGRAPHIES ══ -->
+    <div class="page-section" id="section-geo">
+      <div class="page-header" onclick="toggleSection('section-geo')">
+        <div class="page-icon">🗺️</div>
+        <h2>Geographies Page</h2>
+        <span class="page-count">5 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+        <div class="sub-section">
+          <div class="sub-label">Office / Location Cards & Contact</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">India card (entire card is clickable)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to info@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly for India team?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">UAE card (entire card is clickable)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to info@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly for UAE team?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">Singapore card (entire card is clickable)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to info@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly for Singapore?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">United States card (entire card is clickable)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to info@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly for US team?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"info@10x.global" (text link at bottom)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to info@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ OUR FIRM ══ -->
+    <div class="page-section" id="section-firm">
+      <div class="page-header" onclick="toggleSection('section-firm')">
+        <div class="page-icon">🏛️</div>
+        <h2>Our Firm Page</h2>
+        <span class="page-count">10 buttons</span>
+        <span class="page-chevron">▼</span>
+      </div>
+      <div class="page-body">
+
+        <div class="sub-section">
+          <div class="sub-label">Team / Partners Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">LinkedIn icon (each partner card)</td><td><span class="badge badge-works">WORKING</span></td><td>Opens partner's LinkedIn in new tab</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"Book a Conversation →" (text link)</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Insights Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="works"><td class="col-label">"View All Insights →"</td><td><span class="badge badge-works">WORKING</span></td><td>Opens 10x.global/blog in new tab</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Featured insight article (card link)</td><td><span class="badge badge-works">WORKING</span></td><td>Opens blog article in new tab</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">Side article cards (2 articles)</td><td><span class="badge badge-works">WORKING</span></td><td>Opens blog articles in new tab</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">"Read More Insights" / "Show Fewer" toggle</td><td><span class="badge badge-works">WORKING</span></td><td>Expands / collapses more articles</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="works"><td class="col-label">"VIEW ALL INSIGHTS ON 10x.GLOBAL →"</td><td><span class="badge badge-works">WORKING</span></td><td>Opens 10x.global/insight in new tab</td><td><div class="action-cell" contenteditable="true" data-placeholder="Your notes..." onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-label">Bottom CTA Section</div>
+          <table class="audit-table">
+            <thead><tr><th class="col-label">Button / Link</th><th class="col-status">Status</th><th class="col-now">Currently Does</th><th class="col-action">Client Decision — what should it do?</th></tr></thead>
+            <tbody>
+              <tr data-status="email"><td class="col-label">"Book a Free 30 Minute Consultation"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email, or open Calendly?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="email"><td class="col-label">"Speak to a Partner"</td><td><span class="badge badge-email">EMAIL</span></td><td>Opens email to hello@10x.global</td><td><div class="action-cell" contenteditable="true" data-placeholder="Keep as email? Open Calendly for specific partner?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+              <tr data-status="dead"><td class="col-label">"Explore opportunities at 10x Global →"</td><td><span class="badge badge-dead">DEAD LINK</span></td><td>Goes nowhere</td><td><div class="action-cell" contenteditable="true" data-placeholder="Do you have a careers page or job listings email?" onInput="onEdit(this)" onFocus="clearPlaceholder(this)" onBlur="restorePlaceholder(this)"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+      <span>10x Global — Website Button Audit · Prepared by Shrestha · June 2026</span>
+      <span id="footer-progress">0 of 0 decisions filled</span>
+    </div>
+
+  </div>
+
+  <script>
+    // ── COUNT & POPULATE STATS ──
+    function countRows() {
+      const all    = document.querySelectorAll('tr[data-status]');
+      const works  = document.querySelectorAll('tr[data-status="works"]');
+      const email  = document.querySelectorAll('tr[data-status="email"]');
+      const dead   = document.querySelectorAll('tr[data-status="dead"]');
+      const scroll = document.querySelectorAll('tr[data-status="scroll"]');
+      const decide = document.querySelectorAll('tr[data-status="decide"]');
+      document.getElementById('count-all').textContent    = all.length;
+      document.getElementById('count-works').textContent  = works.length;
+      document.getElementById('count-email').textContent  = email.length;
+      document.getElementById('count-dead').textContent   = dead.length + scroll.length;
+      document.getElementById('count-decide').textContent = decide.length;
+    }
+
+    // ── FILTER BY STATUS ──
+    let activeFilter = 'all';
+    function filterByStatus(status, card) {
+      activeFilter = status;
+      document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      document.querySelectorAll('tr[data-status]').forEach(row => {
+        if (status === 'all') {
+          row.classList.remove('hidden-row');
+        } else if (status === 'dead') {
+          row.classList.toggle('hidden-row', row.dataset.status !== 'dead' && row.dataset.status !== 'scroll');
+        } else {
+          row.classList.toggle('hidden-row', row.dataset.status !== status);
+        }
+      });
+    }
+
+    // ── TOGGLE SECTION ──
+    function toggleSection(id) {
+      document.getElementById(id).classList.toggle('collapsed');
+    }
+
+    // ── EDITABLE CELLS ──
+    function clearPlaceholder(el) {
+      if (el.textContent === el.dataset.placeholder) {
+        el.textContent = '';
+        el.style.color = 'var(--ink)';
+        el.style.fontStyle = 'normal';
+      }
+    }
+    function restorePlaceholder(el) {
+      if (!el.textContent.trim()) {
+        el.textContent = el.dataset.placeholder || '';
+        el.style.color = '#bbb';
+        el.style.fontStyle = 'italic';
+      } else {
+        el.classList.add('filled');
+      }
+      updateProgress();
+    }
+    function onEdit(el) {
+      if (el.textContent.trim()) {
+        el.classList.add('filled');
+      } else {
+        el.classList.remove('filled');
+      }
+      updateProgress();
+    }
+
+    // Init placeholder text
+    document.querySelectorAll('.action-cell').forEach(el => {
+      el.textContent = el.dataset.placeholder || '';
+      el.style.color = '#bbb';
+      el.style.fontStyle = 'italic';
+    });
+
+    // ── PROGRESS ──
+    function updateProgress() {
+      const cells = document.querySelectorAll('.action-cell');
+      const filled = [...cells].filter(c => c.classList.contains('filled') && c.textContent.trim()).length;
+      const total = cells.length;
+      const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('progress-pct').textContent = pct + '%';
+      document.getElementById('progress-sub').textContent = filled + ' of ' + total + ' decisions filled in';
+      document.getElementById('footer-progress').textContent = filled + ' of ' + total + ' decisions filled';
+    }
+
+    // ── SAVE NOTES (download JSON) ──
+    function saveNotes() {
+      const data = {};
+      document.querySelectorAll('tr[data-status]').forEach((row, i) => {
+        const label = row.querySelector('.col-label')?.textContent?.trim();
+        const cell  = row.querySelector('.action-cell');
+        const val   = cell?.classList.contains('filled') ? cell.textContent.trim() : '';
+        if (label) data[label] = val;
+      });
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = '10xglobal-button-audit-notes.json';
+      a.click();
+    }
+
+    // ── INIT ──
+    countRows();
+    updateProgress();
+  </script>
+</body>
+</html>

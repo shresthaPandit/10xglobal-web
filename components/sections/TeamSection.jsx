@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -147,7 +147,6 @@ export default function TeamSection() {
         >
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
-              <div style={{ width: 28, height: 2, backgroundColor: C.copper }} />
               <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.15em" }}>
                 OUR FIRM
               </span>

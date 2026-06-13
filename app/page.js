@@ -1,27 +1,27 @@
-import Navbar             from "@/components/layout/Navbar"
-import HeroSection        from "@/components/HeroSection"
-import LogoBar            from "@/components/sections/LogoBar"
-import ServicesSection    from "@/components/sections/ServicesSection"
-import WhyUsSection       from "@/components/sections/WhyUsSection"
-import TeamSection        from "@/components/sections/TeamSection"
-import TestimonialsSection from "@/components/sections/TestimonialsSection"
-import OfficesSection     from "@/components/sections/OfficesSection"
-import InsightsSection    from "@/components/sections/InsightsSection"
-import CTASection         from "@/components/sections/CTASection"
-import Footer             from "@/components/layout/Footer"
+import Navbar              from "@/components/layout/Navbar"
+import HeroSection         from "@/components/HeroSection"
+import StatsBar            from "@/components/sections/StatsBar"
+import LogoBar             from "@/components/sections/LogoBar"
+import WhyChooseSection    from "@/components/sections/WhyChooseSection"
+import HowWeWork           from "@/components/sections/HowWeWork"
+import TestimonialsSection  from "@/components/sections/TestimonialsSection"
+import EngagementsSection   from "@/components/sections/EngagementsSection"
+import ClientTypesSection   from "@/components/sections/ClientTypesSection"
+import CTASection           from "@/components/sections/CTASection"
+import Footer              from "@/components/layout/Footer"
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <HeroSection />
+      <StatsBar />
       <LogoBar />
-      <ServicesSection />
-      <WhyUsSection />
-      <TeamSection />
+      <WhyChooseSection />
+      <HowWeWork />
       <TestimonialsSection />
-      <OfficesSection />
-      <InsightsSection />
+      <EngagementsSection />
+      <ClientTypesSection />
       <CTASection />
       <Footer />
     </>

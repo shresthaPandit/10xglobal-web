@@ -1,222 +1,281 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
-import dynamic from "next/dynamic"
+import { ComposableMap, Geographies, Geography } from "react-simple-maps"
 import { C, font } from "@/lib/theme"
-import { useIsMobile } from "@/lib/useIsMobile"
+import ContactModal from "@/components/ContactModal"
 
-function GlobeSkeleton() {
+const LOADER_DURATION = 2.3
+
+// geoMercator, scale=170, center=[-8,18] — tighter zoom on the SF→Delhi→Dubai→Singapore route
+const CITIES = [
+  { x: 61,  y: 183, name: "San Francisco", sub: "United States",  anchor: "start", lx:  13 },
+  { x: 653, y: 217, name: "New Delhi",     sub: "India · HQ",     anchor: "start", lx:  13 },
+  { x: 588, y: 227, name: "Dubai",         sub: "UAE",            anchor: "end",   lx: -13 },
+  { x: 732, y: 300, name: "Singapore",     sub: "Southeast Asia", anchor: "end",   lx: -13 },
+]
+
+const LINES = [
+  { x1: 61,  y1: 183, x2: 653, y2: 217, label: "CAPITAL FLOWS", lx: 357, ly: 192 },
+  { x1: 653, y1: 217, x2: 588, y2: 227, label: "OPERATIONS",    lx: 635, ly: 214 },
+  { x1: 588, y1: 227, x2: 732, y2: 300, label: "EXPANSION",     lx: 673, ly: 256 },
+]
+
+const TRAVEL = "M61,183 L653,217 L588,227 L732,300 L61,183"
+
+function MapSVG() {
   return (
-    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{
-        width: "90%", height: "90%", borderRadius: "50%",
-        background: "radial-gradient(circle at 35% 35%, #2a3a50 0%, #0f1520 55%, #080c14 100%)",
-        boxShadow: "0 0 32px rgba(212,136,32,0.35), inset 0 0 20px rgba(0,0,0,0.5)",
-      }} />
-    </div>
+    <ComposableMap
+      projection="geoMercator"
+      projectionConfig={{ scale: 170, center: [-8, 18] }}
+      width={800}
+      height={500}
+      style={{ width: "100%", height: "100%" }}
+    >
+      {/* Country borders — slightly muted so route stands out */}
+      <Geographies geography="/world-110m.json">
+        {({ geographies }) =>
+          geographies.map(geo => (
+            <Geography
+              key={geo.rsmKey}
+              geography={geo}
+              fill="rgba(12,26,39,0.042)"
+              stroke="rgba(12,26,39,0.16)"
+              strokeWidth={0.5}
+              style={{
+                default: { outline: "none" },
+                hover:   { outline: "none" },
+                pressed: { outline: "none" },
+              }}
+            />
+          ))
+        }
+      </Geographies>
+
+      {/* Concentric arcs from bottom-right */}
+      {[200, 280, 360, 440, 520].map((r, i) => (
+        <circle key={i} cx={800} cy={500} r={r}
+          fill="none" stroke="rgba(12,26,39,0.025)" strokeWidth={1} />
+      ))}
+
+      {/* Oval around San Francisco */}
+      <ellipse cx={61} cy={183} rx={80} ry={56}
+        fill="none" stroke="rgba(12,26,39,0.08)" strokeWidth={1} />
+
+      {/* Dashed connection lines — bolder */}
+      {LINES.map((l, i) => (
+        <line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+          stroke="rgba(12,26,39,0.38)" strokeWidth={1.5} strokeDasharray="5 4" />
+      ))}
+
+
+      {/* City pulse rings */}
+      {CITIES.map((c, i) => (
+        <circle key={`ring-${i}`} cx={c.x} cy={c.y} r={6}
+          fill="none" stroke={C.red} strokeWidth={1.2}>
+          <animate attributeName="r"       values="6;28;28"  dur="3s" begin={`${i * 0.8}s`} repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;0;0"  dur="3s" begin={`${i * 0.8}s`} repeatCount="indefinite" />
+        </circle>
+      ))}
+
+      {/* City dots + labels */}
+      {CITIES.map((c, i) => (
+        <g key={i}>
+          <circle cx={c.x} cy={c.y} r={6} fill={C.red} />
+          <text x={c.x + c.lx} y={c.y - 3}
+            textAnchor={c.anchor}
+            fontFamily="'DM Sans', sans-serif" fontSize={14} fontWeight={700} fill="#3D4A58">
+            {c.name}
+          </text>
+          <text x={c.x + c.lx} y={c.y + 13}
+            textAnchor={c.anchor}
+            fontFamily="'DM Sans', sans-serif" fontSize={11} fontWeight={600} fill="#6B7685">
+            {c.sub}
+          </text>
+        </g>
+      ))}
+
+      {/* Travel route */}
+      <defs>
+        <path id="travel-route" d={TRAVEL} />
+      </defs>
+
+      {/* Glow — larger */}
+      <circle r={13} fill={C.red} opacity={0.14}>
+        <animateMotion dur="14s" repeatCount="indefinite" calcMode="paced">
+          <mpath href="#travel-route" />
+        </animateMotion>
+      </circle>
+
+      {/* Core — larger */}
+      <circle r={5.5} fill={C.red} opacity={0.95}>
+        <animateMotion dur="14s" repeatCount="indefinite" calcMode="paced">
+          <mpath href="#travel-route" />
+        </animateMotion>
+      </circle>
+    </ComposableMap>
   )
 }
 
-const GlobeWrapper = dynamic(() => import("./GlobeWrapper"), { ssr: false, loading: () => <GlobeSkeleton /> })
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-}
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } }
-
 export default function HeroSection() {
-  const isMobile = useIsMobile()
+  const [D] = useState(() => {
+    if (typeof window === "undefined") return 0
+    return sessionStorage.getItem("10x_loaded") ? 0 : LOADER_DURATION
+  })
+  const [showContact, setShowContact] = useState(false)
 
   return (
+    <>
+    <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
     <section style={{
       backgroundColor: C.bg,
-      position:        "relative",
-      overflow:        "hidden",
-      height:        isMobile ? "auto" : "100vh",
-      display:       "flex",
-      flexDirection: "column",
-      alignItems:    "center",
+      padding: "4rem 0 3.5rem",
     }}>
+      <style>{`
+        .hero-two-col {
+          display: grid;
+          grid-template-columns: 5fr 7fr;
+          gap: 4rem;
+          align-items: center;
+          max-width: 1360px;
+          margin: 0 auto;
+          padding: 0 5vw;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .hero-map-col { height: 520px; }
+        @media (max-width: 960px) {
+          .hero-two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+          .hero-map-col { height: 340px; }
+        }
+        @media (max-width: 600px) {
+          .hero-map-col { display: none; }
+        }
+      `}</style>
 
-      {/* Dot grid */}
-      <div style={{
-        position:        "absolute",
-        inset:           0,
-        backgroundImage: "radial-gradient(circle, rgba(193,127,62,0.13) 1px, transparent 1px)",
-        backgroundSize:  "44px 44px",
-        pointerEvents:   "none",
-        zIndex:          0,
-      }} />
+      <div className="hero-two-col">
 
-      {/* ── Text content ── */}
-      <motion.div
-        variants={stagger}
-        initial="hidden"
-        animate="show"
-        style={{
-          position:  "relative",
-          zIndex:    2,
-          textAlign: "center",
-          padding:   isMobile ? "1.25rem 6vw 0" : "2.5rem 2vw 0",
-          width:     "90%",
-          maxWidth:  1400,
-        }}
-      >
-        <motion.div variants={fadeUp} style={{ marginBottom: isMobile ? "0.5rem" : "1rem" }}>
-          <span style={{
-            fontFamily:    font.sans,
-            color:         C.copper,
-            fontSize:      isMobile ? "0.55rem" : "0.62rem",
-            fontWeight:    700,
-            letterSpacing: isMobile ? "0.16em" : "0.22em",
+        {/* LEFT — text */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: D + 0.1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {/* Eyebrow */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.75rem", paddingLeft: "0.15rem" }}>
+            <span style={{
+              fontFamily:    font.sans,
+              fontSize:      "0.575rem",
+              fontWeight:    700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color:         C.red,
+            }}>
+              The firm behind firms going global
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 style={{
+            fontFamily:    font.serif,
+            fontSize:      "clamp(2.8rem, 4.2vw, 4rem)",
+            fontWeight:    300,
+            lineHeight:    1.18,
+            color:         C.ink,
+            marginBottom:  "1.75rem",
+            letterSpacing: "0.01em",
           }}>
-            ADVISORY · FINANCE · LEGAL · TECHNOLOGY
-          </span>
+            Expand globally.<br />
+            Raise capital.<br />
+            Operate <em style={{ fontStyle: "italic", color: C.red }}>seamlessly.</em>
+          </h1>
+
+          {/* Body */}
+          <p style={{
+            fontFamily:   font.sans,
+            fontSize:     "clamp(0.875rem, 1vw, 0.975rem)",
+            lineHeight:   1.8,
+            color:        "rgba(12,26,39,0.6)",
+            marginBottom: "2.25rem",
+            maxWidth:     420,
+          }}>
+            10x Global helps{" "}
+            <strong style={{ color: C.ink, fontWeight: 600 }}>founders and multinational companies</strong>{" "}
+            enter new markets, complete transactions and run compliant operations across
+            India, UAE, Singapore and the United States.
+          </p>
+
+          {/* CTA buttons */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 400 }}>
+            <button
+              onClick={() => setShowContact(true)}
+              style={{
+                display:         "block",
+                backgroundColor: C.red,
+                color:           "#fff",
+                padding:         "1.15rem 2rem",
+                fontFamily:      font.sans,
+                fontSize:        "0.72rem",
+                fontWeight:      700,
+                letterSpacing:   "0.16em",
+                textTransform:   "uppercase",
+                textAlign:       "center",
+                width:           "100%",
+                border:          "none",
+                cursor:          "pointer",
+                transition:      "background-color 0.2s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.backgroundColor = "#8B1A22"}
+              onMouseLeave={e => e.currentTarget.style.backgroundColor = C.red}
+            >
+              Book Strategy Call
+            </button>
+            <a
+              href="#engagements"
+              style={{
+                display:        "block",
+                backgroundColor: "transparent",
+                color:           C.ink,
+                padding:         "1.1rem 2rem",
+                fontFamily:      font.sans,
+                fontSize:        "0.72rem",
+                fontWeight:      700,
+                letterSpacing:   "0.16em",
+                textTransform:   "uppercase",
+                textDecoration:  "none",
+                textAlign:       "center",
+                border:          `1.5px solid ${C.ink}`,
+                transition:      "background-color 0.2s, color 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = C.ink; e.currentTarget.style.color = "#fff" }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = C.ink }}
+            >
+              See Recent Engagements →
+            </a>
+          </div>
         </motion.div>
 
-        <motion.h1 variants={fadeUp} style={{
-          fontFamily:    font.serif,
-          fontSize:      isMobile ? "clamp(1.65rem, 8vw, 2.2rem)" : "clamp(2.8rem, 5.8vw, 5.5rem)",
-          lineHeight:    1.1,
-          color:         C.ink,
-          fontWeight:    700,
-          marginBottom:  isMobile ? "0.6rem" : "0.85rem",
-          letterSpacing: "-0.025em",
-        }}>
-          The{" "}
-          <em style={{ color: C.copper, fontStyle: "italic" }}>operating system</em>
-          {" "}for your cross-border business.
-        </motion.h1>
-
-        <motion.p variants={fadeUp} style={{
-          fontFamily: font.sans,
-          color:      "#6a6360",
-          fontSize:   isMobile ? "0.875rem" : "1.05rem",
-          lineHeight: isMobile ? 1.65 : 1.85,
-          maxWidth:   580,
-          margin:     "0 auto 0",
-        }}>
-          Advisory expertise. Technology-led delivery. One team across India, UAE,
-          Singapore, and the US — handling your{" "}
-          <strong style={{ color: C.ink, fontWeight: 600 }}>
-            market entry, transactions, and compliance
-          </strong>{" "}
-          at the speed your business demands.
-        </motion.p>
-      </motion.div>
-
-      {/* ── 10X wordmark (image) + Globe overlay ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.25, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          position: "relative",
-          zIndex:   2,
-          width:    isMobile ? "98%" : "80%",
-          maxWidth: 1000,
-          margin:   isMobile ? "-2rem auto 0" : "-3rem auto 0",
-        }}
-      >
-        <img
-          src="/usethis.png"
-          alt=""
-          aria-hidden="true"
-          style={{
-            display:       "block",
-            width:         "100%",
-            height:        "auto",
-            userSelect:    "none",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Globe */}
-        <div style={{
-          position:      "absolute",
-          top:           "50%",
-          left:          "46%",
-          transform:     "translate(-50%, -50%)",
-          width:         isMobile ? "clamp(110px, 24vw, 150px)" : "clamp(160px, 16vw, 280px)",
-          height:        isMobile ? "clamp(110px, 24vw, 150px)" : "clamp(160px, 16vw, 280px)",
-          zIndex:        4,
-          pointerEvents: "auto",
-        }}>
+        {/* RIGHT — map */}
+        <motion.div
+          className="hero-map-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, delay: D + 0.35 }}
+          style={{ position: "relative" }}
+        >
+          <MapSVG />
+          {/* Gradient fades — blend map softly into page */}
           <div style={{
             position:      "absolute",
-            inset:         "-50%",
-            borderRadius:  "50%",
-            background:    "radial-gradient(circle, rgba(235,145,30,0.40) 0%, rgba(235,145,30,0.12) 45%, transparent 72%)",
-            filter:        "blur(28px)",
+            inset:         0,
+            background:    "linear-gradient(to right, white 0%, transparent 7%), linear-gradient(to left, rgba(255,255,255,0.65) 0%, transparent 12%), linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, transparent 16%), linear-gradient(to top, rgba(255,255,255,0.8) 0%, transparent 16%)",
             pointerEvents: "none",
-            zIndex:        0,
           }} />
-          <GlobeWrapper />
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* ── CTA buttons ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          position:       "relative",
-          zIndex:         4,
-          display:        isMobile ? "flex" : "none",
-          flexDirection:  "column",
-          gap:            isMobile ? "0.75rem" : "1.25rem",
-          alignItems:     "center",
-          justifyContent: "center",
-          width:          isMobile ? "80%" : "auto",
-          marginTop:      isMobile ? "0.25rem" : "1rem",
-        }}
-      >
-        <a href="#cta" style={{ width: isMobile ? "100%" : "auto" }}>
-          <button
-            onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#a86e35"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(193,127,62,0.38)"; }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.copper;   e.currentTarget.style.boxShadow = "0 2px 12px rgba(193,127,62,0.28)"; }}
-            style={{
-              backgroundColor: C.copper,
-              color:           "#fff",
-              padding:         isMobile ? "0.875rem 1.5rem" : "0.85rem 1.85rem",
-              borderRadius:    8,
-              fontSize:        "0.88rem",
-              fontFamily:      font.sans,
-              fontWeight:      600,
-              border:          "none",
-              cursor:          "pointer",
-              letterSpacing:   "0.01em",
-              boxShadow:       "0 2px 12px rgba(193,127,62,0.28)",
-              transition:      "background-color 0.2s, box-shadow 0.2s",
-              width:           isMobile ? "100%" : "auto",
-            }}
-          >
-            Book a free consultation
-          </button>
-        </a>
-        <a href="#team"
-          style={{ fontFamily: font.sans, color: C.ink, fontSize: "0.88rem", fontWeight: 500, opacity: 0.7, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.3rem", transition: "opacity 0.2s", width: isMobile ? "100%" : "auto" }}
-          onMouseEnter={e => { e.currentTarget.style.opacity = 1; }}
-          onMouseLeave={e => { e.currentTarget.style.opacity = 0.7; }}
-        >
-          Our firm →
-        </a>
-      </motion.div>
-
-      {/* Bottom fade */}
-      <div style={{
-        position:      "absolute",
-        bottom:        0,
-        left:          0,
-        right:         0,
-        height:        160,
-        background:    `linear-gradient(to bottom, transparent, ${C.bg})`,
-        pointerEvents: "none",
-        zIndex:        3,
-      }} />
-
+      </div>
     </section>
+    </>
   )
 }

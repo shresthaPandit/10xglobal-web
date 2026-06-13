@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -52,7 +52,6 @@ export default function InsightsSection() {
         >
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
-              <div style={{ width: 28, height: 2, backgroundColor: C.copper }} />
               <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.15em" }}>INSIGHTS & UPDATES</span>
             </div>
             <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 700, color: C.ink, lineHeight: 1.1 }}>

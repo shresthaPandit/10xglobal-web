@@ -78,18 +78,18 @@ function GlobeInner({ globeConfig, data }) {
       .arcEndLng((d)   => +d.endLng)
       .arcColor((d)    => d.color)
       .arcAltitude((d) => +d.arcAlt)
-      .arcStroke(0.6)                  // thick enough to see clearly
-      .arcDashLength(0.4)              // shorter dash = more visible gap/dash contrast
+      .arcStroke(cfg.arcStroke ?? 0.6)
+      .arcDashLength(0.4)
       .arcDashInitialGap((d) => +d.order * 0.5)
-      .arcDashGap(4)                   // tight gap — arc looks like a bright moving dot
+      .arcDashGap(4)
       .arcDashAnimateTime(() => cfg.arcTime)
 
     globeRef.current
       .pointsData(points)
-      .pointColor((d) => d.color)
-      .pointsMerge(true)
+      .pointColor((d) => cfg.pointColorOverride || d.color)
+      .pointsMerge(false)
       .pointAltitude(0.0)
-      .pointRadius(0.35)  // 0.35 degrees ≈ 40km radius — tight city dot
+      .pointRadius(cfg.pointRadius ?? 0.35)
 
     globeRef.current
       .ringsData([])

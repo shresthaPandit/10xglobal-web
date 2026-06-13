@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -73,8 +73,7 @@ export default function WhyUsSection() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.25rem" }}>
-            <div style={{ width: 28, height: 2, backgroundColor: C.copper }} />
-            <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.15em" }}>WHY 10X GLOBAL</span>
+            <span style={{ fontFamily: font.sans, color: C.copper, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em" }}>WHY 10x GLOBAL</span>
           </div>
 
           <h2 style={{ fontFamily: font.serif, fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 700, color: C.ink, lineHeight: 1.1, marginBottom: "2.5rem" }}>
@@ -92,7 +91,7 @@ export default function WhyUsSection() {
                 transition={{ duration: 0.45, delay: i * 0.1 }}
                 style={{ display: "flex", gap: "1.25rem" }}
               >
-                <span style={{ fontFamily: font.serif, fontSize: "1.1rem", fontWeight: 700, color: C.copper, flexShrink: 0, paddingTop: 2 }}>{p.num}</span>
+                <span style={{ fontFamily: font.num, fontSize: "1.1rem", fontWeight: 700, color: C.copper, flexShrink: 0, paddingTop: 2 }}>{p.num}</span>
                 <div>
                   <h3 style={{ fontFamily: font.serif, fontSize: "1.2rem", fontWeight: 700, color: C.ink, marginBottom: "0.4rem" }}>{p.title}</h3>
                   <p style={{ fontFamily: font.sans, color: C.muted, fontSize: "0.9rem", lineHeight: 1.7 }}>{p.desc}</p>
