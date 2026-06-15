@@ -339,216 +339,223 @@ function EngagementModal({ eng, onClose }) {
     return () => { document.body.style.overflow = "" }
   }, [])
 
+  const COLS = [
+    {
+      num: "01", label: "The Brief",
+      content: (
+        <>
+          <p style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.78, marginBottom: "0.85rem" }}>
+            {detail.clientSnapshot}
+          </p>
+          {detail.situation.map((p, i) => (
+            <p key={i} style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.78, marginBottom: i < detail.situation.length - 1 ? "0.85rem" : 0 }}>
+              {p}
+            </p>
+          ))}
+        </>
+      ),
+    },
+    {
+      num: "02", label: "Approach",
+      content: (
+        <>
+          {detail.approach.body.map((p, i) => (
+            <p key={i} style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.78, marginBottom: i < detail.approach.body.length - 1 ? "0.85rem" : 0 }}>
+              {p}
+            </p>
+          ))}
+        </>
+      ),
+    },
+    {
+      num: "03", label: "Scope of Work",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+          {detail.approach.points.map((pt, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+              <span style={{ color: C.red, fontSize: "0.58rem", flexShrink: 0, marginTop: "0.28rem" }}>■</span>
+              <span style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.65 }}>{pt}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      num: "04", label: "What Made It Hard",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+          {detail.challenges.map((ch, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+              <span style={{ color: C.red, fontSize: "0.58rem", flexShrink: 0, marginTop: "0.28rem" }}>■</span>
+              <span style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.65 }}>{ch}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+  ]
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.18 }}
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 200,
-        backgroundColor: "rgba(8,18,28,0.82)",
-        backdropFilter: "blur(8px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "3vh 3vw",
+        backgroundColor: "rgba(0,0,0,0.55)",
+        display: "flex", alignItems: "flex-start", justifyContent: "center",
+        padding: "2vh 3vw",
         overflowY: "auto",
       }}
     >
+      <style>{`
+        .cs-4col {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width: 860px) { .cs-4col { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 540px)  { .cs-4col { grid-template-columns: 1fr; } }
+        .cs-footer {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+        @media (max-width: 640px) { .cs-footer { grid-template-columns: 1fr; gap: 1.5rem; } }
+      `}</style>
+
       <motion.div
-        initial={{ opacity: 0, y: 44, scale: 0.965 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 28, scale: 0.975 }}
-        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 36 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
         onClick={e => e.stopPropagation()}
         style={{
-          width: "100%", maxWidth: 1200,
+          width: "100%", maxWidth: 1140,
           backgroundColor: "#fff",
-          maxHeight: "92vh",
-          overflowY: "auto",
           position: "relative",
-          boxShadow: "0 40px 120px rgba(0,0,0,0.5)",
+          boxShadow: "0 40px 120px rgba(0,0,0,0.38)",
+          marginTop: "2vh", marginBottom: "2vh",
         }}
       >
-        {/* ── HEADER ── */}
-        <div style={{ background: `radial-gradient(ellipse at 80% 50%, rgba(140,26,43,0.18) 0%, transparent 65%), ${C.ink}`, position: "relative", overflow: "hidden" }}>
 
-          {/* Subtle decorative arc */}
-          <svg style={{ position: "absolute", right: 0, bottom: 0, opacity: 0.12, pointerEvents: "none" }} width="420" height="260" viewBox="0 0 420 260">
-            <circle cx="420" cy="260" r="300" fill="none" stroke="#FF8080" strokeWidth="1" />
-            <circle cx="420" cy="260" r="220" fill="none" stroke="#FF8080" strokeWidth="1" />
-            <circle cx="420" cy="260" r="140" fill="none" stroke="#FF8080" strokeWidth="1" />
-          </svg>
-
-          {/* Close */}
+        {/* ── BREADCRUMB BAR ── */}
+        <div style={{
+          padding: "0.8rem 2rem",
+          borderBottom: "1px solid rgba(12,26,39,0.07)",
+          backgroundColor: "#F9F9F7",
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+        }}>
+          <span style={{ fontFamily: font.sans, fontSize: "0.54rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(12,26,39,0.36)" }}>
+            Case Study / {service}
+          </span>
           <button
             onClick={onClose}
             style={{
-              position: "absolute", top: "1.5rem", right: "1.5rem", zIndex: 10,
-              width: 34, height: 34, borderRadius: "50%",
-              border: "1px solid rgba(255,255,255,0.2)",
-              backgroundColor: "transparent",
-              color: "rgba(255,255,255,0.6)", fontSize: "1rem", cursor: "pointer",
+              background: "none", border: "1px solid rgba(12,26,39,0.18)",
+              width: 28, height: 28, borderRadius: "50%",
               display: "flex", alignItems: "center", justifyContent: "center",
-              transition: "all 0.2s",
+              cursor: "pointer", color: "rgba(12,26,39,0.45)", fontSize: "0.8rem",
+              transition: "all 0.18s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#fff" }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "rgba(255,255,255,0.6)" }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = C.ink; e.currentTarget.style.color = C.ink }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(12,26,39,0.18)"; e.currentTarget.style.color = "rgba(12,26,39,0.45)" }}
           >✕</button>
+        </div>
 
-          {/* Top content: tags + title */}
-          <div style={{ padding: "2.75rem 3rem 2.25rem" }}>
-            {/* From → To */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.55rem", marginBottom: "1.75rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 500, color: "rgba(255,255,255,0.5)", letterSpacing: "0.06em" }}>{eng.from}</span>
-              <span style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.7rem" }}>→</span>
-              <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 600, color: accent, letterSpacing: "0.06em" }}>{eng.to}</span>
-            </div>
-
-            {/* Title */}
-            <h2 style={{
-              fontFamily: font.serif, fontSize: "clamp(2rem, 3.8vw, 3.2rem)",
-              fontWeight: 300, color: "#fff", lineHeight: 1.08, marginBottom: "0.75rem",
-              maxWidth: 640,
-            }}>{title}</h2>
-
-            {/* Subtitle */}
-            <p style={{
-              fontFamily: font.serif, fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)",
-              fontStyle: "italic", color: `${accent}BB`, lineHeight: 1.5, marginBottom: "1.25rem",
-              maxWidth: 540,
-            }}>{detail.subtitle}</p>
-
-            {/* Service pill */}
-            <span style={{
-              fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700,
-              letterSpacing: "0.24em", textTransform: "uppercase",
-              color: "rgba(255,255,255,0.28)",
-            }}>{service}</span>
+        {/* ── HERO ROW: title left, stats right ── */}
+        <div style={{ padding: "2rem 2.5rem 1.75rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}>
+          {/* Tag */}
+          <div style={{ marginBottom: "0.65rem" }}>
+            <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: C.red }}>
+              {eng.from}
+            </span>
+            <span style={{ fontFamily: font.sans, fontSize: "0.6rem", color: C.red, margin: "0 0.4rem" }}>→</span>
+            <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: C.red }}>
+              {eng.to}
+            </span>
           </div>
 
-          {/* Stats strip — bottom of header */}
-          <div style={{
-            display: "flex",
-            borderTop: "1px solid rgba(255,255,255,0.07)",
-          }}>
-            {detail.stats.map((s, i) => (
-              <div key={i} style={{
-                flex: 1, padding: "1.5rem 2rem",
-                borderRight: i < detail.stats.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                display: "flex", flexDirection: "column", gap: "0.35rem",
-              }}>
-                <span style={{
-                  fontFamily: font.num, fontSize: "clamp(1.8rem, 3vw, 2.6rem)",
-                  fontWeight: 300, color: "#fff", lineHeight: 1,
-                }}>{s.val}</span>
-                <span style={{
-                  fontFamily: font.sans, fontSize: "0.6rem",
-                  color: "rgba(255,255,255,0.38)", lineHeight: 1.5, whiteSpace: "pre-line",
-                }}>{s.label}</span>
-              </div>
-            ))}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "2rem", flexWrap: "wrap" }}>
+            <div style={{ flex: 1, minWidth: 260 }}>
+              <h2 style={{
+                fontFamily: font.sans, fontSize: "clamp(1.6rem, 2.8vw, 2.4rem)",
+                fontWeight: 700, color: C.ink, lineHeight: 1.1, marginBottom: "0.65rem",
+                letterSpacing: "-0.02em",
+              }}>{title}</h2>
+              <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(12,26,39,0.56)", lineHeight: 1.65, maxWidth: 500 }}>
+                {detail.subtitle}
+              </p>
+            </div>
+            {/* Stats */}
+            <div style={{ display: "flex", gap: "2.5rem", alignItems: "flex-start", paddingTop: "0.2rem" }}>
+              {detail.stats.map((s, i) => (
+                <div key={i}>
+                  <div style={{ fontFamily: font.num, fontSize: "clamp(1.7rem, 2.4vw, 2.2rem)", fontWeight: 700, color: C.ink, lineHeight: 1 }}>
+                    {s.val}
+                  </div>
+                  <div style={{ fontFamily: font.sans, fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.38)", marginTop: "0.3rem", whiteSpace: "pre-line", lineHeight: 1.5 }}>
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* ── BODY ── */}
-        <div style={{ backgroundColor: "#FAFAF8", padding: "2.5rem 3rem" }}>
-          <style>{`
-            .modal-body-grid {
-              display: grid;
-              grid-template-columns: 1fr 1.1fr 1fr;
-              gap: 1.5rem;
-              margin-bottom: 1.5rem;
-              align-items: start;
-            }
-            @media (max-width: 860px) { .modal-body-grid { grid-template-columns: 1fr; } }
-          `}</style>
-
-          <div className="modal-body-grid">
-
-            {/* Col 1: Snapshot + Situation */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              <div style={{ backgroundColor: "#fff", padding: "1.75rem", borderTop: `2px solid ${accent}` }}>
-                <SectionLabel text="Client Snapshot" accent={accent} />
-                <p style={{ fontFamily: font.serif, fontSize: "0.92rem", fontStyle: "italic", color: "rgba(28,23,18,0.78)", lineHeight: 1.8 }}>
-                  {detail.clientSnapshot}
-                </p>
+        {/* ── 4-COLUMN BODY ── */}
+        <div className="cs-4col" style={{ borderBottom: "1px solid rgba(12,26,39,0.07)" }}>
+          {COLS.map((col, i) => (
+            <div key={i} style={{
+              padding: "1.75rem 1.5rem",
+              borderLeft: i > 0 ? "1px solid rgba(12,26,39,0.07)" : "none",
+            }}>
+              {/* Column header */}
+              <div style={{ display: "flex", alignItems: "baseline", gap: "0.45rem", marginBottom: "1.1rem", paddingBottom: "0.75rem", borderBottom: "1px solid rgba(12,26,39,0.1)" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, color: C.ink }}>
+                  {col.num}
+                </span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: C.ink }}>
+                  {col.label}
+                </span>
               </div>
-              <div style={{ backgroundColor: "#fff", padding: "1.75rem", borderTop: "2px solid rgba(12,26,39,0.12)" }}>
-                <SectionLabel text="Situation" accent="rgba(12,26,39,0.45)" />
-                {detail.situation.map((p, i) => (
-                  <p key={i} style={{ fontFamily: font.sans, fontSize: "0.84rem", color: "rgba(28,23,18,0.65)", lineHeight: 1.82, marginBottom: i < detail.situation.length - 1 ? "0.85rem" : 0 }}>
-                    {p}
-                  </p>
-                ))}
-              </div>
+              {col.content}
             </div>
+          ))}
+        </div>
 
-            {/* Col 2: Our Approach */}
-            <div style={{ backgroundColor: "#fff", padding: "1.75rem", borderTop: `2px solid ${accent}`, height: "100%" }}>
-              <SectionLabel text="Our Approach" accent={accent} />
-              {detail.approach.body.map((p, i) => (
-                <p key={i} style={{ fontFamily: font.sans, fontSize: "0.84rem", color: "rgba(28,23,18,0.65)", lineHeight: 1.82, marginBottom: "1rem" }}>
-                  {p}
-                </p>
-              ))}
-              <p style={{ fontFamily: font.sans, fontSize: "0.8rem", fontWeight: 600, color: "rgba(28,23,18,0.8)", lineHeight: 1.6, marginBottom: "0.85rem", marginTop: "0.25rem" }}>
-                {detail.approach.bold}
+        {/* ── DARK FOOTER ── */}
+        <div className="cs-footer" style={{ backgroundColor: C.ink, padding: "2rem 2.5rem" }}>
+          {/* Outcome */}
+          <div>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0.45rem", marginBottom: "0.9rem" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, color: C.red }}>05</span>
+              <span style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>Outcome</span>
+            </div>
+            {detail.outcome.map((p, i) => (
+              <p key={i} style={{ fontFamily: font.sans, fontSize: "0.82rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.78, marginBottom: i < detail.outcome.length - 1 ? "0.75rem" : 0 }}>
+                {p}
               </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                {detail.approach.points.map((pt, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "baseline", gap: "0.65rem", paddingBottom: "0.5rem", borderBottom: "1px solid rgba(12,26,39,0.05)" }}>
-                    <span style={{ width: 16, height: 1, backgroundColor: accent, flexShrink: 0, display: "inline-block", marginBottom: "0.2rem" }} />
-                    <span style={{ fontFamily: font.sans, fontSize: "0.8rem", color: "rgba(28,23,18,0.65)", lineHeight: 1.6 }}>{pt}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Col 3: Challenges + Outcome */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              <div style={{ backgroundColor: "#fff", padding: "1.75rem", borderTop: "2px solid rgba(12,26,39,0.12)" }}>
-                <SectionLabel text="Key Challenges" accent="rgba(12,26,39,0.45)" />
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                  {detail.challenges.map((ch, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
-                      <span style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "rgba(12,26,39,0.2)", flexShrink: 0, marginTop: "0.42rem" }} />
-                      <span style={{ fontFamily: font.sans, fontSize: "0.8rem", color: "rgba(28,23,18,0.62)", lineHeight: 1.65 }}>{ch}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Outcome — inverted */}
-              <div style={{ backgroundColor: C.ink, padding: "1.75rem" }}>
-                <SectionLabel text="Outcome" accent={accent} />
-                {detail.outcome.map((p, i) => (
-                  <p key={i} style={{ fontFamily: font.serif, fontSize: "0.88rem", fontStyle: "italic", color: "rgba(255,255,255,0.78)", lineHeight: 1.82, marginBottom: i < detail.outcome.length - 1 ? "1rem" : 0 }}>
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </div>
-
+            ))}
           </div>
 
           {/* Services Delivered */}
-          <div style={{ paddingTop: "1.5rem", borderTop: "1px solid rgba(12,26,39,0.1)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", flexShrink: 0 }}>
+          <div>
+            <div style={{ marginBottom: "0.9rem" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.17em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)" }}>
                 Services Delivered
               </span>
-              <div style={{ width: 1, height: 14, backgroundColor: "rgba(12,26,39,0.15)", flexShrink: 0 }} />
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {detail.services.map(s => (
-                  <span key={s} style={{
-                    fontFamily: font.sans, fontSize: "0.7rem", color: "rgba(12,26,39,0.55)",
-                    border: "1px solid rgba(12,26,39,0.13)",
-                    padding: "0.22rem 0.75rem",
-                    backgroundColor: "#fff",
-                  }}>{s}</span>
-                ))}
-              </div>
+            </div>
+            <div>
+              {detail.services.map((s, i) => (
+                <span key={s} style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(255,255,255,0.55)" }}>
+                  {s}
+                  {i < detail.services.length - 1 && (
+                    <span style={{ color: "rgba(255,255,255,0.18)", margin: "0 0.5rem" }}>|</span>
+                  )}
+                </span>
+              ))}
             </div>
           </div>
         </div>
