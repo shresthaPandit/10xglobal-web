@@ -347,6 +347,34 @@ function SectionLabel({ text, accent }) {
   )
 }
 
+function CountUpStat({ val, delay = 0.3 }) {
+  const isCountable = /^\d+\+?$/.test(val)
+  const [displayed, setDisplayed] = useState(isCountable ? "0" : val)
+
+  useEffect(() => {
+    if (!isCountable) return
+    const num = parseInt(val)
+    const plus = val.includes("+") ? "+" : ""
+    const duration = 1.1
+    let startTime = null
+    let raf
+
+    const tick = (now) => {
+      if (startTime === null) startTime = now + delay * 1000
+      if (now < startTime) { raf = requestAnimationFrame(tick); return }
+      const elapsed = (now - startTime) / 1000
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 2.5)
+      setDisplayed(Math.round(eased * num) + plus)
+      if (progress < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [val, delay, isCountable])
+
+  return <>{displayed}</>
+}
+
 function EngagementModal({ eng, onClose }) {
   const { detail, title, service } = eng
   const accent = SERVICE_COLOR[service]
@@ -513,14 +541,25 @@ function EngagementModal({ eng, onClose }) {
             </div>
             <div style={{ display: "flex", alignItems: "flex-start" }}>
               {detail.stats.map((s, i) => (
-                <div key={i} style={{ textAlign: "left", paddingLeft: "1.5rem", borderLeft: i > 0 ? "1px solid rgba(12,26,39,0.12)" : "none", minWidth: 90 }}>
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.22 + i * 0.1, duration: 0.4 }}
+                  style={{ textAlign: "left", paddingLeft: "1.5rem", borderLeft: i > 0 ? "1px solid rgba(12,26,39,0.12)" : "none", minWidth: 90 }}
+                >
                   <div style={{ fontFamily: font.num, fontSize: "clamp(1.6rem, 2.4vw, 2rem)", fontWeight: 700, color: C.ink, lineHeight: 1 }}>
-                    {s.val}
+                    <CountUpStat val={s.val} delay={0.28 + i * 0.1} />
                   </div>
-                  <div style={{ fontFamily: font.sans, fontSize: "0.46rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", marginTop: "0.22rem", whiteSpace: "pre-line", lineHeight: 1.4 }}>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.55 + i * 0.1, duration: 0.35 }}
+                    style={{ fontFamily: font.sans, fontSize: "0.46rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", marginTop: "0.22rem", whiteSpace: "pre-line", lineHeight: 1.4 }}
+                  >
                     {s.label}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -549,7 +588,7 @@ function EngagementModal({ eng, onClose }) {
 
         {/* ── TIMELINE ── */}
         {detail.timeline && (
-          <div style={{ padding: "0.75rem 1.75rem 0.8rem", borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
+          <div style={{ padding: "0.75rem 1.75rem 0.8rem", borderBottom: "1px solid rgba(12,26,39,0.08)", backgroundColor: "#F0EFEB" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", marginBottom: "0.7rem", flexWrap: "wrap" }}>
               <span style={{ fontFamily: font.sans, fontSize: "0.8rem", fontWeight: 700, color: C.ink }}>
                 {detail.timeline.title}
@@ -564,12 +603,18 @@ function EngagementModal({ eng, onClose }) {
                 <div style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: "0.15rem" }}>
                   <div />
                   {detail.timeline.phases.map((phase, i) => (
-                    <div key={i} style={{
-                      fontFamily: font.sans, fontSize: "0.44rem", fontWeight: 700,
-                      letterSpacing: "0.12em", textTransform: "uppercase",
-                      color: i === detail.timeline.phases.length - 1 ? C.red : "rgba(12,26,39,0.35)",
-                      textAlign: "center", paddingBottom: "0.35rem",
-                    }}>{phase}</div>
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + i * 0.05, duration: 0.3 }}
+                      style={{
+                        fontFamily: font.sans, fontSize: "0.44rem", fontWeight: 700,
+                        letterSpacing: "0.12em", textTransform: "uppercase",
+                        color: i === detail.timeline.phases.length - 1 ? C.red : "rgba(12,26,39,0.35)",
+                        textAlign: "center", paddingBottom: "0.35rem",
+                      }}
+                    >{phase}</motion.div>
                   ))}
                 </div>
 
@@ -602,28 +647,53 @@ function EngagementModal({ eng, onClose }) {
                     {row.steps.map((step, si) => {
                       const isLast = si === row.steps.length - 1
                       const isBold = row.boldIndex === si
+                      const dotDelay = 0.45 + ri * 0.12 + si * 0.09
                       return (
                         <div key={si} style={{ textAlign: "center", position: "relative" }}>
                           {si < row.steps.length - 1 && (
-                            <div style={{
-                              position: "absolute", top: 3, left: "50%", width: "100%",
-                              height: 1, backgroundColor: "rgba(12,26,39,0.12)", zIndex: 0,
-                            }} />
+                            <motion.div
+                              initial={{ scaleX: 0 }}
+                              animate={{ scaleX: 1 }}
+                              transition={{ delay: 0.38 + ri * 0.12 + si * 0.09, duration: 0.35, ease: "easeOut" }}
+                              style={{
+                                position: "absolute", top: 3, left: "50%", width: "100%",
+                                height: 1, backgroundColor: "rgba(12,26,39,0.15)", zIndex: 0,
+                                transformOrigin: "left",
+                              }}
+                            />
                           )}
-                          <div style={{
-                            width: isLast ? 11 : 7, height: isLast ? 11 : 7,
-                            borderRadius: "50%",
-                            backgroundColor: isLast ? C.red : C.ink,
-                            margin: "0 auto 0.3rem",
-                            position: "relative", zIndex: 1,
-                            boxShadow: isLast ? `0 0 0 3px rgba(140,26,43,0.15)` : "none",
-                          }} />
-                          <span style={{
-                            fontFamily: font.sans, fontSize: "0.56rem",
-                            fontWeight: isBold ? 700 : isLast ? 600 : 400,
-                            color: isLast ? C.red : C.ink,
-                            lineHeight: 1.3, whiteSpace: "pre-line", display: "block",
-                          }}>{step}</span>
+                          <div style={{ width: isLast ? 11 : 7, height: isLast ? 11 : 7, margin: "0 auto 0.3rem", position: "relative" }}>
+                            {isLast && (
+                              <motion.div
+                                animate={{ scale: [1, 2.8], opacity: [0.5, 0] }}
+                                transition={{ repeat: Infinity, duration: 1.8, ease: "easeOut", repeatDelay: 0.4, delay: dotDelay + 0.3 }}
+                                style={{ position: "absolute", inset: 0, borderRadius: "50%", backgroundColor: C.red }}
+                              />
+                            )}
+                            <motion.div
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ delay: dotDelay, type: "spring", stiffness: 500, damping: 22 }}
+                              style={{
+                                width: "100%", height: "100%",
+                                borderRadius: "50%",
+                                backgroundColor: isLast ? C.red : C.ink,
+                                position: "relative", zIndex: 1,
+                                boxShadow: isLast ? `0 0 0 3px rgba(140,26,43,0.15)` : "none",
+                              }}
+                            />
+                          </div>
+                          <motion.span
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: dotDelay + 0.06, duration: 0.28 }}
+                            style={{
+                              fontFamily: font.sans, fontSize: "0.56rem",
+                              fontWeight: isBold ? 700 : isLast ? 600 : 400,
+                              color: isLast ? C.red : C.ink,
+                              lineHeight: 1.3, whiteSpace: "pre-line", display: "block",
+                            }}
+                          >{step}</motion.span>
                         </div>
                       )
                     })}
