@@ -7,6 +7,7 @@ import { font } from "@/lib/theme"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import ContactModal from "@/components/ContactModal"
+import CareerModal from "@/components/CareerModal"
 
 const RED   = "#8C1A2B"
 const CREAM = "#FFFFFF"
@@ -335,10 +336,12 @@ function AnimatedPhrase() {
 export default function OurFirmPage() {
   const [showMore, setShowMore] = useState(false)
   const [showContact, setShowContact] = useState(false)
+  const [showCareer, setShowCareer] = useState(false)
 
   return (
     <>
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
+      <CareerModal isOpen={showCareer} onClose={() => setShowCareer(false)} />
       <Navbar />
       <main style={{ backgroundColor: CREAM, fontFamily: font.sans }}>
 
@@ -649,10 +652,10 @@ export default function OurFirmPage() {
                 <p style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 700, color: "#fff" }}>
                   Ready to shape global markets? Let&apos;s talk.
                 </p>
-                <a href="mailto:info@10x.global"
-                  style={{ backgroundColor: RED, color: "#fff", padding: "0.9rem 1.85rem", fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem", whiteSpace: "nowrap" }}>
+                <button onClick={() => setShowCareer(true)}
+                  style={{ backgroundColor: RED, color: "#fff", padding: "0.9rem 1.85rem", fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem", whiteSpace: "nowrap" }}>
                   Find your next opportunity →
-                </a>
+                </button>
               </div>
             </div>
           </div>
