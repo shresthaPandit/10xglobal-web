@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { font } from "@/lib/theme"
@@ -280,6 +280,58 @@ function OfficeFlipCard({ office, index }) {
   )
 }
 
+const CAREER_PHRASES = [
+  "expand globally.",
+  "raise capital globally.",
+  "operate globally.",
+  "comply globally.",
+  "scale globally.",
+]
+const FIXED_SUFFIX = " globally."
+
+function AnimatedPhrase() {
+  const [phraseIdx, setPhraseIdx] = useState(0)
+  const [displayed, setDisplayed] = useState("")
+  const [phase, setPhase] = useState("typing")
+
+  useEffect(() => {
+    const full = CAREER_PHRASES[phraseIdx]
+    let t
+    if (phase === "typing") {
+      if (displayed.length < full.length) {
+        t = setTimeout(() => setDisplayed(full.slice(0, displayed.length + 1)), 88)
+      } else {
+        t = setTimeout(() => setPhase("erasing"), 1800)
+      }
+    } else {
+      if (displayed.length > 0) {
+        t = setTimeout(() => setDisplayed(d => d.slice(0, -1)), 38)
+      } else {
+        setPhraseIdx(i => (i + 1) % CAREER_PHRASES.length)
+        setPhase("typing")
+      }
+    }
+    return () => clearTimeout(t)
+  }, [displayed, phase, phraseIdx])
+
+  const full = CAREER_PHRASES[phraseIdx]
+  const splitAt = full.length - FIXED_SUFFIX.length
+  const redPart   = displayed.slice(0, Math.min(displayed.length, splitAt))
+  const whitePart = displayed.length > splitAt ? displayed.slice(splitAt) : ""
+
+  return (
+    <span style={{ display: "inline-flex", alignItems: "baseline" }}>
+      <span style={{ color: "#E8394A" }}>{redPart}</span>
+      <span style={{ color: "#fff", whiteSpace: "pre" }}>{whitePart}</span>
+      <motion.span
+        animate={{ opacity: [1, 1, 0, 0] }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: "linear", times: [0, 0.45, 0.5, 0.95] }}
+        style={{ color: "#fff", marginLeft: "2px", fontWeight: 200 }}
+      >|</motion.span>
+    </span>
+  )
+}
+
 export default function OurFirmPage() {
   const [showMore, setShowMore] = useState(false)
   const [showContact, setShowContact] = useState(false)
@@ -426,49 +478,6 @@ export default function OurFirmPage() {
         </section>
 
 
-        {/* ── WHY WE BUILT 10X GLOBAL ─────────────────────────── */}
-        <section style={{ backgroundColor: CREAM, padding: "6rem 0", borderTop: "1px solid rgba(28,23,18,0.08)" }}>
-          <style>{`
-            .why-built-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
-            @media (max-width: 860px) { .why-built-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
-            .why-built-scroll::-webkit-scrollbar { width: 3px; }
-            .why-built-scroll::-webkit-scrollbar-track { background: rgba(28,23,18,0.06); }
-            .why-built-scroll::-webkit-scrollbar-thumb { background: rgba(140,26,43,0.3); border-radius: 2px; }
-          `}</style>
-          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
-            <div className="why-built-grid">
-
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ position: "sticky", top: "7rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem" }}>
-                  Why We Built This
-                </span>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                  Why we built<br /><em style={{ fontStyle: "italic", color: RED }}>10x Global.</em>
-                </h2>
-                <div style={{ width: 40, height: 2, backgroundColor: RED, marginTop: "2rem" }} />
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
-                className="why-built-scroll"
-                style={{ maxHeight: 400, overflowY: "auto", paddingRight: "1.25rem" }}>
-                {[
-                  "Over the years, we realised that founders spend an incredible amount of time dealing with things that have very little to do with actually building their businesses.",
-                  "To keep a company running, a founder often ends up coordinating with lawyers, chartered accountants, company secretaries, tax advisors, bankers, compliance professionals, investors, and countless other stakeholders. They spend time reading legal documents to understand what is good for them and what is not. They worry about whether a compliance has been missed.",
-                  "They wonder which country to enter next, how to structure that entry, what entity to set up, how to hire people there, how to move money across borders, and whether everything is being done correctly.",
-                  "We always felt that this was backwards. A founder's primary job is to build. To create products. To serve customers. To hire great people. To scale. To sell. To innovate. To obsess over their craft.",
-                ].map((p, i) => (
-                  <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "1.5rem" }}>{p}</p>
-                ))}
-                <div style={{ height: 1, backgroundColor: "rgba(28,23,18,0.08)", marginBottom: "1.5rem" }} />
-                <p style={{ fontFamily: font.serif, fontSize: "1.15rem", fontStyle: "italic", color: RED, lineHeight: 1.6 }}>
-                  So we built 10x Global to handle all of it — so founders never have to.
-                </p>
-              </motion.div>
-
-            </div>
-          </div>
-        </section>
-
         {/* ── THE PEOPLE ────────────────────────────────────────── */}
         <section style={{ backgroundColor: CREAM, padding: "6rem 0" }}>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
@@ -556,6 +565,96 @@ export default function OurFirmPage() {
               </button>
             </div>
 
+          </div>
+        </section>
+
+        {/* ── WHY WE BUILT 10X GLOBAL ─────────────────────────── */}
+        <section style={{ backgroundColor: CREAM, padding: "6rem 0", borderTop: "1px solid rgba(28,23,18,0.08)" }}>
+          <style>{`
+            .why-built-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+            @media (max-width: 860px) { .why-built-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+            .why-built-scroll::-webkit-scrollbar { width: 3px; }
+            .why-built-scroll::-webkit-scrollbar-track { background: rgba(28,23,18,0.06); }
+            .why-built-scroll::-webkit-scrollbar-thumb { background: rgba(140,26,43,0.3); border-radius: 2px; }
+          `}</style>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            <div className="why-built-grid">
+
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ position: "sticky", top: "7rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem" }}>
+                  Why We Built This
+                </span>
+                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
+                  Why we built<br /><em style={{ fontStyle: "italic", color: RED }}>10x Global.</em>
+                </h2>
+                <div style={{ width: 40, height: 2, backgroundColor: RED, marginTop: "2rem" }} />
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
+                className="why-built-scroll"
+                style={{ maxHeight: 400, overflowY: "auto", paddingRight: "1.25rem" }}>
+                {[
+                  "Over the years, we realised that founders spend an incredible amount of time dealing with things that have very little to do with actually building their businesses.",
+                  "To keep a company running, a founder often ends up coordinating with lawyers, chartered accountants, company secretaries, tax advisors, bankers, compliance professionals, investors, and countless other stakeholders. They spend time reading legal documents to understand what is good for them and what is not. They worry about whether a compliance has been missed.",
+                  "They wonder which country to enter next, how to structure that entry, what entity to set up, how to hire people there, how to move money across borders, and whether everything is being done correctly.",
+                  "We always felt that this was backwards. A founder's primary job is to build. To create products. To serve customers. To hire great people. To scale. To sell. To innovate. To obsess over their craft.",
+                ].map((p, i) => (
+                  <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "1.5rem" }}>{p}</p>
+                ))}
+                <div style={{ height: 1, backgroundColor: "rgba(28,23,18,0.08)", marginBottom: "1.5rem" }} />
+                <p style={{ fontFamily: font.serif, fontSize: "1.15rem", fontStyle: "italic", color: RED, lineHeight: 1.6 }}>
+                  So we built 10x Global to handle all of it — so founders never have to.
+                </p>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ── CAREERS ──────────────────────────────────────────── */}
+        <section style={{ backgroundColor: "#112240" }}>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            {/* Label bar */}
+            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", paddingTop: "2.5rem" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#E8394A", flexShrink: 0 }}>Careers</span>
+              <div style={{ flex: 1, height: 1, backgroundColor: "rgba(255,255,255,0.18)" }} />
+            </div>
+
+            {/* Main copy */}
+            <div style={{ padding: "5rem 0 4.5rem" }}>
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                style={{ fontFamily: font.sans, fontSize: "0.88rem", fontWeight: 700, color: "rgba(255,255,255,0.72)", letterSpacing: "0.01em", marginBottom: "1.25rem" }}>
+                Scale across borders. Build global impact.
+              </motion.p>
+              <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+                style={{ fontFamily: font.sans, fontSize: "clamp(3rem, 6vw, 5.5rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.1, marginBottom: "1.75rem", textShadow: "0 2px 24px rgba(0,0,0,0.3)" }}>
+                <span style={{ display: "block" }}>Help companies</span>
+                <AnimatedPhrase />
+              </motion.h2>
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.18 }}
+                style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.75, maxWidth: 500, marginBottom: "2rem" }}>
+                Be the small, sharp team handling market entry,<br />finance, legal, and compliance worldwide.
+              </motion.p>
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.25 }}
+                style={{ fontFamily: font.sans, fontSize: "1.05rem", fontWeight: 700, color: "#ffffff" }}>
+                Real stakes<span style={{ color: RED }}>.</span>{" "}Real solutions<span style={{ color: RED }}>.</span>{" "}Real growth<span style={{ color: RED }}>.</span>
+              </motion.p>
+            </div>
+          </div>
+
+          {/* Bottom CTA bar */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}>
+            <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.75rem 0", flexWrap: "wrap", gap: "1.25rem" }}>
+                <p style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 700, color: "#fff" }}>
+                  Ready to shape global markets? Let&apos;s talk.
+                </p>
+                <a href="mailto:info@10x.global"
+                  style={{ backgroundColor: RED, color: "#fff", padding: "0.9rem 1.85rem", fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem", whiteSpace: "nowrap" }}>
+                  Find your next opportunity →
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
