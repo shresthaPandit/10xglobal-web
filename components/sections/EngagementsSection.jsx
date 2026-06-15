@@ -22,26 +22,26 @@ const ENGAGEMENTS = [
     ],
     service: "Global Market Entry",
     detail: {
-      subtitle: "Two markets, fully operational in six to eight weeks.",
+      subtitle: <>Two markets launched <strong>in parallel</strong> and fully operational in <strong>six to eight weeks</strong>.</>,
       stats: [
-        { val: "6–8 wks", label: "to operational in\nboth markets" },
-        { val: "2",       label: "jurisdictions\nlaunched in parallel" },
-        { val: "45+",     label: "UAE free zones\nto navigate" },
+        { val: "2",       label: "JURISDICTIONS\nIN PARALLEL" },
+        { val: "6–8 wks", label: "TO FULLY\nOPERATIONAL" },
+        { val: "45+",     label: "UAE FREE\nZONES\nEVALUATED" },
       ],
-      clientSnapshot: "A leading global advertising-technology company, backed by prominent international investors, set out to expand into the UAE and Singapore as part of its wider international growth plan.",
+      clientSnapshot: "A leading global advertising technology company, backed by prominent international investors, set out to expand into the UAE and Singapore as part of a wider growth plan.",
       situation: [
-        "The company needed fully operational entities in both markets, with support across the entire setup lifecycle: market-entry strategy, entity selection, incorporation, banking, hiring, and operational readiness.",
-        "Incorporation was only part of the brief. The founders also wanted clear guidance on the right structures, fast execution, and the ability to start operating with minimal delay.",
+        <>It needed fully operational entities in both markets, with <strong>clear guidance on the right structures, fast execution, and the ability to start operating with minimal delay.</strong></>,
       ],
       approach: {
+        subheadings: ["UNITED ARAB EMIRATES", "SINGAPORE"],
         body: [
-          "In the UAE, the first major decision was where to incorporate. The country has more than 45 free zones, and the choice carries real regulatory, operational, and commercial consequences. We reviewed the company's business model and expansion plans, then recommended the free zone that fit best.",
-          "In Singapore, our local team established the company's Private Limited (Pte. Ltd.) entity and managed the process end to end.",
+          "The first decision was where to incorporate. With more than 45 free zones, each carrying real regulatory and commercial consequences, we reviewed the business model and recommended the one that fit best.",
+          "Our local team established the company's Private Limited (Pte. Ltd.) entity and ran the process from start to finish.",
         ],
         bold: "Alongside incorporation, we also handled:",
         points: [
           "Entity setup in the UAE and Singapore",
-          "Bank account opening and banking coordination",
+          "Bank account opening and coordination",
           "Employment and hiring structure",
           "Visa and immigration support",
           "Operational readiness planning",
@@ -49,17 +49,34 @@ const ENGAGEMENTS = [
         ],
       },
       challenges: [
-        "Expanding into two international markets at the same time",
+        "Entering two international markets at once",
         "Tight timelines to become operational",
-        "Setting up banking across multiple countries",
-        "Hiring and visa requirements in markets with evolving regulation",
-        "Decisions on entity structure and jurisdiction selection",
+        "Banking setup across multiple countries",
+        "Hiring and visa rules in evolving regulation",
+        "Entity structure and jurisdiction decisions",
       ],
       outcome: [
-        "Both entities were operational within roughly six to eight weeks, with several setup milestones completed well ahead of that. Banking, hiring, and compliance were all in place, letting the company begin local operations quickly.",
-        "The relationship has continued since, expanding into further work including European market entry and compliance in new jurisdictions.",
+        "Both entities were operational within roughly six to eight weeks, several milestones completed ahead of schedule, with banking, hiring, and compliance fully in place.",
+        <>The relationship has continued since, expanding into <strong>European market entry and compliance across new jurisdictions.</strong></>,
       ],
-      services: ["Global Market Entry", "UAE Incorporation Advisory", "Singapore Incorporation Advisory", "Banking Setup", "Immigration & Visa Support", "Employment Structuring", "Operational Readiness", "Ongoing Compliance & Managed Services"],
+      services: ["Global Market Entry", "UAE Incorporation", "Singapore Incorporation", "Banking Setup", "Immigration & Visa", "Employment Structuring", "Operational Readiness", "Ongoing Compliance"],
+      timeline: {
+        title: "Two jurisdictions, run side by side",
+        subtitle: "Both markets moved through the same phases at once, not in sequence.",
+        phases: ["KICKOFF", "SELECTION", "INCORPORATION", "BANKING", "HIRING & VISAS", "OPERATIONAL"],
+        rows: [
+          {
+            flag: "🇦🇪", label: "UAE", sublabel: "FREE ZONE",
+            steps: ["Scoping", "45+ zones\nevaluated", "Entity set up", "Accounts open", "Staff & visas", "Operational\n6 to 8 weeks"],
+            boldIndex: 1,
+          },
+          {
+            flag: "🇸🇬", label: "SINGAPORE", sublabel: "PTE.\nLTD.",
+            steps: ["Scoping", "Structure set", "Pte. Ltd.\nestablished", "Accounts open", "Staff & visas", "Operational\n6 to 8 weeks"],
+            boldIndex: 2,
+          },
+        ],
+      },
     },
   },
   {
@@ -360,9 +377,16 @@ function EngagementModal({ eng, onClose }) {
       content: (
         <>
           {detail.approach.body.map((p, i) => (
-            <p key={i} style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.78, marginBottom: i < detail.approach.body.length - 1 ? "0.85rem" : 0 }}>
-              {p}
-            </p>
+            <div key={i} style={{ marginBottom: i < detail.approach.body.length - 1 ? "1rem" : 0 }}>
+              {detail.approach.subheadings?.[i] && (
+                <p style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: C.ink, marginBottom: "0.35rem", marginTop: 0 }}>
+                  {detail.approach.subheadings[i]}
+                </p>
+              )}
+              <p style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.78, margin: 0 }}>
+                {p}
+              </p>
+            </div>
           ))}
         </>
       ),
@@ -524,6 +548,81 @@ function EngagementModal({ eng, onClose }) {
             </div>
           ))}
         </div>
+
+        {/* ── TIMELINE ── */}
+        {detail.timeline && (
+          <div style={{ padding: "1.75rem 2.5rem 2rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 700, color: C.ink }}>
+                {detail.timeline.title}
+              </span>
+              <span style={{ fontFamily: font.sans, fontSize: "0.79rem", color: "rgba(12,26,39,0.42)" }}>
+                {detail.timeline.subtitle}
+              </span>
+            </div>
+
+            <div style={{ overflowX: "auto" }}>
+              <div style={{ minWidth: 640 }}>
+                {/* Phase headers */}
+                <div style={{ display: "grid", gridTemplateColumns: "130px repeat(6, 1fr)", marginBottom: "0.25rem" }}>
+                  <div />
+                  {detail.timeline.phases.map((phase, i) => (
+                    <div key={i} style={{
+                      fontFamily: font.sans, fontSize: "0.48rem", fontWeight: 700,
+                      letterSpacing: "0.12em", textTransform: "uppercase",
+                      color: i === detail.timeline.phases.length - 1 ? C.red : "rgba(12,26,39,0.38)",
+                      textAlign: "center", paddingBottom: "0.6rem",
+                    }}>{phase}</div>
+                  ))}
+                </div>
+
+                {/* Rows */}
+                {detail.timeline.rows.map((row, ri) => (
+                  <div key={ri} style={{ display: "grid", gridTemplateColumns: "130px repeat(6, 1fr)", marginBottom: ri < detail.timeline.rows.length - 1 ? "1.5rem" : 0 }}>
+                    {/* Row label */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", paddingRight: "0.75rem" }}>
+                      <span style={{ fontSize: "1.1rem" }}>{row.flag}</span>
+                      <div>
+                        <div style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, color: C.ink, letterSpacing: "0.04em" }}>{row.label}</div>
+                        <div style={{ fontFamily: font.sans, fontSize: "0.5rem", color: "rgba(12,26,39,0.42)", whiteSpace: "pre-line", lineHeight: 1.2 }}>/ {row.sublabel}</div>
+                      </div>
+                    </div>
+
+                    {/* Steps */}
+                    {row.steps.map((step, si) => {
+                      const isLast = si === row.steps.length - 1
+                      const isBold = row.boldIndex === si
+                      return (
+                        <div key={si} style={{ textAlign: "center", position: "relative" }}>
+                          {si < row.steps.length - 1 && (
+                            <div style={{
+                              position: "absolute", top: 4, left: "50%", width: "100%",
+                              height: 1, backgroundColor: "rgba(12,26,39,0.14)", zIndex: 0,
+                            }} />
+                          )}
+                          <div style={{
+                            width: isLast ? 13 : 9, height: isLast ? 13 : 9,
+                            borderRadius: "50%",
+                            backgroundColor: isLast ? C.red : C.ink,
+                            margin: "0 auto 0.45rem",
+                            position: "relative", zIndex: 1,
+                            boxShadow: isLast ? `0 0 0 4px rgba(140,26,43,0.14)` : "none",
+                          }} />
+                          <span style={{
+                            fontFamily: font.sans, fontSize: "0.62rem",
+                            fontWeight: isBold ? 700 : isLast ? 600 : 400,
+                            color: isLast ? C.red : C.ink,
+                            lineHeight: 1.35, whiteSpace: "pre-line", display: "block",
+                          }}>{step}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── DARK FOOTER ── */}
         <div className="cs-footer" style={{ backgroundColor: C.ink, padding: "2rem 2.5rem" }}>
