@@ -26,7 +26,7 @@ const ENGAGEMENTS = [
       stats: [
         { val: "2",       label: "JURISDICTIONS\nIN PARALLEL" },
         { val: "6–8 wks", label: "TO FULLY\nOPERATIONAL" },
-        { val: "45+",     label: "UAE FREE\nZONES\nEVALUATED" },
+        { val: "45+",     label: "UAE FREE ZONES\nEVALUATED" },
       ],
       clientSnapshot: "A leading global advertising technology company, backed by prominent international investors, set out to expand into the UAE and Singapore as part of a wider growth plan.",
       situation: [
@@ -66,12 +66,12 @@ const ENGAGEMENTS = [
         phases: ["KICKOFF", "SELECTION", "INCORPORATION", "BANKING", "HIRING & VISAS", "OPERATIONAL"],
         rows: [
           {
-            flag: "🇦🇪", label: "UAE", sublabel: "FREE ZONE",
+            flagCode: "ae", label: "UAE", sublabel: "FREE ZONE",
             steps: ["Scoping", "45+ zones\nevaluated", "Entity set up", "Accounts open", "Staff & visas", "Operational\n6 to 8 weeks"],
             boldIndex: 1,
           },
           {
-            flag: "🇸🇬", label: "SINGAPORE", sublabel: "PTE.\nLTD.",
+            flagCode: "sg", label: "SINGAPORE", sublabel: "PTE.\nLTD.",
             steps: ["Scoping", "Structure set", "Pte. Ltd.\nestablished", "Accounts open", "Staff & visas", "Operational\n6 to 8 weeks"],
             boldIndex: 2,
           },
@@ -511,13 +511,13 @@ function EngagementModal({ eng, onClose }) {
                 {detail.subtitle}
               </p>
             </div>
-            <div style={{ display: "flex", gap: "2rem", alignItems: "flex-end", paddingBottom: "0.05rem" }}>
+            <div style={{ display: "flex", alignItems: "flex-start" }}>
               {detail.stats.map((s, i) => (
-                <div key={i} style={{ textAlign: "left" }}>
+                <div key={i} style={{ textAlign: "left", paddingLeft: "1.5rem", borderLeft: i > 0 ? "1px solid rgba(12,26,39,0.12)" : "none", minWidth: 90 }}>
                   <div style={{ fontFamily: font.num, fontSize: "clamp(1.6rem, 2.4vw, 2rem)", fontWeight: 700, color: C.ink, lineHeight: 1 }}>
                     {s.val}
                   </div>
-                  <div style={{ fontFamily: font.sans, fontSize: "0.46rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", marginTop: "0.2rem", whiteSpace: "pre-line", lineHeight: 1.4 }}>
+                  <div style={{ fontFamily: font.sans, fontSize: "0.46rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", marginTop: "0.22rem", whiteSpace: "pre-line", lineHeight: 1.4 }}>
                     {s.label}
                   </div>
                 </div>
@@ -575,8 +575,8 @@ function EngagementModal({ eng, onClose }) {
 
                 {detail.timeline.rows.map((row, ri) => (
                   <div key={ri} style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: ri < detail.timeline.rows.length - 1 ? "0.7rem" : 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", paddingRight: "0.5rem" }}>
-                      <span style={{ fontSize: "0.95rem" }}>{row.flag}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingRight: "0.5rem" }}>
+                      <img src={`https://flagcdn.com/w28/${row.flagCode}.png`} width={22} height={15} alt={row.label} style={{ display: "block", objectFit: "cover", flexShrink: 0, border: "1px solid rgba(0,0,0,0.08)" }} />
                       <div>
                         <div style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, color: C.ink, letterSpacing: "0.03em" }}>{row.label}</div>
                         <div style={{ fontFamily: font.sans, fontSize: "0.46rem", color: "rgba(12,26,39,0.4)", whiteSpace: "pre-line", lineHeight: 1.15 }}>/ {row.sublabel}</div>
