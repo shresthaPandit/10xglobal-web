@@ -361,11 +361,11 @@ function EngagementModal({ eng, onClose }) {
       num: "01", label: "The Brief",
       content: (
         <>
-          <p style={{ fontFamily: font.sans, fontSize: "0.7rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.55, marginBottom: "0.85rem" }}>
+          <p style={{ fontFamily: font.sans, fontSize: "0.75rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.6, marginBottom: "0.85rem" }}>
             {detail.clientSnapshot}
           </p>
           {detail.situation.map((p, i) => (
-            <p key={i} style={{ fontFamily: font.sans, fontSize: "0.7rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.55, marginBottom: i < detail.situation.length - 1 ? "0.85rem" : 0 }}>
+            <p key={i} style={{ fontFamily: font.sans, fontSize: "0.75rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.6, marginBottom: i < detail.situation.length - 1 ? "0.85rem" : 0 }}>
               {p}
             </p>
           ))}
@@ -383,7 +383,7 @@ function EngagementModal({ eng, onClose }) {
                   {detail.approach.subheadings[i]}
                 </p>
               )}
-              <p style={{ fontFamily: font.sans, fontSize: "0.7rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.55, margin: 0 }}>
+              <p style={{ fontFamily: font.sans, fontSize: "0.75rem", color: "rgba(12,26,39,0.62)", lineHeight: 1.6, margin: 0 }}>
                 {p}
               </p>
             </div>
@@ -456,7 +456,7 @@ function EngagementModal({ eng, onClose }) {
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         onClick={e => e.stopPropagation()}
         style={{
-          width: "100%", maxWidth: 1160,
+          width: "100%", maxWidth: 1300,
           backgroundColor: "#fff",
           position: "relative",
           boxShadow: "0 24px 80px rgba(0,0,0,0.45), 0 2px 0 rgba(140,26,43,0.6) inset",
@@ -489,7 +489,7 @@ function EngagementModal({ eng, onClose }) {
         </div>
 
         {/* ── HERO ROW ── */}
-        <div style={{ padding: "0.9rem 1.75rem 0.75rem", borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
+        <div style={{ padding: "1.1rem 2rem 0.9rem", borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
           <div style={{ marginBottom: "0.3rem" }}>
             <span style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: C.red }}>
               {eng.from}
@@ -500,21 +500,21 @@ function EngagementModal({ eng, onClose }) {
             </span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "1.5rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap" }}>
             <div style={{ flex: 1, minWidth: 220 }}>
               <h2 style={{
-                fontFamily: font.sans, fontSize: "clamp(1.15rem, 2vw, 1.65rem)",
-                fontWeight: 700, color: C.ink, lineHeight: 1.08, marginBottom: "0.3rem",
+                fontFamily: font.sans, fontSize: "clamp(1.3rem, 2.2vw, 1.9rem)",
+                fontWeight: 700, color: C.ink, lineHeight: 1.08, marginBottom: "0.35rem",
                 letterSpacing: "-0.022em",
               }}>{title}</h2>
-              <p style={{ fontFamily: font.sans, fontSize: "0.76rem", color: "rgba(12,26,39,0.5)", lineHeight: 1.5, maxWidth: 460, margin: 0 }}>
+              <p style={{ fontFamily: font.sans, fontSize: "0.84rem", color: "rgba(12,26,39,0.5)", lineHeight: 1.5, maxWidth: 500, margin: 0 }}>
                 {detail.subtitle}
               </p>
             </div>
             <div style={{ display: "flex", gap: "2rem", alignItems: "flex-end", paddingBottom: "0.05rem" }}>
               {detail.stats.map((s, i) => (
                 <div key={i} style={{ textAlign: "left" }}>
-                  <div style={{ fontFamily: font.num, fontSize: "clamp(1.3rem, 1.9vw, 1.6rem)", fontWeight: 700, color: C.ink, lineHeight: 1 }}>
+                  <div style={{ fontFamily: font.num, fontSize: "clamp(1.6rem, 2.4vw, 2rem)", fontWeight: 700, color: C.ink, lineHeight: 1 }}>
                     {s.val}
                   </div>
                   <div style={{ fontFamily: font.sans, fontSize: "0.46rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", marginTop: "0.2rem", whiteSpace: "pre-line", lineHeight: 1.4 }}>
@@ -530,7 +530,7 @@ function EngagementModal({ eng, onClose }) {
         <div className="cs-4col" style={{ borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
           {COLS.map((col, i) => (
             <div key={i} style={{
-              padding: "0.85rem 1.1rem",
+              padding: "1rem 1.3rem",
               borderLeft: i > 0 ? "1px solid rgba(12,26,39,0.07)" : "none",
               backgroundColor: i % 2 === 1 ? "#FAFAF8" : "#fff",
             }}>
