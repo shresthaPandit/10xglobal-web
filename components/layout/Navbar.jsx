@@ -24,6 +24,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", fn)
   }, [])
 
+  useEffect(() => {
+    if (document.getElementById("calendly-css")) return
+    const link = document.createElement("link")
+    link.id   = "calendly-css"
+    link.rel  = "stylesheet"
+    link.href = "https://assets.calendly.com/assets/external/widget.css"
+    document.head.appendChild(link)
+
+    if (document.getElementById("calendly-js")) return
+    const script  = document.createElement("script")
+    script.id     = "calendly-js"
+    script.src    = "https://assets.calendly.com/assets/external/widget.js"
+    script.async  = true
+    document.head.appendChild(script)
+  }, [])
+
+  const openCalendly = () => {
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({ url: "https://calendly.com/srishti-mittal-10x/30min" })
+    }
+  }
+
   return (
     <>
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
@@ -137,7 +159,7 @@ export default function Navbar() {
                 </button>
               </a>
               <button
-                onClick={() => setShowContact(true)}
+                onClick={openCalendly}
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#7e6232"; e.currentTarget.style.transform = "translateY(-1px)" }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.gold;    e.currentTarget.style.transform = "translateY(0)" }}
                 style={{
@@ -192,7 +214,7 @@ export default function Navbar() {
                 {label}
               </a>
             ))}
-            <button onClick={() => { setMenuOpen(false); setShowContact(true) }} style={{ width: "100%", backgroundColor: C.gold, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
+            <button onClick={() => { setMenuOpen(false); openCalendly() }} style={{ width: "100%", backgroundColor: C.gold, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
               Book a call
             </button>
           </div>
