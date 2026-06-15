@@ -576,7 +576,23 @@ function EngagementModal({ eng, onClose }) {
                 {detail.timeline.rows.map((row, ri) => (
                   <div key={ri} style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: ri < detail.timeline.rows.length - 1 ? "0.7rem" : 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingRight: "0.5rem" }}>
-                      <img src={`https://flagcdn.com/w28/${row.flagCode}.png`} width={22} height={15} alt={row.label} style={{ display: "block", objectFit: "cover", flexShrink: 0, border: "1px solid rgba(0,0,0,0.08)" }} />
+                      {row.flagCode === "ae" ? (
+                        <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0, display: "block" }}>
+                          <rect width="6" height="16" fill="#00732F"/>
+                          <rect x="6" width="18" height="5.33" fill="#00732F"/>
+                          <rect x="6" y="5.33" width="18" height="5.34" fill="#fff"/>
+                          <rect x="6" y="10.67" width="18" height="5.33" fill="#000"/>
+                          <rect width="6" height="16" fill="#FF0000"/>
+                        </svg>
+                      ) : (
+                        <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0, display: "block" }}>
+                          <rect width="24" height="8" fill="#EF3340"/>
+                          <rect y="8" width="24" height="8" fill="#fff"/>
+                          <circle cx="7.5" cy="5" r="2.6" fill="#fff"/>
+                          <circle cx="8.8" cy="5" r="2.1" fill="#EF3340"/>
+                          <polygon points="10.5,3 11,4.6 12.5,4.6 11.3,5.5 11.7,7 10.5,6.1 9.3,7 9.7,5.5 8.5,4.6 10,4.6" fill="#fff" transform="scale(0.7) translate(5,2)"/>
+                        </svg>
+                      )}
                       <div>
                         <div style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, color: C.ink, letterSpacing: "0.03em" }}>{row.label}</div>
                         <div style={{ fontFamily: font.sans, fontSize: "0.46rem", color: "rgba(12,26,39,0.4)", whiteSpace: "pre-line", lineHeight: 1.15 }}>/ {row.sublabel}</div>
