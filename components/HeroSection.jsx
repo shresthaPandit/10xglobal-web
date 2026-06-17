@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ComposableMap, Geographies, Geography } from "react-simple-maps"
 import { C, font } from "@/lib/theme"
@@ -118,6 +118,59 @@ function MapSVG() {
   )
 }
 
+const HERO_LINE3 = "Operate seamlessly."
+const BLINK_SPLIT = 8 // "Operate " is 8 chars, rest is red
+
+function HeroHeading({ style }) {
+  const ref = useRef(null)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    // If preloader already ran in this session, start immediately
+    if (sessionStorage.getItem("10x_loaded")) {
+      setReady(true)
+    } else {
+      // First visit — wait for preloader (1600ms) + fade-out (550ms) + small buffer
+      const t = setTimeout(() => setReady(true), 2250)
+      return () => clearTimeout(t)
+    }
+  }, [])
+
+  const fadeLine = (delay) => ({
+    initial: { opacity: 0 },
+    animate: ready ? { opacity: 1 } : { opacity: 0 },
+    transition: { duration: 1.4, ease: "easeOut", delay },
+  })
+
+  const blinkChar = (delay) => ({
+    initial: { opacity: 0 },
+    animate: ready ? { opacity: [0, 1, 0, 1] } : { opacity: 0 },
+    transition: { duration: 0.28, times: [0, 0.2, 0.55, 1], ease: "linear", delay },
+  })
+
+  return (
+    <h1 ref={ref} style={style}>
+      <motion.span style={{ display: "block", whiteSpace: "nowrap" }} {...fadeLine(0.1)}>
+        Expand globally.
+      </motion.span>
+      <motion.span style={{ display: "block" }} {...fadeLine(0.48)}>
+        Raise capital.
+      </motion.span>
+      <span style={{ display: "block" }}>
+        {HERO_LINE3.split("").map((char, i) => (
+          <motion.span
+            key={i}
+            style={{ color: i >= BLINK_SPLIT ? C.red : C.ink }}
+            {...blinkChar(1.0 + i * 0.07)}
+          >
+            {char === " " ? " " : char}
+          </motion.span>
+        ))}
+      </span>
+    </h1>
+  )
+}
+
 export default function HeroSection() {
   const [D] = useState(() => {
     if (typeof window === "undefined") return 0
@@ -130,13 +183,13 @@ export default function HeroSection() {
     <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
     <section style={{
       backgroundColor: C.bg,
-      padding: "4rem 0 3.5rem",
+      padding: "clamp(3rem, 4vw, 5.5rem) 0",
     }}>
       <style>{`
         .hero-two-col {
           display: grid;
           grid-template-columns: 5fr 7fr;
-          gap: 4rem;
+          gap: clamp(2rem, 3vw, 5rem);
           align-items: center;
           max-width: 1360px;
           margin: 0 auto;
@@ -144,7 +197,7 @@ export default function HeroSection() {
           width: 100%;
           box-sizing: border-box;
         }
-        .hero-map-col { height: 520px; }
+        .hero-map-col { height: clamp(400px, 36vw, 640px); }
         @media (max-width: 960px) {
           .hero-two-col { grid-template-columns: 1fr; gap: 2.5rem; }
           .hero-map-col { height: 340px; }
@@ -177,19 +230,15 @@ export default function HeroSection() {
           </div>
 
           {/* Headline */}
-          <h1 style={{
-            fontFamily:    font.serif,
+          <HeroHeading style={{
+            fontFamily:    font.sans,
             fontSize:      "clamp(2.8rem, 4.2vw, 4rem)",
-            fontWeight:    300,
-            lineHeight:    1.18,
+            fontWeight:    800,
+            lineHeight:    1.12,
             color:         C.ink,
             marginBottom:  "1.75rem",
-            letterSpacing: "0.01em",
-          }}>
-            Expand globally.<br />
-            Raise capital.<br />
-            Operate <em style={{ fontStyle: "italic", color: C.red }}>seamlessly.</em>
-          </h1>
+            letterSpacing: "-0.01em",
+          }} />
 
           {/* Body */}
           <p style={{
@@ -211,23 +260,25 @@ export default function HeroSection() {
             <button
               onClick={() => setShowContact(true)}
               style={{
-                display:         "block",
-                backgroundColor: C.red,
-                color:           "#fff",
-                padding:         "1.15rem 2rem",
-                fontFamily:      font.sans,
-                fontSize:        "0.72rem",
-                fontWeight:      700,
-                letterSpacing:   "0.16em",
-                textTransform:   "uppercase",
-                textAlign:       "center",
-                width:           "100%",
-                border:          "none",
-                cursor:          "pointer",
-                transition:      "background-color 0.2s",
+                display:            "block",
+                background:         `linear-gradient(to right, #5a0f1a 50%, ${C.red} 50%)`,
+                backgroundSize:     "200% 100%",
+                backgroundPosition: "right",
+                color:              "#fff",
+                padding:            "1.15rem 2rem",
+                fontFamily:         font.sans,
+                fontSize:           "0.72rem",
+                fontWeight:         700,
+                letterSpacing:      "0.16em",
+                textTransform:      "uppercase",
+                textAlign:          "center",
+                width:              "100%",
+                border:             "none",
+                cursor:             "pointer",
+                transition:         "background-position 0.4s ease",
               }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = "#8B1A22"}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = C.red}
+              onMouseEnter={e => e.currentTarget.style.backgroundPosition = "left"}
+              onMouseLeave={e => e.currentTarget.style.backgroundPosition = "right"}
             >
               Book Strategy Call
             </button>

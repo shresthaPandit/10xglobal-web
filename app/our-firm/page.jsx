@@ -1,8 +1,8 @@
 ﻿"use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useInView } from "framer-motion"
 import { font } from "@/lib/theme"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
@@ -76,9 +76,10 @@ const INSIGHTS_MORE = [
 const OFFICES = [
   {
     code: "IN",
+    timezone: "Asia/Kolkata",
     region: "India · Headquarters",
     city: "New Delhi",
-    img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.unsplash.com/photo-1597836228657-d61e739df51b?auto=format&fit=crop&w=800&q=80",
     address: "2/6 Block 2, West Patel Nagar,\nNew Delhi 110008",
     address2: "1409, Palms Spring Plaza\nGolf Course Road, Sector 54\nGurugram 122002",
     address2Label: "Gurgaon",
@@ -90,9 +91,10 @@ const OFFICES = [
   },
   {
     code: "AE",
+    timezone: "Asia/Dubai",
     region: "UAE · MENA Hub",
     city: "Dubai",
-    img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
+    img: "/dubai-bridge.jpg",
     address: "1607 JBC5, Cluster W,\nJumeirah Lake Towers, Dubai",
     email: "info@10x.global",
     phone: "+971 04 5757988",
@@ -102,9 +104,10 @@ const OFFICES = [
   },
   {
     code: "SG",
+    timezone: "Asia/Singapore",
     region: "Singapore · SE Asia",
     city: "Singapore",
-    img: "https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=80",
+    img: "https://images.pexels.com/photos/15480456/pexels-photo-15480456.jpeg?auto=compress&cs=tinysrgb&w=800",
     address: "200 Jalan Sultan, #11-01,\nTextile Centre, Singapore 199018",
     email: "info@10x.global",
     phone: null,
@@ -114,9 +117,10 @@ const OFFICES = [
   },
   {
     code: "US",
+    timezone: "America/New_York",
     region: "United States · Americas",
     city: "Delaware",
-    img: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80",
+    img: "https://plus.unsplash.com/premium_photo-1661954654458-c673671d4a08?auto=format&fit=crop&w=800&q=80",
     address: "605 Geddes Street,\nWilmington, DE 19805",
     email: "info@10x.global",
     phone: null,
@@ -157,6 +161,36 @@ const INDIA_OFFICES = [
   },
 ]
 
+function LocalTime({ timezone }) {
+  const [display, setDisplay] = useState("")
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date()
+      const timeStr = now.toLocaleTimeString("en-US", {
+        timeZone: timezone, hour: "2-digit", minute: "2-digit", hour12: true,
+      })
+      const tzAbbr = new Intl.DateTimeFormat("en-US", {
+        timeZone: timezone, timeZoneName: "short",
+      }).formatToParts(now).find(p => p.type === "timeZoneName")?.value || ""
+      setDisplay(`${timeStr} ${tzAbbr}`)
+    }
+    update()
+    const id = setInterval(update, 1000)
+    return () => clearInterval(id)
+  }, [timezone])
+
+  if (!display) return null
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginTop: "0.35rem" }}>
+      <span style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "#5aD45a", flexShrink: 0 }} />
+      <span style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 500, color: "rgba(255,255,255,0.82)", letterSpacing: "0.04em" }}>
+        {display}
+      </span>
+    </div>
+  )
+}
+
 function OfficeFlipCard({ office, index }) {
   const [flipped, setFlipped] = useState(false)
 
@@ -168,7 +202,7 @@ function OfficeFlipCard({ office, index }) {
       transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
-      style={{ perspective: "1200px", height: 240, cursor: "default" }}
+      style={{ perspective: "1200px", height: 300, cursor: "default" }}
     >
       <div style={{
         position:       "relative",
@@ -206,9 +240,10 @@ function OfficeFlipCard({ office, index }) {
             <p style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)", marginBottom: "0.4rem" }}>
               {office.region}
             </p>
-            <h3 style={{ fontFamily: font.serif, fontSize: "clamp(1.7rem, 2.4vw, 2.2rem)", fontWeight: 300, color: "#fff", lineHeight: 1.1, marginBottom: "0.75rem" }}>
+            <h3 style={{ fontFamily: font.serif, fontSize: "clamp(1.7rem, 2.4vw, 2.2rem)", fontWeight: 300, color: "#fff", lineHeight: 1.1, marginBottom: "0.35rem" }}>
               {office.city}
             </h3>
+            <LocalTime timezone={office.timezone} />
           </div>
         </div>
 
@@ -220,7 +255,7 @@ function OfficeFlipCard({ office, index }) {
           WebkitBackfaceVisibility: "hidden",
           transform:                "rotateY(180deg)",
           backgroundColor:          RED,
-          padding:                  "1.75rem 1.75rem 1.5rem",
+          padding:                  "1.25rem 1.5rem 1.25rem",
           display:                  "flex",
           flexDirection:            "column",
         }}>
@@ -302,7 +337,7 @@ function AnimatedPhrase() {
       if (displayed.length < full.length) {
         t = setTimeout(() => setDisplayed(full.slice(0, displayed.length + 1)), 88)
       } else {
-        t = setTimeout(() => setPhase("erasing"), 1800)
+        t = setTimeout(() => setPhase("erasing"), 1000)
       }
     } else {
       if (displayed.length > 0) {
@@ -333,10 +368,264 @@ function AnimatedPhrase() {
   )
 }
 
+const BLINK_TEXT  = "going global."
+const BLINK_SPLIT = 6 // chars before "global." (red part)
+
+function HeroHeading() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true })
+
+  const fadeLine = (delay) => ({
+    initial: { opacity: 0 },
+    animate: inView ? { opacity: 1 } : { opacity: 0 },
+    transition: { duration: 1.4, ease: "easeOut", delay },
+  })
+
+  const blinkChar = (delay) => ({
+    initial: { opacity: 0 },
+    animate: inView ? { opacity: [0, 1, 0, 1] } : { opacity: 0 },
+    transition: { duration: 0.28, times: [0, 0.2, 0.55, 1], ease: "linear", delay },
+  })
+
+  return (
+    <h1 ref={ref} style={{ fontFamily: font.sans, fontSize: "clamp(3.4rem, 5vw, 5.5rem)", fontWeight: 800, lineHeight: 1.08, color: INK }}>
+      <motion.span style={{ display: "block" }} {...fadeLine(0.1)}>Built by founders,</motion.span>
+      <motion.span style={{ display: "block" }} {...fadeLine(0.48)}>for founders</motion.span>
+      <span style={{ display: "block" }}>
+        {BLINK_TEXT.split("").map((char, i) => (
+          <motion.span
+            key={i}
+            style={{ color: i >= BLINK_SPLIT ? RED : INK }}
+            {...blinkChar(1.0 + i * 0.09)}
+          >
+            {char === " " ? " " : char}
+          </motion.span>
+        ))}
+      </span>
+    </h1>
+  )
+}
+
+function LiquidTagline() {
+  const wrapRef = useRef(null)
+  const [box, setBox] = useState({ w: 0, h: 0, fs: 48, lh: 65 })
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const update = () => {
+      const p = el.querySelector("p")
+      if (!p) return
+      const fs = parseFloat(window.getComputedStyle(p).fontSize)
+      const lh = fs * 1.3
+      const h = lh * 4 + fs * 0.2
+      setBox({ w: el.offsetWidth, h, fs, lh })
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const { w: W, h: H, fs: FS, lh: LH } = box
+  const WL = H * 0.58
+  const WL_B = H * 0.60
+
+  return (
+    <div ref={wrapRef} style={{ position: "relative", width: "100%", height: H > 0 ? H : undefined, overflow: "hidden" }}>
+      <p style={{ visibility: "hidden", margin: 0, fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(2.4rem, 4.2vw, 4.8rem)", fontWeight: 900, lineHeight: 1.3, whiteSpace: "nowrap" }}>
+        the business.
+      </p>
+
+      {W > 0 && (
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
+          style={{ position: "absolute", top: 0, left: 0, display: "block" }}>
+          <defs>
+            {/* Lines 1-2: You build / the business. */}
+            <mask id="liq-mask-a">
+              <rect width="100%" height="100%" fill="black" />
+              <text fill="white" fontSize={FS} fontWeight="900"
+                style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                <tspan x="0" y={FS}>You build</tspan>
+                <tspan x="0" dy={LH}>the business.</tspan>
+              </text>
+            </mask>
+            {/* Lines 3-4: We build / the bridge. */}
+            <mask id="liq-mask-b">
+              <rect width="100%" height="100%" fill="black" />
+              <text fill="white" fontSize={FS} fontWeight="900"
+                style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                <tspan x="0" y={FS + 2 * LH}>We build</tspan>
+                <tspan x="0" dy={LH}>the bridge.</tspan>
+              </text>
+            </mask>
+            <clipPath id="bubble-clip">
+              <rect x="0" y={WL - H * 0.15} width={W} height={H} />
+            </clipPath>
+          </defs>
+
+          {/* ── Lines 1-2: navy + faint blue water + strong bubbles ── */}
+          <g mask="url(#liq-mask-a)">
+            <rect width={W} height={H} fill="#1e3a8a" />
+            <path fill="rgba(255,255,255,0.18)">
+              <animate attributeName="d" dur="2.4s" repeatCount="indefinite"
+                values={[
+                  `M0,${WL} C${W*.15},${WL-H*.02} ${W*.35},${WL+H*.02} ${W*.5},${WL} C${W*.65},${WL-H*.02} ${W*.85},${WL+H*.02} ${W},${WL} L${W},${H} L0,${H} Z`,
+                  `M0,${WL} C${W*.15},${WL+H*.02} ${W*.35},${WL-H*.02} ${W*.5},${WL} C${W*.65},${WL+H*.02} ${W*.85},${WL-H*.02} ${W},${WL} L${W},${H} L0,${H} Z`,
+                  `M0,${WL} C${W*.15},${WL-H*.02} ${W*.35},${WL+H*.02} ${W*.5},${WL} C${W*.65},${WL-H*.02} ${W*.85},${WL+H*.02} ${W},${WL} L${W},${H} L0,${H} Z`,
+                ].join(";")} />
+            </path>
+            <g clipPath="url(#bubble-clip)">
+              <circle r="5" fill="rgba(255,255,255,0.9)"><animateMotion dur="3s" repeatCount="indefinite" path={`M${W*.12},${H} Q${W*.13},${WL} ${W*.12},${WL-H*.45}`} /></circle>
+              <circle r="3" fill="rgba(255,255,255,0.85)"><animateMotion dur="4s" repeatCount="indefinite" begin="-1.5s" path={`M${W*.38},${H} Q${W*.39},${WL} ${W*.38},${WL-H*.45}`} /></circle>
+              <circle r="4" fill="rgba(255,255,255,0.88)"><animateMotion dur="4.8s" repeatCount="indefinite" begin="-2s" path={`M${W*.25},${H} Q${W*.26},${WL} ${W*.25},${WL-H*.45}`} /></circle>
+              <circle r="2.5" fill="rgba(255,255,255,0.8)"><animateMotion dur="3.6s" repeatCount="indefinite" begin="-0.8s" path={`M${W*.55},${H} Q${W*.56},${WL} ${W*.55},${WL-H*.45}`} /></circle>
+            </g>
+          </g>
+
+          {/* ── Lines 3-4: navy blue + faint blue water + strong bubbles ── */}
+          <g mask="url(#liq-mask-b)">
+            <rect width={W} height={H} fill="#1e3a8a" />
+            <path fill="rgba(255,255,255,0.18)">
+              <animate attributeName="d" dur="2.4s" repeatCount="indefinite"
+                values={[
+                  `M0,${WL_B} C${W*.15},${WL_B-H*.02} ${W*.35},${WL_B+H*.02} ${W*.5},${WL_B} C${W*.65},${WL_B-H*.02} ${W*.85},${WL_B+H*.02} ${W},${WL_B} L${W},${H} L0,${H} Z`,
+                  `M0,${WL_B} C${W*.15},${WL_B+H*.02} ${W*.35},${WL_B-H*.02} ${W*.5},${WL_B} C${W*.65},${WL_B+H*.02} ${W*.85},${WL_B-H*.02} ${W},${WL_B} L${W},${H} L0,${H} Z`,
+                  `M0,${WL_B} C${W*.15},${WL_B-H*.02} ${W*.35},${WL_B+H*.02} ${W*.5},${WL_B} C${W*.65},${WL_B-H*.02} ${W*.85},${WL_B+H*.02} ${W},${WL_B} L${W},${H} L0,${H} Z`,
+                ].join(";")} />
+            </path>
+            <g clipPath="url(#bubble-clip)">
+              <circle r="4" fill="rgba(255,255,255,0.9)"><animateMotion dur="3.6s" repeatCount="indefinite" begin="-0.7s" path={`M${W*.62},${H} Q${W*.63},${WL_B} ${W*.62},${WL_B-H*.45}`} /></circle>
+              <circle r="2.5" fill="rgba(255,255,255,0.85)"><animateMotion dur="3s" repeatCount="indefinite" begin="-1s" path={`M${W*.52},${H} Q${W*.53},${WL_B} ${W*.52},${WL_B-H*.45}`} /></circle>
+              <circle r="3.5" fill="rgba(255,255,255,0.88)"><animateMotion dur="4.4s" repeatCount="indefinite" begin="-3s" path={`M${W*.80},${H} Q${W*.81},${WL_B} ${W*.80},${WL_B-H*.45}`} /></circle>
+              <circle r="2" fill="rgba(255,255,255,0.8)"><animateMotion dur="5s" repeatCount="indefinite" begin="-1.8s" path={`M${W*.70},${H} Q${W*.71},${WL_B} ${W*.70},${WL_B-H*.45}`} /></circle>
+            </g>
+          </g>
+        </svg>
+      )}
+      <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)" }}>
+        You build the business. We build the bridge.
+      </span>
+    </div>
+  )
+}
+
+function PrincipleCarousel() {
+  const [active, setActive] = useState(0)
+  const n = PRINCIPLES.length
+  const prev = () => setActive(i => (i - 1 + n) % n)
+  const next = () => setActive(i => (i + 1) % n)
+
+  const getSlot = (i) => {
+    const d = (i - active + n) % n
+    if (d === 0) return 0
+    if (d === 1) return 1
+    if (d === n - 1) return -1
+    return 2
+  }
+
+  const CARD_W  = 500
+  const GAP     = 560
+  const CARD_BG = ["#0D1635", "#6B1220", "#162244", "#7A1525"]
+
+  return (
+    <div>
+      <style>{`
+        @keyframes spin-border { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+        @keyframes glow-pulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; } }
+      `}</style>
+
+      <div style={{ position: "relative", height: 330, overflow: "hidden" }}>
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 180, background: "linear-gradient(to right, #FAFAFA 20%, transparent)", zIndex: 5, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 180, background: "linear-gradient(to left, #FAFAFA 20%, transparent)", zIndex: 5, pointerEvents: "none" }} />
+
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {PRINCIPLES.map((p, i) => {
+            const slot = getSlot(i)
+            const isCenter = slot === 0
+            const isHidden = Math.abs(slot) > 1
+            return (
+              <motion.div
+                key={p.n}
+                style={{ position: "absolute", width: CARD_W, cursor: isCenter ? "default" : "pointer" }}
+                animate={{ x: slot * GAP, scale: isCenter ? 1 : 0.88, opacity: isHidden ? 0 : isCenter ? 1 : 0.6 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                onClick={isCenter ? undefined : () => setActive(i)}
+              >
+                {/* Border wrapper */}
+                <div style={{ position: "relative", borderRadius: 22, padding: isCenter ? 3 : 1, overflow: "hidden" }}>
+                  {/* Spinning gradient border — only on center card */}
+                  {isCenter && (
+                    <div style={{
+                      position: "absolute", top: "50%", left: "50%",
+                      width: "220%", height: "220%",
+                      background: "conic-gradient(from 0deg, transparent 0deg, transparent 130deg, rgba(196,169,106,0.4) 155deg, #C4A96A 168deg, #ffffff 180deg, #C4A96A 192deg, rgba(196,169,106,0.4) 205deg, transparent 230deg, transparent 360deg)",
+                      animation: "spin-border 3s linear infinite",
+                      pointerEvents: "none",
+                    }} />
+                  )}
+                  <div style={{
+                    position: "relative",
+                    width: "100%", height: 290,
+                    backgroundColor: CARD_BG[i],
+                    borderRadius: 20,
+                    boxShadow: "none",
+                    padding: "2rem 2.5rem",
+                    overflow: "hidden",
+                    userSelect: "none",
+                  }}>
+                    <span style={{ position: "absolute", right: "-0.5rem", bottom: "-1.5rem", fontFamily: font.num, fontSize: "9rem", fontWeight: 300, color: "rgba(255,255,255,0.05)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{p.n}</span>
+                    <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1.2rem, 1.6vw, 1.45rem)", fontWeight: 700, color: "#fff", marginBottom: "0.85rem", lineHeight: 1.3 }}>{p.title}</h3>
+                    <p style={{ fontFamily: font.sans, fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)", fontWeight: 450, color: "rgba(255,255,255,0.72)", lineHeight: 1.75 }}>{p.body}</p>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        <button onClick={prev} style={{ position: "absolute", left: "3%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 46, height: 46, borderRadius: "50%", border: `1.5px solid ${RED}`, backgroundColor: "#fff", color: RED, fontSize: "1rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.1)" }}>‹</button>
+        <button onClick={next} style={{ position: "absolute", right: "3%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 46, height: 46, borderRadius: "50%", border: `1.5px solid ${RED}`, backgroundColor: "#fff", color: RED, fontSize: "1rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.1)" }}>›</button>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", gap: "0.45rem", marginTop: "1.75rem" }}>
+        {PRINCIPLES.map((_, i) => (
+          <div key={i} onClick={() => setActive(i)} style={{ width: i === active ? 22 : 6, height: 6, borderRadius: 3, backgroundColor: i === active ? RED : "rgba(140,26,43,0.2)", transition: "all 0.35s ease", cursor: "pointer" }} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function OurFirmPage() {
   const [showMore, setShowMore] = useState(false)
   const [showContact, setShowContact] = useState(false)
   const [showCareer, setShowCareer] = useState(false)
+  const [ctaForm, setCtaForm] = useState({ firstName: "", lastName: "", email: "", phone: "", company: "", query: "" })
+  const [ctaStatus, setCtaStatus] = useState("idle")
+
+  const handleCtaChange = e => setCtaForm(p => ({ ...p, [e.target.name]: e.target.value }))
+  const handleCtaSubmit = async e => {
+    e.preventDefault()
+    setCtaStatus("sending")
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@10x.global", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Enquiry from ${ctaForm.firstName} ${ctaForm.lastName}${ctaForm.company ? ` — ${ctaForm.company}` : ""}`,
+          name: `${ctaForm.firstName} ${ctaForm.lastName}`,
+          email: ctaForm.email,
+          phone: ctaForm.phone || "—",
+          company: ctaForm.company || "—",
+          message: ctaForm.query || "—",
+        }),
+      })
+      setCtaStatus(res.ok ? "done" : "error")
+    } catch {
+      setCtaStatus("error")
+    }
+  }
 
   return (
     <>
@@ -346,52 +635,40 @@ export default function OurFirmPage() {
       <main style={{ backgroundColor: CREAM, fontFamily: font.sans }}>
 
         {/* ── HERO ──────────────────────────────────────────────── */}
-        <section className="inner-page-hero" style={{ padding: "7rem 0 5rem" }}>
-          <div className="page-hero-grid" style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+        <section className="inner-page-hero" style={{ padding: "1.5rem 0 2rem" }}>
+          <div className="page-hero-grid" style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw", gridTemplateColumns: "1.5fr 1fr", alignItems: "stretch" }}>
 
-            <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}>
-              <motion.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2.5rem", paddingLeft: "0.15rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Our Firm</span>
-              </motion.div>
-              <motion.h1 variants={fadeUp} style={{ fontFamily: font.serif, fontSize: "clamp(2.8rem, 4.5vw, 4.5rem)", fontWeight: 300, lineHeight: 1.1, color: INK }}>
-                Built by founders,<br />for founders<br />going{" "}
-                <em style={{ fontStyle: "italic", color: RED }}>global.</em>
-              </motion.h1>
-            </motion.div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <HeroHeading />
+            </div>
 
             <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} style={{ paddingTop: "0.5rem" }}>
 
-              <motion.p variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "1.1rem" }}>
+              <motion.p variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)", fontWeight: 450, color: MUTED, lineHeight: 1.75, marginBottom: "0.75rem" }}>
                 10x Global was built on a simple belief: founders should focus on building, while we handle everything else required to help them scale.
               </motion.p>
-              <motion.p variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "2rem" }}>
+              <motion.p variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)", fontWeight: 450, color: MUTED, lineHeight: 1.75, marginBottom: "1.25rem" }}>
                 Across global expansion, transactions, legal, tax, finance and compliance we operate as a single integrated partner to ambitious companies navigating growth across borders.
               </motion.p>
 
               {/* Philosophy card */}
-              <motion.div variants={fadeUp} style={{ position: "relative", overflow: "hidden", padding: "2.25rem 2.5rem", border: "1px solid rgba(28,23,18,0.1)", backgroundColor: "#FAFAF8" }}>
-                {/* Ghost watermark */}
-                <span style={{
-                  position: "absolute", top: "30%", left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  fontFamily: font.serif, fontSize: "8rem", fontWeight: 300,
-                  color: "rgba(140,26,43,0.05)", lineHeight: 1,
-                  userSelect: "none", pointerEvents: "none", letterSpacing: "-0.02em",
-                  whiteSpace: "nowrap",
-                }}>10x</span>
+              <motion.div variants={fadeUp} style={{ position: "relative", overflow: "hidden", padding: "1.5rem 2rem 1.5rem", borderRadius: "2rem", border: "none", backgroundColor: RED, boxShadow: "0 8px 32px rgba(140,26,43,0.3), 0 2px 8px rgba(140,26,43,0.15)" }}>
+                <video autoPlay muted playsInline onCanPlay={e => { e.currentTarget.playbackRate = 0.5 }} onEnded={e => e.currentTarget.pause()} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", pointerEvents: "none" }}>
+                  <source src="/card-bg.mp4" type="video/mp4" />
+                </video>
+                <div style={{ position: "absolute", inset: 0, background: "rgba(140,26,43,0.68)", pointerEvents: "none" }} />
 
-                {/* Red accent line */}
-                <div style={{ width: 32, height: 2, backgroundColor: RED, marginBottom: "1.5rem" }} />
-
-                <p style={{ fontFamily: font.serif, fontSize: "clamp(1.1rem, 1.5vw, 1.3rem)", fontStyle: "italic", color: INK, lineHeight: 1.7, marginBottom: "1.5rem" }}>
-                  Exceptional companies are not built through small incremental improvements. They are built through bold decisions, disciplined execution and the pursuit of outcomes many times larger than where they began.
-                </p>
-
-                <div style={{ borderTop: "1px solid rgba(28,23,18,0.08)", paddingTop: "1.1rem", display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                  <span style={{ color: RED, fontSize: "0.8rem", flexShrink: 0, marginTop: "0.1rem" }}>✦</span>
-                  <p style={{ fontFamily: font.sans, fontSize: "0.78rem", fontStyle: "italic", color: "rgba(28,23,18,0.42)", lineHeight: 1.65 }}>
-                    The name 10x reflects this philosophy — and yes, it is also Maradona, Messi and Sachin Tendulkar's jersey number!!
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)", fontWeight: 450, color: "#fff", lineHeight: 1.75, marginBottom: "1rem" }}>
+                    Exceptional companies are not built through small incremental improvements. They are built through bold decisions, disciplined execution and the pursuit of outcomes many times larger than where they began.
                   </p>
+
+                  <div style={{ borderTop: "1px solid rgba(255,255,255,0.2)", paddingTop: "1.1rem", display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.8rem", flexShrink: 0, marginTop: "0.1rem" }}>✦</span>
+                    <p style={{ fontFamily: font.sans, fontSize: "0.78rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.65 }}>
+                      The name 10x reflects this philosophy, and yes, it is also Maradona, Messi and Sachin Tendulkar's jersey number!!
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -399,20 +676,19 @@ export default function OurFirmPage() {
           </div>
         </section>
 
-        {/* ── DIVIDER ───────────────────────────────────────────── */}
-        <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
-          <div style={{ height: 1, backgroundColor: "rgba(28,23,18,0.1)" }} />
-        </div>
-
         {/* ── FOUNDER QUOTE ─────────────────────────────────────── */}
-        <section style={{ padding: "5rem 0" }}>
+        <section style={{ backgroundColor: "#0B1628", padding: "3.5rem 0" }}>
           <div className="quote-grid" style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-              style={{ fontFamily: font.serif, fontSize: "clamp(1.6rem, 2.6vw, 2.2rem)", fontWeight: 300, fontStyle: "italic", color: RED, lineHeight: 1.55 }}>
-              The name is our promise: every engagement should create the possibility of a 10<span style={{ color: RED }}>x</span> outcome
-            </motion.p>
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
-              <p style={{ fontFamily: font.sans, fontSize: "0.8rem", letterSpacing: "0.08em", color: MUTED, marginTop: "0.25rem" }}>
+            <div>
+              <div style={{ fontFamily: font.serif, fontSize: "3.5rem", color: RED, lineHeight: 0.8, marginBottom: "0.5rem", userSelect: "none" }}>"</div>
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
+                style={{ fontFamily: font.sans, fontSize: "clamp(1.3rem, 2vw, 1.8rem)", fontWeight: 700, lineHeight: 1.5, background: "linear-gradient(135deg, #ffffff 0%, #a0a8b8 60%, #6b7385 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                The name is our promise: every engagement should create the possibility of a 10<span style={{ color: RED }}>x</span> outcome
+              </motion.p>
+            </div>
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}
+              style={{ paddingTop: "2.5rem" }}>
+              <p style={{ fontFamily: font.sans, fontSize: "0.8rem", letterSpacing: "0.08em", color: "#fff", textShadow: "0 0 18px rgba(255,255,255,0.7), 0 0 40px rgba(255,255,255,0.35)" }}>
                 ~ Siddharth Kohli &amp; Ashish Jain, Co-founders, 10<span style={{ color: RED }}>x</span> Global
               </p>
             </motion.div>
@@ -420,38 +696,19 @@ export default function OurFirmPage() {
         </section>
 
         {/* ── PRINCIPLES ────────────────────────────────────────── */}
-        <section style={{ backgroundColor: GREY, padding: "6rem 0" }}>
-          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>What We Believe</span>
-              </div>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, marginBottom: "1rem" }}>
-                The principles we <em style={{ fontStyle: "italic", color: RED }}>operate by.</em>
-              </h2>
-              <p style={{ fontFamily: font.serif, fontSize: "1.1rem", fontStyle: "italic", color: MUTED }}>
+        <section style={{ backgroundColor: "#FAFAFA", padding: "5rem 0" }}>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw", textAlign: "center", marginBottom: "3rem" }}>
+            <div>
+              <motion.span initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem" }}>What We Believe</motion.span>
+              <motion.h2 initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, marginBottom: "1rem", lineHeight: 1.15 }}>
+                The principles we <em style={{ fontStyle: "normal", color: RED }}>operate by.</em>
+              </motion.h2>
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.28 }} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.8 }}>
                 Four convictions that have guided every engagement since our very first day.
-              </p>
-            </motion.div>
-
-            <div style={{ backgroundColor: "rgba(0,0,0,0.02)", borderRadius: 8, padding: "1rem" }}>
-              <div className="partners-grid">
-                {PRINCIPLES.map((p, i) => (
-                  <motion.div key={p.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                    style={{ backgroundColor: "#FFFFFF", borderLeft: `3px solid ${RED}`, padding: "2.5rem 2rem", position: "relative", overflow: "hidden", borderRadius: 8, boxShadow: "0 2px 18px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04)" }}>
-                    <span style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.num, fontSize: "7rem", fontWeight: 300, color: "rgba(140,26,43,0.25)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{p.n}</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
-                      <span style={{ fontFamily: font.num, fontSize: "0.75rem", fontWeight: 700, color: RED }}>{p.n}</span>
-                      <div style={{ flex: 1, height: 1, backgroundColor: "rgba(140,26,43,0.2)" }} />
-                    </div>
-                    <h3 style={{ fontFamily: font.serif, fontSize: "1.5rem", fontWeight: 400, color: INK, marginBottom: "1rem", lineHeight: 1.3 }}>{p.title}</h3>
-                    <p style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 450, color: MUTED, lineHeight: 1.8 }}>{p.body}</p>
-                  </motion.div>
-                ))}
-              </div>
+              </motion.p>
             </div>
           </div>
+          <PrincipleCarousel />
         </section>
 
         {/* ── WHERE WE OPERATE ─────────────────────────────────── */}
@@ -462,13 +719,13 @@ export default function OurFirmPage() {
           `}</style>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>Where We Operate</span>
+              <div style={{ marginBottom: "1rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: RED }}>Where We Operate</span>
               </div>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, marginBottom: "1rem" }}>
-                Four geographies. <em style={{ fontStyle: "italic", color: RED }}>One team.</em>
-              </h2>
-              <p style={{ fontFamily: font.serif, fontSize: "1.1rem", fontStyle: "italic", color: MUTED }}>
+              <motion.h2 initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }} style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 800, color: INK, marginBottom: "1rem" }}>
+                Four geographies. <em style={{ fontStyle: "normal", color: RED }}>One team.</em>
+              </motion.h2>
+              <p style={{ fontFamily: font.sans, fontSize: "1.1rem", fontWeight: 450, color: MUTED }}>
                 Every office is a full-service presence.
               </p>
             </motion.div>
@@ -487,12 +744,12 @@ export default function OurFirmPage() {
 
             <div className="heading-2col" style={{ marginBottom: "3.5rem" }}>
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-                  <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>The People</span>
+                <div style={{ marginBottom: "1rem" }}>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: RED }}>The People</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                  Partners you can <em style={{ fontStyle: "italic", color: RED }}>call directly.</em>
-                </h2>
+                <motion.h2 initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }} style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.2 }}>
+                  Partners you can <em style={{ fontStyle: "normal", color: RED }}>call directly.</em>
+                </motion.h2>
               </motion.div>
               <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
                 style={{ fontFamily: font.sans, fontSize: "1.05rem", fontWeight: 450, color: MUTED, lineHeight: 1.85, paddingTop: "3rem" }}>
@@ -510,7 +767,7 @@ export default function OurFirmPage() {
                   </div>
                   <div style={{ padding: "2rem 1.75rem", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <p style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: RED, marginBottom: "0.5rem" }}>{p.role}</p>
-                    <h3 style={{ fontFamily: font.serif, fontSize: "1.6rem", fontWeight: 400, color: INK, marginBottom: "0.25rem" }}>{p.name}</h3>
+                    <h3 style={{ fontFamily: font.sans, fontSize: "1.6rem", fontWeight: 700, color: INK, marginBottom: "0.25rem" }}>{p.name}</h3>
                     <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: MUTED, marginBottom: "1.5rem" }}>{p.spec}</p>
                     <div className="partner-info-row" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: RED, flexShrink: 0 }} />
@@ -562,7 +819,7 @@ export default function OurFirmPage() {
 
             {/* Book CTA strip */}
             <div className="book-cta-strip" style={{ paddingTop: "2rem", marginTop: "2rem" }}>
-              <p style={{ fontFamily: font.serif, fontSize: "1.6rem", fontStyle: "italic", color: MUTED }}>Want to know who would handle your account?</p>
+              <p style={{ fontFamily: font.sans, fontSize: "1.4rem", fontWeight: 600, color: MUTED }}>Want to know who would handle your account?</p>
               <button onClick={() => setShowContact(true)} style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: RED, textDecoration: "none", borderBottom: `1px solid ${RED}`, paddingBottom: "2px", whiteSpace: "nowrap", background: "none", border: "none", borderBottom: `1px solid ${RED}`, cursor: "pointer" }}>
                 Book a Conversation →
               </button>
@@ -574,39 +831,44 @@ export default function OurFirmPage() {
         {/* ── WHY WE BUILT 10X GLOBAL ─────────────────────────── */}
         <section style={{ backgroundColor: CREAM, padding: "6rem 0", borderTop: "1px solid rgba(28,23,18,0.08)" }}>
           <style>{`
-            .why-built-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
-            @media (max-width: 860px) { .why-built-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+            .why-built-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+            .why-built-bottom > * { min-width: 0; }
+            @media (max-width: 860px) { .why-built-bottom { grid-template-columns: 1fr; gap: 2.5rem; } }
             .why-built-scroll::-webkit-scrollbar { width: 3px; }
             .why-built-scroll::-webkit-scrollbar-track { background: rgba(28,23,18,0.06); }
             .why-built-scroll::-webkit-scrollbar-thumb { background: rgba(140,26,43,0.3); border-radius: 2px; }
           `}</style>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
-            <div className="why-built-grid">
 
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ position: "sticky", top: "7rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem" }}>
-                  Why We Built This
-                </span>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                  Why we built<br /><em style={{ fontStyle: "italic", color: RED }}>10x Global.</em>
-                </h2>
-                <div style={{ width: 40, height: 2, backgroundColor: RED, marginTop: "2rem" }} />
-              </motion.div>
+            {/* Full-width heading centered */}
+            <motion.div initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }} style={{ textAlign: "center", marginBottom: "3rem" }}>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(1.9rem, 3.2vw, 2.8rem)", fontWeight: 800, color: INK, lineHeight: 1.3, display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 0 }}>
+                Why we built 10x Global
+              </h2>
+            </motion.div>
 
+            <div className="why-built-bottom">
+
+              {/* Left — big tagline using vertical space */}
+              <div style={{ minWidth: 0 }}>
+                <LiquidTagline />
+              </div>
+
+              {/* Right — scrollable paragraphs */}
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
                 className="why-built-scroll"
-                style={{ maxHeight: 400, overflowY: "auto", paddingRight: "1.25rem" }}>
+                style={{ maxHeight: 420, overflowY: "auto", paddingRight: "0.25rem" }}>
                 {[
                   "Over the years, we realised that founders spend an incredible amount of time dealing with things that have very little to do with actually building their businesses.",
                   "To keep a company running, a founder often ends up coordinating with lawyers, chartered accountants, company secretaries, tax advisors, bankers, compliance professionals, investors, and countless other stakeholders. They spend time reading legal documents to understand what is good for them and what is not. They worry about whether a compliance has been missed.",
                   "They wonder which country to enter next, how to structure that entry, what entity to set up, how to hire people there, how to move money across borders, and whether everything is being done correctly.",
                   "We always felt that this was backwards. A founder's primary job is to build. To create products. To serve customers. To hire great people. To scale. To sell. To innovate. To obsess over their craft.",
                 ].map((p, i) => (
-                  <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.9, marginBottom: "1.5rem" }}>{p}</p>
+                  <p key={i} style={{ fontFamily: font.sans, fontSize: "clamp(0.95rem, 1.3vw, 1.15rem)", fontWeight: 450, color: MUTED, lineHeight: 1.8, marginBottom: "1.5rem" }}>{p}</p>
                 ))}
                 <div style={{ height: 1, backgroundColor: "rgba(28,23,18,0.08)", marginBottom: "1.5rem" }} />
-                <p style={{ fontFamily: font.serif, fontSize: "1.15rem", fontStyle: "italic", color: RED, lineHeight: 1.6 }}>
-                  So we built 10x Global to handle all of it — so founders never have to.
+                <p style={{ fontFamily: font.sans, fontSize: "1.15rem", fontWeight: 600, color: RED, lineHeight: 1.6 }}>
+                  We built 10x Global to handle all of it so founders never have to.
                 </p>
               </motion.div>
 
@@ -615,12 +877,11 @@ export default function OurFirmPage() {
         </section>
 
         {/* ── CAREERS ──────────────────────────────────────────── */}
-        <section style={{ backgroundColor: "#112240" }}>
+        <section id="careers" style={{ backgroundColor: "#112240" }}>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
             {/* Label bar */}
-            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", paddingTop: "2.5rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#E8394A", flexShrink: 0 }}>Careers</span>
-              <div style={{ flex: 1, height: 1, backgroundColor: "rgba(255,255,255,0.18)" }} />
+            <div style={{ paddingTop: "2.5rem" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#E8394A" }}>Careers</span>
             </div>
 
             {/* Main copy */}
@@ -667,12 +928,12 @@ export default function OurFirmPage() {
 
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2.5rem" }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
-                  <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>Insights & Updates</span>
+                <div style={{ marginBottom: "0.75rem" }}>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: RED }}>Insights & Updates</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 300, color: INK }}>
-                  From the desk of <em style={{ fontStyle: "italic", color: RED }}>our experts.</em>
-                </h2>
+                <motion.h2 initial={{ opacity: 0, y: 72 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }} style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 800, color: INK }}>
+                  From the desk of <em style={{ fontStyle: "normal", color: RED }}>our experts.</em>
+                </motion.h2>
               </div>
               <a href="https://www.10x.global/blog" target="_blank" rel="noreferrer" style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: RED, textDecoration: "none", borderBottom: `1px solid ${RED}`, paddingBottom: "2px", whiteSpace: "nowrap" }}>
                 View All Insights →
@@ -693,7 +954,7 @@ export default function OurFirmPage() {
                     <span style={{ fontFamily: font.sans, fontSize: "0.75rem", color: MUTED }}>· Feb 2025</span>
                     <span style={{ fontFamily: font.sans, fontSize: "0.75rem", color: MUTED, marginLeft: "auto" }}>5 min read</span>
                   </div>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.45rem", fontWeight: 400, color: INK, lineHeight: 1.4, marginBottom: "0.85rem" }}>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.45rem", fontWeight: 700, color: INK, lineHeight: 1.4, marginBottom: "0.85rem" }}>
                     Advertising Services to Foreign Clients: New Tax Clarity for Indian Agencies
                   </h3>
                   <p style={{ fontFamily: font.sans, fontSize: "0.925rem", fontWeight: 450, color: MUTED, lineHeight: 1.8, marginBottom: "1.1rem" }}>
@@ -716,7 +977,7 @@ export default function OurFirmPage() {
                       <span style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", backgroundColor: "rgba(140,26,43,0.08)", color: RED, padding: "0.22rem 0.55rem" }}>Market Insights</span>
                       <span style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED }}>· Feb 2025</span>
                     </div>
-                    <h3 style={{ fontFamily: font.serif, fontSize: "1rem", fontWeight: 400, color: INK, lineHeight: 1.5, marginBottom: "0.75rem" }}>
+                    <h3 style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: "0.75rem" }}>
                       The Liberalised Remittance Scheme: How Liberally Can Indians Send Money Abroad?
                     </h3>
                     <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
@@ -734,7 +995,7 @@ export default function OurFirmPage() {
                       <span style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", backgroundColor: "rgba(140,26,43,0.08)", color: RED, padding: "0.22rem 0.55rem" }}>Global Setup</span>
                       <span style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED }}>· Feb 2025</span>
                     </div>
-                    <h3 style={{ fontFamily: font.serif, fontSize: "1rem", fontWeight: 400, color: INK, lineHeight: 1.5, marginBottom: "0.75rem" }}>
+                    <h3 style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: "0.75rem" }}>
                       UAE Free Zones: The Complete Guide for Businesses Expanding to the Middle East
                     </h3>
                     <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
@@ -774,7 +1035,7 @@ export default function OurFirmPage() {
                             <span style={{ fontFamily: font.sans, fontSize: "0.65rem", color: MUTED }}>· {ins.date}</span>
                           </div>
                           <p style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED, marginBottom: "0.5rem" }}>{ins.date}</p>
-                          <h3 style={{ fontFamily: font.serif, fontSize: "0.95rem", fontWeight: 400, color: INK, lineHeight: 1.5, marginBottom: "0.85rem" }}>{ins.title}</h3>
+                          <h3 style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: "0.85rem" }}>{ins.title}</h3>
                           <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, color: RED, letterSpacing: "0.05em" }}>READ MORE →</span>
                         </div>
                       </a>
@@ -794,32 +1055,121 @@ export default function OurFirmPage() {
         </section>
 
         {/* ── FINAL CTA ─────────────────────────────────────────── */}
-        <section style={{ backgroundColor: GREY, padding: "7rem 0", textAlign: "center" }}>
-          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            style={{ maxWidth: 680, margin: "0 auto" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>Work With Us</span>
+        <section style={{ borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
+          <style>{`
+            .cta-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 460px; }
+            @media (max-width: 860px) { .cta-split { grid-template-columns: 1fr; } }
+            .cta-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+            @media (max-width: 560px) { .cta-2col { grid-template-columns: 1fr; } }
+            .cta-field { margin-bottom: 0.75rem; }
+            .cta-label { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); display: block; margin-bottom: 0.45rem; }
+            .cta-input { width: 100%; font-family: inherit; font-size: 0.9rem; color: rgba(255,255,255,0.92); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.22); padding: 0.8rem 1rem; outline: none; box-sizing: border-box; border-radius: 0; appearance: none; transition: border-color 0.2s, background 0.2s; }
+            .cta-input::placeholder { color: rgba(255,255,255,0.2); }
+            .cta-input:focus { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.09); }
+          `}</style>
+          <div className="cta-split">
+
+            {/* Left — maroon panel */}
+            <div style={{ background: "linear-gradient(145deg, #8C1A2B 0%, #6B1220 100%)", padding: "3.5rem clamp(2rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+              {/* subtle decorative ring */}
+              <div style={{ position: "absolute", right: "-6rem", top: "50%", transform: "translateY(-50%)", width: "28rem", height: "28rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.07)", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", right: "-9rem", top: "50%", transform: "translateY(-50%)", width: "36rem", height: "36rem", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.04)", pointerEvents: "none" }} />
+              <span style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: "2rem", display: "block" }}>
+                Work With Us
+              </span>
+              <motion.h2
+                initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                style={{ fontFamily: font.sans, fontSize: "clamp(1.9rem, 3.2vw, 3rem)", fontWeight: 800, color: "#fff", lineHeight: 1.15, marginBottom: "1.75rem" }}>
+                Tell us where you're headed. We'll tell you what it takes.
+              </motion.h2>
+              <div style={{ width: "2.5rem", height: "1px", backgroundColor: "rgba(255,255,255,0.3)", marginBottom: "1.75rem" }} />
+              <p style={{ fontFamily: font.sans, fontSize: "clamp(0.88rem, 1.1vw, 0.98rem)", fontWeight: 400, color: "rgba(255,255,255,0.62)", lineHeight: 1.85, maxWidth: "36ch" }}>
+                30 minutes with a partner. No cost, no pitch. Just a clear-eyed conversation about your next move and what stands between you and getting there.
+              </p>
             </div>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, color: INK, marginBottom: "1.5rem", lineHeight: 1.1 }}>
-              Begin the <em style={{ fontStyle: "italic", color: RED }}>conversation.</em>
-            </h2>
-            <p style={{ fontFamily: font.sans, fontSize: "1.05rem", fontWeight: 450, color: MUTED, lineHeight: 1.85, marginBottom: "2.5rem" }}>
-              Book a 30 minute consultation with one of our partners. No cost and no obligation, simply a clear eyed conversation about where you intend to go, and how we can help you get there.
-            </p>
-            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
-              <button onClick={() => setShowContact(true)} style={{ backgroundColor: RED, color: "#fff", padding: "1rem 2rem", border: "none", cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                Book a Free 30 Minute Consultation
-              </button>
-              <button onClick={() => setShowContact(true)} style={{ backgroundColor: "transparent", color: RED, padding: "1rem 2rem", border: `1.5px solid ${RED}`, cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                Speak to a Partner
-              </button>
+
+            {/* Right — dark navy form panel */}
+            <div style={{ backgroundColor: "#0B1628", padding: "3.5rem clamp(2rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              {ctaStatus === "done" ? (
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ width: 52, height: 52, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem" }}>
+                    <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M4 10l5 5 8-8" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </div>
+                  <p style={{ fontFamily: font.sans, fontSize: "1.5rem", fontWeight: 700, color: "#fff", marginBottom: "0.6rem" }}>Enquiry sent.</p>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
+                    We'll get back to you at <strong style={{ color: "rgba(255,255,255,0.75)" }}>{ctaForm.email}</strong> shortly.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "#E05070", marginBottom: "0.6rem" }}>
+                    Get in Touch
+                  </p>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", fontWeight: 700, color: "#fff", marginBottom: "0.35rem", lineHeight: 1.2 }}>
+                    Start the conversation.
+                  </h3>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.8rem", color: "rgba(255,255,255,0.35)", marginBottom: "2rem", letterSpacing: "0.01em" }}>
+                    We respond within one working day.
+                  </p>
+                  <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)", marginBottom: "2rem" }} />
+                  <form onSubmit={handleCtaSubmit} style={{ fontFamily: font.sans }}>
+                    <div className="cta-2col">
+                      <div>
+                        <label className="cta-label">First Name <span style={{ color: "#E05070" }}>*</span></label>
+                        <input className="cta-input" name="firstName" required value={ctaForm.firstName} onChange={handleCtaChange} />
+                      </div>
+                      <div>
+                        <label className="cta-label">Last Name <span style={{ color: "#E05070" }}>*</span></label>
+                        <input className="cta-input" name="lastName" required value={ctaForm.lastName} onChange={handleCtaChange} />
+                      </div>
+                    </div>
+                    <div className="cta-field">
+                      <label className="cta-label">Email <span style={{ color: "#E05070" }}>*</span></label>
+                      <input className="cta-input" name="email" type="email" required value={ctaForm.email} onChange={handleCtaChange} />
+                    </div>
+                    <div className="cta-2col">
+                      <div>
+                        <label className="cta-label">Phone</label>
+                        <input className="cta-input" name="phone" type="tel" value={ctaForm.phone} onChange={handleCtaChange} placeholder="+91 98765 43210" />
+                      </div>
+                      <div>
+                        <label className="cta-label">Company</label>
+                        <input className="cta-input" name="company" value={ctaForm.company} onChange={handleCtaChange} placeholder="Acme Technologies" />
+                      </div>
+                    </div>
+                    <div className="cta-field">
+                      <label className="cta-label">Your Query</label>
+                      <textarea className="cta-input" name="query" value={ctaForm.query} onChange={handleCtaChange} rows={3}
+                        style={{ resize: "vertical", minHeight: 88 }}
+                        placeholder="e.g. We're looking to set up an entity in the UAE and need help with structuring..." />
+                    </div>
+                    {ctaStatus === "error" && (
+                      <p style={{ fontSize: "0.78rem", color: "#E05070", marginBottom: "0.75rem" }}>
+                        Something went wrong. Please email us directly at info@10x.global
+                      </p>
+                    )}
+                    <button type="submit" disabled={ctaStatus === "sending"}
+                      style={{ width: "100%", backgroundColor: ctaStatus === "sending" ? "rgba(140,26,43,0.4)" : RED, color: "#fff", padding: "1rem", border: "none", cursor: ctaStatus === "sending" ? "default" : "pointer", fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", transition: "opacity 0.2s", marginTop: "0.5rem" }}>
+                      {ctaStatus === "sending" ? "Sending…" : "Send Enquiry →"}
+                    </button>
+                  </form>
+                  <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.6rem" }}>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.78rem", color: "rgba(255,255,255,0.35)" }}>Or connect with us directly</span>
+                    <a href="https://wa.me/918800565608" target="_blank" rel="noopener noreferrer"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", padding: "0.45rem 1rem", border: "1px solid rgba(37,211,102,0.35)", color: "#25D366", fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 600, textDecoration: "none", letterSpacing: "0.04em", transition: "background 0.2s" }}
+                      onMouseEnter={e => e.currentTarget.style.background = "rgba(37,211,102,0.08)"}
+                      onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.86L.072 23.5l5.788-1.438A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.943 0-3.757-.537-5.309-1.471l-.381-.224-3.433.854.882-3.339-.247-.398A9.964 9.964 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                      </svg>
+                      WhatsApp · +91 88005 65608
+                    </a>
+                  </div>
+                </>
+              )}
             </div>
-            <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: MUTED }}>
-              Looking to build your career with us?{" "}
-              <a href="#" style={{ color: RED, fontWeight: 600, textDecoration: "none" }}>Explore opportunities at 10x Global →</a>
-            </p>
-          </motion.div>
+
           </div>
         </section>
 

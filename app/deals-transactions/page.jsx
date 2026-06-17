@@ -113,8 +113,8 @@ export default function DealsPage() {
               <motion.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Deals & Transaction Advisory</span>
               </motion.div>
-              <motion.h1 variants={fadeUp} style={{ fontFamily: font.serif, fontSize: "clamp(3.2rem, 5.5vw, 5.5rem)", fontWeight: 400, lineHeight: 0.88, color: INK }}>
-                The deal<br />deserves<br />advisors who've<br /><em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>done this before.</em>
+              <motion.h1 variants={fadeUp} style={{ fontFamily: font.sans, fontSize: "clamp(3.2rem, 5.5vw, 5.5rem)", fontWeight: 800, lineHeight: 0.88, color: INK }}>
+                The deal<br />deserves<br />advisors who've<br /><em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>done this before.</em>
               </motion.h1>
             </motion.div>
 
@@ -177,7 +177,7 @@ export default function DealsPage() {
                   }}
                   style={{ cursor: "pointer", display: "block", transition: "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1)", borderRadius: 12 }}>
                   <div className="journey-inner" style={{ border: "1.5px solid rgba(140,26,43,0.4)", borderRadius: 12, padding: "1.6rem 1.75rem", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", transition: "background-color 0.25s, border-color 0.25s" }}>
-                    <span className="card-label" style={{ fontFamily: font.serif, fontSize: "1.25rem", fontWeight: 400, color: INK, transition: "color 0.25s" }}>{label}</span>
+                    <span className="card-label" style={{ fontFamily: font.sans, fontSize: "1.25rem", fontWeight: 700, color: INK, transition: "color 0.25s" }}>{label}</span>
                     <span className="card-arrow" style={{ color: RED, fontSize: "1.25rem", fontWeight: 600, transition: "color 0.25s" }}>→</span>
                   </div>
                 </div>
@@ -194,8 +194,8 @@ export default function DealsPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
                   <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>How We Work</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, lineHeight: 1.15 }}>
-                  No handoffs.<br /><em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>One brief.</em>
+                <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, color: INK, lineHeight: 1.15 }}>
+                  No handoffs.<br /><em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>One brief.</em>
                 </h2>
               </motion.div>
               <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
@@ -217,8 +217,8 @@ export default function DealsPage() {
               <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>
                 What We Do
               </span>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.1, marginTop: "0.6rem" }}>
-                The full transaction <em style={{ fontStyle: "italic", color: RED }}>lifecycle.</em>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.1, marginTop: "0.6rem" }}>
+                The full transaction <em style={{ fontStyle: "normal", color: RED }}>lifecycle.</em>
               </h2>
             </motion.div>
 
@@ -336,7 +336,7 @@ export default function DealsPage() {
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <h3 style={{ fontFamily: font.serif, fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)", fontWeight: 300, color: INK, lineHeight: 1.15, marginBottom: "1.25rem" }}>
+                    <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)", fontWeight: 800, color: INK, lineHeight: 1.15, marginBottom: "1.25rem" }}>
                       {SERVICES[activeService].title}
                     </h3>
                     <div style={{ width: 36, height: 1.5, backgroundColor: RED, opacity: 0.7, marginBottom: "1.5rem" }} />
@@ -389,8 +389,8 @@ export default function DealsPage() {
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               style={{ textAlign: "center", marginBottom: "4.5rem" }}>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                Trusted at <em style={{ fontStyle: "italic", color: RED }}>every stage of growth.</em>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, color: INK, lineHeight: 1.2 }}>
+                Trusted at <em style={{ fontStyle: "normal", color: RED }}>every stage of growth.</em>
               </h2>
             </motion.div>
 
@@ -409,7 +409,7 @@ export default function DealsPage() {
                     </div>
                     <div className="stage-text">
                       <p style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: RED, marginBottom: "0.4rem" }}>Stage {s.n}</p>
-                      <p style={{ fontFamily: font.serif, fontSize: "1.05rem", fontWeight: 400, color: INK, marginBottom: "0.5rem", lineHeight: 1.25 }}>{s.label}</p>
+                      <p style={{ fontFamily: font.sans, fontSize: "1.05rem", fontWeight: 400, color: INK, marginBottom: "0.5rem", lineHeight: 1.25 }}>{s.label}</p>
                       <p style={{ fontFamily: font.sans, fontSize: "0.75rem", fontWeight: 450, color: MUTED, lineHeight: 1.6 }}>{s.desc}</p>
                     </div>
                   </motion.div>
@@ -427,7 +427,7 @@ export default function DealsPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
                   <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>We Also Invest</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 300, color: INK, lineHeight: 1.3 }}>
+                <h2 style={{ fontFamily: font.sans, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 800, color: INK, lineHeight: 1.3 }}>
                   We did not build an investment platform to find new companies. We built it to back the ones we already know.
                 </h2>
               </motion.div>
@@ -439,7 +439,7 @@ export default function DealsPage() {
                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i + 1) * 0.1 }}
                   style={{ borderLeft: `3px solid ${RED}`, padding: "1.75rem", backgroundColor: "#F5F5F5" }}>
                   <p style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", color: RED, marginBottom: "0.85rem" }}>{card.tag}</p>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.5rem", fontWeight: 400, color: INK, marginBottom: "0.85rem", lineHeight: 1.25 }}>{card.title}</h3>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.5rem", fontWeight: 700, color: INK, marginBottom: "0.85rem", lineHeight: 1.25 }}>{card.title}</h3>
                   <p style={{ fontFamily: font.sans, fontSize: "0.92rem", fontWeight: 450, color: MUTED, lineHeight: 1.8, marginBottom: "1.25rem" }}>{card.body}</p>
                   <a href="#" style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: RED, textDecoration: "none" }}>
                     Explore →
@@ -458,8 +458,8 @@ export default function DealsPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
                   <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Questions We Get Asked</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                  Before we <em style={{ fontStyle: "italic", color: RED }}>interact,</em><br />some answers.
+                <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.2 }}>
+                  Before we <em style={{ fontStyle: "normal", color: RED }}>interact,</em><br />some answers.
                 </h2>
               </motion.div>
 
@@ -469,7 +469,7 @@ export default function DealsPage() {
                     <button
                       onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
                       style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1.5rem 0", background: "none", border: "none", cursor: "pointer", textAlign: "left", gap: "1.5rem" }}>
-                      <span style={{ fontFamily: font.serif, fontSize: "1.2rem", fontWeight: 600, color: INK, lineHeight: 1.4 }}>{faq.q}</span>
+                      <span style={{ fontFamily: font.sans, fontSize: "1.2rem", fontWeight: 600, color: INK, lineHeight: 1.4 }}>{faq.q}</span>
                       <span style={{
                         width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
                         backgroundColor: openFaq === i ? RED : "transparent",
@@ -506,10 +506,10 @@ export default function DealsPage() {
               <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Start the Conversation</span>
               <div style={{ width: 32, height: 1, backgroundColor: RED }} />
             </div>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4.25rem)", fontWeight: 300, color: INK, lineHeight: 1.1, marginBottom: "0.5rem" }}>
+            <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.5rem, 5vw, 4.25rem)", fontWeight: 800, color: INK, lineHeight: 1.1, marginBottom: "0.5rem" }}>
               Tell us about the transaction.
             </h2>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4.25rem)", fontWeight: 300, fontStyle: "italic", color: RED, lineHeight: 1.15, marginBottom: "2rem" }}>
+            <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.5rem, 5vw, 4.25rem)", fontWeight: 800, fontStyle: "normal", color: RED, lineHeight: 1.15, marginBottom: "2rem" }}>
               We'll tell you how we can help.
             </h2>
             <p style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 450, color: MUTED, lineHeight: 1.85, marginBottom: "2rem" }}>

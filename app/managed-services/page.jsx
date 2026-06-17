@@ -137,9 +137,9 @@ export default function ManagedServicesPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2.5rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Managed Services</span>
               </div>
-              <h1 style={{ fontFamily: font.serif, fontSize: "clamp(3rem, 5vw, 4.5rem)", fontWeight: 300, lineHeight: 1.08, color: INK }}>
+              <h1 style={{ fontFamily: font.sans, fontSize: "clamp(3rem, 5vw, 4.5rem)", fontWeight: 800, lineHeight: 1.08, color: INK }}>
                 Your finance<br />function.<br />Without the<br />
-                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>full-time hire.</em>
+                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>full-time hire.</em>
               </h1>
             </motion.div>
 
@@ -210,7 +210,7 @@ export default function ManagedServicesPage() {
                   }}
                   style={{ cursor: "pointer", display: "block", transition: "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1)", borderRadius: 12 }}>
                   <div className="ms-intent-card" style={{ border: "1.5px solid rgba(140,26,43,0.4)", borderRadius: 12, padding: "1.6rem 1.75rem", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", transition: "background-color 0.25s, border-color 0.25s" }}>
-                    <span className="card-label" style={{ fontFamily: font.serif, fontSize: "1.25rem", fontWeight: 400, color: INK, transition: "color 0.25s" }}>{label}</span>
+                    <span className="card-label" style={{ fontFamily: font.sans, fontSize: "1.25rem", fontWeight: 700, color: INK, transition: "color 0.25s" }}>{label}</span>
                     <span className="card-arrow" style={{ color: RED, fontSize: "1.25rem", fontWeight: 600, transition: "color 0.25s" }}>→</span>
                   </div>
                 </div>
@@ -228,15 +228,15 @@ export default function ManagedServicesPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>What's Included</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.1 }}>
+                <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.1 }}>
                   The full finance function.<br />
-                  <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>Every jurisdiction.</em>
+                  <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>Every jurisdiction.</em>
                 </h2>
               </motion.div>
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
                 style={{ paddingTop: "2.5rem", display: "flex", justifyContent: "flex-end" }}>
                 <div style={{ borderLeft: `2px solid ${RED}`, paddingLeft: "1.25rem", maxWidth: 320 }}>
-                  <p style={{ fontFamily: font.serif, fontSize: "1rem", fontStyle: "italic", fontWeight: 300, color: INK, lineHeight: 1.55 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "1rem", fontStyle: "normal", fontWeight: 800, color: INK, lineHeight: 1.55 }}>
                     All services available as part of a single integrated retainer.
                   </p>
                   <p style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: RED, marginTop: "0.6rem" }}>One team. One brief.</p>
@@ -248,8 +248,8 @@ export default function ManagedServicesPage() {
               {SERVICES.map((s, i) => (
                 <motion.div key={s.n} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                   style={{ backgroundColor: WHITE, border: "1px solid rgba(28,23,18,0.1)", padding: "1.25rem", display: "flex", flexDirection: "column" }}>
-                  <span style={{ fontFamily: font.num, fontSize: "1.5rem", fontWeight: 400, fontStyle: "italic", color: RED, lineHeight: 1, marginBottom: "0.65rem" }}>{s.n}</span>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.15rem", fontWeight: 400, color: INK, lineHeight: 1.35, marginBottom: "0.55rem" }}>{s.title}</h3>
+                  <span style={{ fontFamily: font.num, fontSize: "1.5rem", fontWeight: 400, fontStyle: "normal", color: RED, lineHeight: 1, marginBottom: "0.65rem" }}>{s.n}</span>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.15rem", fontWeight: 700, color: INK, lineHeight: 1.35, marginBottom: "0.55rem" }}>{s.title}</h3>
                   <p style={{ fontFamily: font.sans, fontSize: "0.82rem", fontWeight: 450, color: MUTED, lineHeight: 1.65, marginBottom: "0.75rem", flex: 1 }}>{s.body}</p>
                   <button onClick={() => setOpenScope(openScope === i ? -1 : i)}
                     style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0 0", border: "none", background: "none", cursor: "pointer", marginTop: "auto" }}>
@@ -282,8 +282,8 @@ export default function ManagedServicesPage() {
         <section style={{ backgroundColor: CREAM, padding: "6rem 0", textAlign: "center" }}>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ maxWidth: 820, margin: "0 auto" }}>
-            <p style={{ fontFamily: font.serif, fontSize: "4rem", color: "rgba(140,26,43,0.22)", lineHeight: 0.5, marginBottom: "2rem" }}>"</p>
-            <p style={{ fontFamily: font.serif, fontSize: "clamp(1.3rem, 2.2vw, 1.75rem)", fontStyle: "italic", fontWeight: 300, color: INK, lineHeight: 1.65, marginBottom: "2rem" }}>
+            <p style={{ fontFamily: font.sans, fontSize: "4rem", color: "rgba(140,26,43,0.22)", lineHeight: 0.5, marginBottom: "2rem" }}>"</p>
+            <p style={{ fontFamily: font.sans, fontSize: "clamp(1.3rem, 2.2vw, 1.75rem)", fontStyle: "normal", fontWeight: 800, color: INK, lineHeight: 1.65, marginBottom: "2rem" }}>
               "Before 10x Global, our India compliance was a constant source of anxiety. Missed deadlines, advisors not talking to each other. Now it's invisible. It just gets done, every quarter, without us having to chase."
             </p>
             <p style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(107,101,96,0.45)" }}>
@@ -301,15 +301,15 @@ export default function ManagedServicesPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
                   <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Engagement Options</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 300, color: INK, lineHeight: 1.1 }}>
+                <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 800, color: INK, lineHeight: 1.1 }}>
                   Structured for where<br />
-                  <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>you actually are.</em>
+                  <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>you actually are.</em>
                 </h2>
               </motion.div>
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
                 style={{ paddingTop: "3.5rem", display: "flex", justifyContent: "flex-end" }}>
                 <div style={{ borderLeft: `2px solid ${RED}`, paddingLeft: "1.25rem", maxWidth: 300 }}>
-                  <p style={{ fontFamily: font.serif, fontSize: "1rem", fontStyle: "italic", fontWeight: 300, color: INK, lineHeight: 1.65 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "1rem", fontStyle: "normal", fontWeight: 800, color: INK, lineHeight: 1.65 }}>
                     Scope and pricing tailored to your jurisdiction count and complexity.
                   </p>
                 </div>
@@ -321,7 +321,7 @@ export default function ManagedServicesPage() {
                 <motion.div key={t.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                   style={{ borderLeft: `3px solid ${RED}`, padding: "2rem 1.75rem" }}>
                   <p style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: RED, marginBottom: "0.85rem" }}>{t.tier}</p>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.5rem", fontWeight: 400, color: INK, marginBottom: "0.85rem", lineHeight: 1.25 }}>{t.title}</h3>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.5rem", fontWeight: 700, color: INK, marginBottom: "0.85rem", lineHeight: 1.25 }}>{t.title}</h3>
                   <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: MUTED, lineHeight: 1.75 }}>{t.body}</p>
                 </motion.div>
               ))}
@@ -336,9 +336,9 @@ export default function ManagedServicesPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Who Uses This</span>
               </div>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 300, color: INK, lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 800, color: INK, lineHeight: 1.1 }}>
                 Built for founders who have<br />
-                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>better things to chase.</em>
+                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>better things to chase.</em>
               </h2>
             </motion.div>
 
@@ -346,8 +346,8 @@ export default function ManagedServicesPage() {
               {WHO.map((w, i) => (
                 <motion.div key={w.n} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                   style={{ position: "relative", borderLeft: `3px solid ${RED}`, padding: "2rem 1.75rem", backgroundColor: WHITE, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-                  <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.num, fontSize: "6rem", fontWeight: 300, color: "rgba(140,26,43,0.25)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{w.n}</span>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.2rem", fontWeight: 400, color: INK, marginBottom: "0.85rem", lineHeight: 1.4, position: "relative" }}>{w.title}</h3>
+                  <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.num, fontSize: "6rem", fontWeight: 800, color: "rgba(140,26,43,0.25)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{w.n}</span>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.2rem", fontWeight: 700, color: INK, marginBottom: "0.85rem", lineHeight: 1.4, position: "relative" }}>{w.title}</h3>
                   <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: MUTED, lineHeight: 1.75, position: "relative" }}>{w.body}</p>
                 </motion.div>
               ))}
@@ -362,8 +362,8 @@ export default function ManagedServicesPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Common Questions</span>
               </div>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                Before we <em style={{ fontStyle: "italic", color: RED }}>interact,</em><br />some answers.
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.2 }}>
+                Before we <em style={{ fontStyle: "normal", color: RED }}>interact,</em><br />some answers.
               </h2>
             </motion.div>
 
@@ -373,7 +373,7 @@ export default function ManagedServicesPage() {
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
                     style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1.5rem 0", background: "none", border: "none", cursor: "pointer", textAlign: "left", gap: "1.5rem" }}>
-                    <span style={{ fontFamily: font.serif, fontSize: "1.15rem", fontWeight: 600, color: INK, lineHeight: 1.4 }}>{faq.q}</span>
+                    <span style={{ fontFamily: font.sans, fontSize: "1.15rem", fontWeight: 600, color: INK, lineHeight: 1.4 }}>{faq.q}</span>
                     <span style={{
                       width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
                       backgroundColor: openFaq === i ? RED : "transparent",
@@ -407,10 +407,10 @@ export default function ManagedServicesPage() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
               <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Start the Conversation</span>
             </div>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, color: INK, lineHeight: 1.08, marginBottom: "0.25rem" }}>
+            <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, color: INK, lineHeight: 1.08, marginBottom: "0.25rem" }}>
               Tell us about your entities.
             </h2>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, fontStyle: "italic", color: RED, lineHeight: 1.08, marginBottom: "1.75rem" }}>
+            <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, fontStyle: "normal", color: RED, lineHeight: 1.08, marginBottom: "1.75rem" }}>
               We'll handle the rest.
             </h2>
             <p style={{ fontFamily: font.sans, fontSize: "1rem", color: MUTED, lineHeight: 1.8, marginBottom: "2rem" }}>

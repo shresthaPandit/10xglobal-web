@@ -17,7 +17,7 @@ const COLS = [
     links: [
       { label: "Our Firm",   href: "/our-firm"                  },
       { label: "Insights",   href: "/our-firm#insights"         },
-      { label: "Careers",    href: "#"                          },
+      { label: "Careers",    href: "/our-firm#careers"          },
       { label: "10x Reads",  href: "https://enlightenedpost.com/" },
     ],
   },

@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import { font } from "@/lib/theme"
 
 const RED    = "#E8394A"
-const WHITE  = "#ffffff"
-const DIM    = "rgba(255,255,255,0.45)"
-const BORDER = "rgba(255,255,255,0.15)"
+const INK    = "#0C1A27"
+const MID    = "rgba(12,26,39,0.55)"
+const BORDER = "rgba(12,26,39,0.15)"
+const BG     = "#FAFAF9"
 
 const AREA_OPTIONS = [
   "Tax & Compliance",
@@ -29,7 +30,7 @@ function Field({ label, required, children }) {
       <label style={{
         fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700,
         letterSpacing: "0.18em", textTransform: "uppercase",
-        color: "rgba(255,255,255,0.88)",
+        color: INK,
       }}>
         {label}{required && <span style={{ color: RED, marginLeft: 3 }}>*</span>}
       </label>
@@ -43,7 +44,7 @@ const inputBase = {
   fontFamily: "inherit",
   fontSize: "0.9rem",
   fontWeight: 400,
-  color: WHITE,
+  color: INK,
   backgroundColor: "transparent",
   border: "none",
   borderBottomWidth: "1px",
@@ -85,7 +86,7 @@ export default function CareerModal({ isOpen, onClose }) {
       fd.append("Relevant Qualification", form.qualification || "—")
       fd.append("Area of Interest",       form.area          || "—")
       fd.append("Years of Experience",    form.experience    || "—")
-      fd.append("LinkedIn / Portfolio",   form.linkedin      || "—")
+      fd.append("LinkedIn",                form.linkedin      || "—")
       if (resume) fd.append("resume", resume, resume.name)
       const res = await fetch("https://formsubmit.co/ajax/hr@10x.global", {
         method: "POST", headers: { Accept: "application/json" }, body: fd,
@@ -104,25 +105,25 @@ export default function CareerModal({ isOpen, onClose }) {
     }, 350)
   }
 
-  const chevron = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.35)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`
+  const chevron = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(12,26,39,0.35)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           <style>{`
-            .cm-field::placeholder { color: rgba(255,255,255,0.2); }
+            .cm-field::placeholder { color: #A0A8B0; }
             .cm-field:focus { border-bottom-color: ${RED} !important; }
-            .cm-sel option { background: #0A1628; color: #fff; }
+            .cm-sel option { background: #fff; color: #0C1A27; padding-left: 8px; }
             .cm-scroll::-webkit-scrollbar { width: 3px; }
-            .cm-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+            .cm-scroll::-webkit-scrollbar-thumb { background: rgba(12,26,39,0.1); border-radius: 2px; }
           `}</style>
 
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={handleClose}
-            style={{ position: "fixed", inset: 0, backgroundColor: "rgba(3,7,18,0.82)", zIndex: 1000, backdropFilter: "blur(6px)" }}
+            style={{ position: "fixed", inset: 0, backgroundColor: "rgba(12,26,39,0.55)", zIndex: 1000, backdropFilter: "blur(6px)" }}
           />
 
           {/* Modal */}
@@ -138,10 +139,10 @@ export default function CareerModal({ isOpen, onClose }) {
               width: "min(560px, 95vw)",
               maxHeight: "90vh",
               overflowY: "auto",
-              background: "linear-gradient(160deg, #0F1E35 0%, #091528 100%)",
+              background: BG,
               borderRadius: 16,
-              border: "1px solid rgba(255,255,255,0.07)",
-              boxShadow: "0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04)",
+              border: "1px solid rgba(12,26,39,0.08)",
+              boxShadow: "0 24px 80px rgba(12,26,39,0.18), 0 0 0 1px rgba(12,26,39,0.04)",
             }}
           >
             {status === "done" ? (
@@ -152,10 +153,10 @@ export default function CareerModal({ isOpen, onClose }) {
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.1, type: "spring", stiffness: 260, damping: 18 }}
-                  style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(232,57,74,0.12)", border: "1px solid rgba(232,57,74,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", fontSize: "1.4rem", color: RED }}
+                  style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(232,57,74,0.08)", border: "1px solid rgba(232,57,74,0.25)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", fontSize: "1.4rem", color: RED }}
                 >✓</motion.div>
-                <p style={{ fontFamily: font.sans, fontSize: "1.1rem", fontWeight: 700, color: WHITE, marginBottom: "0.5rem" }}>Application received.</p>
-                <p style={{ fontFamily: font.sans, fontSize: "0.85rem", color: DIM, lineHeight: 1.65 }}>We read every one. Expect a reply within a week.</p>
+                <p style={{ fontFamily: font.sans, fontSize: "1.1rem", fontWeight: 700, color: INK, marginBottom: "0.5rem" }}>Application received.</p>
+                <p style={{ fontFamily: font.sans, fontSize: "0.85rem", color: MID, lineHeight: 1.65 }}>We read every one. Expect a reply within a week.</p>
                 <button onClick={handleClose} style={{ marginTop: "2rem", fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: RED, background: "none", border: "none", cursor: "pointer" }}>Close →</button>
               </motion.div>
             ) : (
@@ -167,19 +168,19 @@ export default function CareerModal({ isOpen, onClose }) {
                       <p style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: RED, marginBottom: "0.65rem" }}>
                         Application
                       </p>
-                      <h2 style={{ fontFamily: font.sans, fontSize: "1.75rem", fontWeight: 800, color: WHITE, lineHeight: 1.1, marginBottom: "0.6rem" }}>
+                      <h2 style={{ fontFamily: font.sans, fontSize: "1.75rem", fontWeight: 800, color: INK, lineHeight: 1.1, marginBottom: "0.6rem" }}>
                         Tell us about you
                       </h2>
-                      <p style={{ fontFamily: font.sans, fontSize: "0.82rem", color: DIM, lineHeight: 1.7, maxWidth: 380 }}>
-                        A few details and your resume. We read every application — expect a reply within a week.
+                      <p style={{ fontFamily: font.sans, fontSize: "0.82rem", color: MID, lineHeight: 1.7, maxWidth: 380 }}>
+                        A few details and your resume. We read every application. Expect a reply within a week.
                       </p>
                     </div>
-                    <button onClick={handleClose} style={{ flexShrink: 0, marginLeft: "1rem", marginTop: "0.2rem", width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>
+                    <button onClick={handleClose} style={{ flexShrink: 0, marginLeft: "1rem", marginTop: "0.2rem", width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(12,26,39,0.1)", background: "rgba(12,26,39,0.04)", color: "rgba(12,26,39,0.4)", cursor: "pointer", fontSize: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}>
                       ✕
                     </button>
                   </div>
                   {/* Divider */}
-                  <div style={{ height: 1, backgroundColor: "rgba(255,255,255,0.07)", margin: "2rem 0 0" }} />
+                  <div style={{ height: 1, backgroundColor: "rgba(12,26,39,0.07)", margin: "2rem 0 0" }} />
                 </div>
 
                 {/* Form */}
@@ -218,9 +219,9 @@ export default function CareerModal({ isOpen, onClose }) {
                       <select required name="area" value={form.area} onChange={set}
                         className="cm-field cm-sel"
                         onFocus={() => setFocused("area")} onBlur={() => setFocused(null)}
-                        style={{ ...inputBase, ...focusStyle("area"), color: form.area ? WHITE : "rgba(255,255,255,0.2)", backgroundImage: chevron, backgroundRepeat: "no-repeat", backgroundPosition: "right 0.1rem center", paddingRight: "1.4rem", cursor: "pointer" }}>
+                        style={{ ...inputBase, ...focusStyle("area"), color: form.area ? INK : "rgba(12,26,39,0.25)", backgroundImage: chevron, backgroundRepeat: "no-repeat", backgroundPosition: "right 0.1rem center", paddingRight: "1.4rem", cursor: "pointer" }}>
                         <option value="" disabled>Select...</option>
-                        {AREA_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
+                        {AREA_OPTIONS.map(o => <option key={o} value={o}>{"  "}{o}</option>)}
                       </select>
                     </Field>
 
@@ -228,14 +229,14 @@ export default function CareerModal({ isOpen, onClose }) {
                       <select name="experience" value={form.experience} onChange={set}
                         className="cm-field cm-sel"
                         onFocus={() => setFocused("exp")} onBlur={() => setFocused(null)}
-                        style={{ ...inputBase, ...focusStyle("exp"), color: form.experience ? WHITE : "rgba(255,255,255,0.2)", backgroundImage: chevron, backgroundRepeat: "no-repeat", backgroundPosition: "right 0.1rem center", paddingRight: "1.4rem", cursor: "pointer" }}>
+                        style={{ ...inputBase, ...focusStyle("exp"), color: form.experience ? INK : "rgba(12,26,39,0.25)", backgroundImage: chevron, backgroundRepeat: "no-repeat", backgroundPosition: "right 0.1rem center", paddingRight: "1.4rem", cursor: "pointer" }}>
                         <option value="">Select...</option>
-                        {EXP_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
+                        {EXP_OPTIONS.map(o => <option key={o} value={o}>{"  "}{o}</option>)}
                       </select>
                     </Field>
 
                     <div style={{ gridColumn: "1 / -1" }}>
-                      <Field label="LinkedIn / Portfolio">
+                      <Field label="LinkedIn">
                         <input name="linkedin" value={form.linkedin} onChange={set}
                           placeholder="https://" className="cm-field"
                           onFocus={() => setFocused("li")} onBlur={() => setFocused(null)}
@@ -245,22 +246,22 @@ export default function CareerModal({ isOpen, onClose }) {
 
                     {/* Resume upload */}
                     <div style={{ gridColumn: "1 / -1" }}>
-                      <p style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)", marginBottom: "0.75rem" }}>
-                        Resume <span style={{ color: "rgba(255,255,255,0.2)", fontWeight: 400, letterSpacing: 0, textTransform: "none", fontSize: "0.7rem" }}>PDF or Word</span>
+                      <p style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: INK, marginBottom: "0.75rem" }}>
+                        Resume <span style={{ color: "rgba(12,26,39,0.3)", fontWeight: 400, letterSpacing: 0, textTransform: "none", fontSize: "0.7rem" }}>PDF or Word</span>
                       </p>
                       <div
                         onClick={() => fileRef.current?.click()}
-                        style={{ border: `1px dashed ${resume ? "rgba(232,57,74,0.4)" : BORDER}`, borderRadius: 8, padding: "1rem 1.25rem", display: "flex", alignItems: "center", gap: "1rem", cursor: "pointer", transition: "border-color 0.2s, background 0.2s", backgroundColor: resume ? "rgba(232,57,74,0.05)" : "rgba(255,255,255,0.02)" }}
+                        style={{ border: `1px dashed ${resume ? "rgba(232,57,74,0.4)" : "rgba(12,26,39,0.15)"}`, borderRadius: 8, padding: "1rem 1.25rem", display: "flex", alignItems: "center", gap: "1rem", cursor: "pointer", transition: "border-color 0.2s, background 0.2s", backgroundColor: resume ? "rgba(232,57,74,0.04)" : "rgba(12,26,39,0.02)" }}
                       >
-                        <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 600, color: WHITE, backgroundColor: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", padding: "0.38rem 0.85rem", borderRadius: 5, whiteSpace: "nowrap", flexShrink: 0 }}>
+                        <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 600, color: INK, backgroundColor: "rgba(12,26,39,0.06)", border: "1px solid rgba(12,26,39,0.1)", padding: "0.38rem 0.85rem", borderRadius: 5, whiteSpace: "nowrap", flexShrink: 0 }}>
                           Choose file
                         </span>
-                        <span style={{ fontFamily: font.sans, fontSize: "0.82rem", color: resume ? "rgba(255,255,255,0.65)" : DIM, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <span style={{ fontFamily: font.sans, fontSize: "0.82rem", color: resume ? "rgba(12,26,39,0.65)" : MID, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                           {resume ? resume.name : "No file selected"}
                         </span>
                         {resume && (
                           <button type="button" onClick={e => { e.stopPropagation(); setResume(null) }}
-                            style={{ marginLeft: "auto", flexShrink: 0, background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>✕</button>
+                            style={{ marginLeft: "auto", flexShrink: 0, background: "none", border: "none", color: "rgba(12,26,39,0.3)", cursor: "pointer", fontSize: "0.8rem" }}>✕</button>
                         )}
                       </div>
                       <input ref={fileRef} type="file" accept=".pdf,.doc,.docx"
@@ -271,11 +272,11 @@ export default function CareerModal({ isOpen, onClose }) {
                   </div>
 
                   {/* Divider */}
-                  <div style={{ height: 1, backgroundColor: "rgba(255,255,255,0.06)", margin: "2rem 0 1.5rem" }} />
+                  <div style={{ height: 1, backgroundColor: "rgba(12,26,39,0.06)", margin: "2rem 0 1.5rem" }} />
 
                   {/* Submit */}
                   <button type="submit" disabled={status === "sending"}
-                    style={{ width: "100%", backgroundColor: RED, color: WHITE, border: "none", padding: "1rem", fontFamily: font.sans, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.06em", borderRadius: 8, cursor: status === "sending" ? "wait" : "pointer", opacity: status === "sending" ? 0.7 : 1, transition: "opacity 0.2s" }}>
+                    style={{ width: "100%", backgroundColor: RED, color: "#fff", border: "none", padding: "1rem", fontFamily: font.sans, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.06em", borderRadius: 8, cursor: status === "sending" ? "wait" : "pointer", opacity: status === "sending" ? 0.7 : 1, transition: "opacity 0.2s" }}>
                     {status === "sending" ? "Sending…" : "Submit application →"}
                   </button>
 
@@ -285,7 +286,7 @@ export default function CareerModal({ isOpen, onClose }) {
                     </p>
                   )}
 
-                  <p style={{ fontFamily: font.sans, fontSize: "0.64rem", color: "rgba(255,255,255,0.2)", textAlign: "center", marginTop: "1rem", lineHeight: 1.6 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.64rem", color: "rgba(12,26,39,0.25)", textAlign: "center", marginTop: "1rem", lineHeight: 1.6 }}>
                     Sends directly to our HR team. We reply within a week.
                   </p>
                 </form>

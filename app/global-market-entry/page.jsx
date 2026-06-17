@@ -119,9 +119,9 @@ export default function GlobalMarketEntryPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2.5rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Global Market Entry</span>
               </div>
-              <h1 style={{ fontFamily: font.serif, fontSize: "clamp(3rem, 5vw, 4.5rem)", fontWeight: 300, lineHeight: 1.08, color: INK }}>
+              <h1 style={{ fontFamily: font.sans, fontSize: "clamp(3rem, 5vw, 4.5rem)", fontWeight: 800, lineHeight: 1.08, color: INK }}>
                 Enter new<br />markets.<br />Without the<br />
-                <em style={{ display: "inline-block", marginTop: "0.04em", fontStyle: "italic", color: RED }}>expensive mistakes.</em>
+                <em style={{ display: "inline-block", marginTop: "0.04em", fontStyle: "normal", color: RED }}>expensive mistakes.</em>
               </h1>
             </motion.div>
 
@@ -176,7 +176,7 @@ export default function GlobalMarketEntryPage() {
                   }}
                   style={{ cursor: "pointer", display: "block", transition: "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1)", borderRadius: 12 }}>
                   <div className="gme-intent-card" style={{ border: "1.5px solid rgba(140,26,43,0.4)", borderRadius: 12, padding: "1.6rem 1.75rem", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", transition: "background-color 0.25s, border-color 0.25s", height: "100%" }}>
-                    <span className="card-label" style={{ fontFamily: font.serif, fontSize: "1.25rem", fontWeight: 400, color: INK, transition: "color 0.25s" }}>{label}</span>
+                    <span className="card-label" style={{ fontFamily: font.sans, fontSize: "1.25rem", fontWeight: 700, color: INK, transition: "color 0.25s" }}>{label}</span>
                     <span className="card-arrow" style={{ color: RED, fontSize: "1.25rem", fontWeight: 600, transition: "color 0.25s" }}>→</span>
                   </div>
                 </div>
@@ -193,15 +193,15 @@ export default function GlobalMarketEntryPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>What We Cover</span>
                 </div>
-                <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.1 }}>
+                <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.1 }}>
                   End-to-end entry.<br />
-                  <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>One integrated team.</em>
+                  <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>One integrated team.</em>
                 </h2>
               </motion.div>
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
                 style={{ paddingTop: "3.5rem", display: "flex", justifyContent: "flex-end" }}>
                 <div style={{ borderLeft: `2px solid ${RED}`, paddingLeft: "1.25rem", maxWidth: 280 }}>
-                  <p style={{ fontFamily: font.serif, fontSize: "1.1rem", fontStyle: "italic", fontWeight: 300, color: INK, lineHeight: 1.65 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "1.1rem", fontWeight: 700, color: INK, lineHeight: 1.65 }}>
                     One mandate across every stage. No handoffs between advisors.
                   </p>
                 </div>
@@ -219,7 +219,7 @@ export default function GlobalMarketEntryPage() {
                     transition={{ delay: i * 0.07 }}
                     style={{ backgroundColor: WHITE, border: "1px solid rgba(28,23,18,0.1)", padding: "1.75rem 1.5rem", display: "flex", flexDirection: "column", minHeight: 320 }}>
                     <span style={{ fontFamily: font.num, fontSize: "1.5rem", fontWeight: 400, fontStyle: "italic", color: RED, lineHeight: 1, marginBottom: "0.65rem" }}>{s.n}</span>
-                    <h3 style={{ fontFamily: font.serif, fontSize: "1.15rem", fontWeight: 400, color: INK, lineHeight: 1.35, marginBottom: "0.55rem" }}>{s.title}</h3>
+                    <h3 style={{ fontFamily: font.sans, fontSize: "1.15rem", fontWeight: 700, color: INK, lineHeight: 1.35, marginBottom: "0.55rem" }}>{s.title}</h3>
                     <p style={{ fontFamily: font.sans, fontSize: "0.82rem", fontWeight: 450, color: MUTED, lineHeight: 1.65, marginBottom: "0.75rem", flex: 1 }}>{s.body}</p>
                     <button onClick={() => setOpenScope(isOpen ? -1 : i)}
                       style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0 0", border: "none", background: "none", cursor: "pointer", marginTop: "auto" }}>
@@ -254,8 +254,8 @@ export default function GlobalMarketEntryPage() {
         <section style={{ backgroundColor: CREAM, padding: "6rem 0", textAlign: "center" }}>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ maxWidth: 820, margin: "0 auto" }}>
-            <p style={{ fontFamily: font.serif, fontSize: "4rem", color: "rgba(140,26,43,0.22)", lineHeight: 0.5, marginBottom: "2rem" }}>"</p>
-            <p style={{ fontFamily: font.serif, fontSize: "clamp(1.3rem, 2.2vw, 1.75rem)", fontStyle: "italic", fontWeight: 300, color: INK, lineHeight: 1.65, marginBottom: "2rem" }}>
+            <p style={{ fontFamily: font.sans, fontSize: "4rem", color: "rgba(140,26,43,0.22)", lineHeight: 0.5, marginBottom: "2rem" }}>"</p>
+            <p style={{ fontFamily: font.sans, fontSize: "clamp(1.3rem, 2.2vw, 1.75rem)", fontWeight: 700, color: INK, lineHeight: 1.65, marginBottom: "2rem" }}>
               "We had spent months trying to structure our India entry through local advisors. 10x Global identified a structural issue in one call that would have cost us years to unwind. That review alone was worth more than everything else combined."
             </p>
             <p style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(107,101,96,0.45)" }}>
@@ -272,9 +272,9 @@ export default function GlobalMarketEntryPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Who This Is For</span>
               </div>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 300, color: INK, lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 800, color: INK, lineHeight: 1.1 }}>
                 Built for companies that<br />
-                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>don't fit in one country.</em>
+                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>don't fit in one country.</em>
               </h2>
             </motion.div>
 
@@ -282,8 +282,8 @@ export default function GlobalMarketEntryPage() {
               {WHO.map((w, i) => (
                 <motion.div key={w.n} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                   style={{ position: "relative", borderLeft: `3px solid ${RED}`, padding: "2rem 1.75rem", backgroundColor: CREAM, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-                  <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.num, fontSize: "6rem", fontWeight: 300, color: "rgba(140,26,43,0.25)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{w.n}</span>
-                  <h3 style={{ fontFamily: font.serif, fontSize: "1.2rem", fontWeight: 400, color: INK, marginBottom: "0.85rem", lineHeight: 1.4, position: "relative" }}>{w.title}</h3>
+                  <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.num, fontSize: "6rem", fontWeight: 800, color: "rgba(140,26,43,0.25)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{w.n}</span>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.2rem", fontWeight: 700, color: INK, marginBottom: "0.85rem", lineHeight: 1.4, position: "relative" }}>{w.title}</h3>
                   <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: MUTED, lineHeight: 1.75, position: "relative" }}>{w.body}</p>
                 </motion.div>
               ))}
@@ -296,9 +296,9 @@ export default function GlobalMarketEntryPage() {
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               style={{ textAlign: "center", marginBottom: "4.5rem" }}>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, color: INK, lineHeight: 1.2 }}>
                 First call to fully operational.<br />
-                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "italic", color: RED }}>At breakneck speed.</em>
+                <em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>At breakneck speed.</em>
               </h2>
             </motion.div>
 
@@ -315,7 +315,7 @@ export default function GlobalMarketEntryPage() {
                     </div>
                     <div className="step-text">
                       <p style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: RED, marginBottom: "0.5rem" }}>{s.step}</p>
-                      <h3 style={{ fontFamily: font.serif, fontSize: "1.4rem", fontWeight: 400, color: INK, marginBottom: "0.75rem", lineHeight: 1.25 }}>{s.title}</h3>
+                      <h3 style={{ fontFamily: font.sans, fontSize: "1.4rem", fontWeight: 700, color: INK, marginBottom: "0.75rem", lineHeight: 1.25 }}>{s.title}</h3>
                       <p style={{ fontFamily: font.sans, fontSize: "0.85rem", color: MUTED, lineHeight: 1.7 }}>{s.body}</p>
                     </div>
                   </motion.div>
@@ -332,8 +332,8 @@ export default function GlobalMarketEntryPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
                 <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Common Questions</span>
               </div>
-              <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, color: INK, lineHeight: 1.2 }}>
-                Before we <em style={{ fontStyle: "italic", color: RED }}>interact,</em><br />some answers.
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 800, color: INK, lineHeight: 1.2 }}>
+                Before we <em style={{ fontStyle: "normal", color: RED }}>interact,</em><br />some answers.
               </h2>
             </motion.div>
 
@@ -343,7 +343,7 @@ export default function GlobalMarketEntryPage() {
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
                     style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1.5rem 0", background: "none", border: "none", cursor: "pointer", textAlign: "left", gap: "1.5rem" }}>
-                    <span style={{ fontFamily: font.serif, fontSize: "1.15rem", fontWeight: 600, color: INK, lineHeight: 1.4 }}>{faq.q}</span>
+                    <span style={{ fontFamily: font.sans, fontSize: "1.15rem", fontWeight: 700, color: INK, lineHeight: 1.4 }}>{faq.q}</span>
                     <span style={{
                       width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
                       backgroundColor: openFaq === i ? RED : "transparent",
@@ -377,10 +377,10 @@ export default function GlobalMarketEntryPage() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
               <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>Start the Conversation</span>
             </div>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, color: INK, lineHeight: 1.08, marginBottom: "0.25rem" }}>
+            <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, color: INK, lineHeight: 1.08, marginBottom: "0.25rem" }}>
               Tell us where you're going.
             </h2>
-            <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, fontStyle: "italic", color: RED, lineHeight: 1.08, marginBottom: "1.75rem" }}>
+            <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, color: RED, lineHeight: 1.08, marginBottom: "1.75rem" }}>
               We'll design the structure.
             </h2>
             <p style={{ fontFamily: font.sans, fontSize: "1rem", color: MUTED, lineHeight: 1.8, marginBottom: "2rem" }}>

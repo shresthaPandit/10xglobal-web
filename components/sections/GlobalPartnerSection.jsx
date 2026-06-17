@@ -56,7 +56,7 @@ function CyclingPhrase() {
 
 export default function GlobalPartnerSection() {
   return (
-    <section style={{ backgroundColor: C.ink, padding: "6rem 7vw" }}>
+    <section style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5vw, 8rem) 7vw" }}>
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}

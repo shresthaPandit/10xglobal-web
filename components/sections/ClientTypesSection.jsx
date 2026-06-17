@@ -105,9 +105,9 @@ function ClientCard({ client, index }) {
 
           {/* Title */}
           <h3 style={{
-            fontFamily:   font.serif,
+            fontFamily:   font.sans,
             fontSize:     "clamp(1.25rem, 1.6vw, 1.5rem)",
-            fontWeight:   400,
+            fontWeight:   700,
             color:        C.ink,
             lineHeight:   1.2,
             marginBottom: "1rem",
@@ -139,7 +139,7 @@ function ClientCard({ client, index }) {
 
 export default function ClientTypesSection() {
   return (
-    <section style={{ backgroundColor: C.ink, padding: "6rem 7vw" }}>
+    <section style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5vw, 8rem) 7vw" }}>
       <style>{`
         .ct-grid {
           display: grid;
@@ -174,17 +174,17 @@ export default function ClientTypesSection() {
           </span>
 
           <h2 style={{
-            fontFamily:            font.serif,
+            fontFamily:            font.sans,
             fontSize:              "clamp(2.2rem, 3.5vw, 3.2rem)",
-            fontWeight:            300,
+            fontWeight:            800,
             color:                 "#fff",
-            lineHeight:            1.18,
+            lineHeight:            1.12,
             marginBottom:          "1.25rem",
             WebkitFontSmoothing:   "antialiased",
             MozOsxFontSmoothing:   "grayscale",
           }}>
             Built for companies that mean{" "}
-            <em style={{ fontStyle: "italic", color: C.red }}>business.</em>
+            <em style={{ fontStyle: "normal", color: C.red }}>business.</em>
           </h2>
 
           <p style={{

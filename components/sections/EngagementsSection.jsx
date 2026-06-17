@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { C, font } from "@/lib/theme"
 
@@ -22,21 +22,22 @@ const ENGAGEMENTS = [
     ],
     service: "Global Market Entry",
     detail: {
-      subtitle: <>Two markets launched <strong>in parallel</strong> and fully operational in <strong>six to eight weeks</strong>.</>,
+      heroTitle: "A global adtech leader goes live in the UAE and Singapore in eight weeks.",
+      heroDesc: "When a fast-scaling US technology company decided to expand into the Middle East and Southeast Asia, it needed both markets running quickly and set up correctly. We handled the full process in each, from entity structure and incorporation through banking, hiring, visas, and compliance.",
       stats: [
-        { val: "2",       label: "JURISDICTIONS\nIN PARALLEL" },
-        { val: "6–8 wks", label: "TO FULLY OPERATIONAL" },
+        { val: "2",       label: "MARKETS\nLAUNCHED IN\nPARALLEL" },
+        { val: "6–8 wks", label: "FROM KICKOFF\nTO FULLY\nOPERATIONAL" },
         { val: "45+",     label: "UAE FREE ZONES\nEVALUATED" },
       ],
-      clientSnapshot: "A leading global advertising technology company, backed by prominent international investors, set out to expand into the UAE and Singapore as part of a wider growth plan.",
+      clientSnapshot: "The client is a global advertising technology company backed by well-known international investors. As part of a broader expansion plan, the business chose the UAE and Singapore as its next two markets.",
       situation: [
-        <>It needed fully operational entities in both markets, with <strong>clear guidance on the right structures, fast execution, and the ability to start operating with minimal delay.</strong></>,
+        "They wanted fully operational entities in both, structured correctly from day one, so their local teams could get to work with as little delay as possible.",
       ],
       approach: {
         subheadings: ["UNITED ARAB EMIRATES", "SINGAPORE"],
         body: [
-          "The first decision was where to incorporate. With more than 45 free zones, each carrying real regulatory and commercial consequences, we reviewed the business model and recommended the one that fit best.",
-          "Our local team established the company's Private Limited (Pte. Ltd.) entity and ran the process from start to finish.",
+          "The first decision was where to incorporate. We worked through the client's business model against the free zone options, recommended the one that fit, then ran incorporation, banking, hiring, and visas from there.",
+          "Our local team set up the Private Limited (Pte. Ltd.) entity and managed the full process, from the right structure through to bank accounts and staffing.",
         ],
         bold: "Alongside incorporation, we also handled:",
         points: [
@@ -49,15 +50,12 @@ const ENGAGEMENTS = [
         ],
       },
       challenges: [
-        "Entering two international markets at once",
-        "Tight timelines to become operational",
-        "Banking setup across multiple countries",
-        "Hiring and visa rules in evolving regulation",
-        "Entity structure and jurisdiction decisions",
+        "Setting up in a new country is demanding on its own. The client was doing it in two at once, on a tight timeline, while the rules in both markets kept shifting.",
+        "The UAE alone has more than 45 free zones, and the wrong choice of zone or entity structure would have meant real cost and rework later. Banking, hiring, and visas all had to come together across both jurisdictions before the business could operate.",
       ],
       outcome: [
-        "Both entities were operational within roughly six to eight weeks, several milestones completed ahead of schedule, with banking, hiring, and compliance fully in place.",
-        <>The relationship has continued since, expanding into <strong>European market entry and compliance across new jurisdictions.</strong></>,
+        <>Both entities were <strong>live in roughly six to eight weeks</strong>, with several milestones completed ahead of schedule. Banking, hiring, and compliance were all in place, and the client's teams were able to start operating in both markets straight away.</>,
+        <>The relationship has continued since. We are now supporting the same client's <strong>expansion into Europe</strong>, handling market entry and compliance across new jurisdictions.</>,
       ],
       services: ["Global Market Entry", "UAE Incorporation", "Singapore Incorporation", "Banking Setup", "Immigration & Visa", "Employment Structuring", "Operational Readiness", "Ongoing Compliance"],
       timeline: {
@@ -77,57 +75,6 @@ const ENGAGEMENTS = [
           },
         ],
       },
-    },
-  },
-  {
-    from: "AI Tech", to: "Series A · $12M",
-    title: "Fundraising & Transaction Advisory",
-    items: [
-      "Pre-fundraise structuring & cap table clean-up",
-      "Term sheet review & investor negotiations",
-      "SHA / SSA documentation",
-      "RBI filings & post-round compliance",
-    ],
-    service: "Deals & Transaction Advisory",
-    detail: {
-      subtitle: "A $12M round, closed clean and on schedule.",
-      stats: [
-        { val: "$12M",  label: "Series A raised" },
-        { val: "4",     label: "investors in\nfinal round" },
-        { val: "11 wks", label: "from mandate\nto close" },
-      ],
-      clientSnapshot: "A fast-growing AI technology company with strong enterprise traction and early institutional backing engaged us ahead of their Series A. The cap table carried residual complexity from an angel round, and the corporate structure had not been designed with institutional investors in mind.",
-      situation: [
-        "The founders needed to clean up the structure before investors began formal due diligence. Any gaps surfaced late would delay or reprice the round.",
-        "Beyond documentation, they needed experienced negotiators on the term sheet and SHA, and a team that could manage RBI filings in parallel without slowing the close.",
-      ],
-      approach: {
-        body: [
-          "We began with a full audit of the existing cap table and corporate structure. Excess share classes from the seed round were simplified, ESOP percentages were rationalised, and the holding architecture was reviewed for investor fit.",
-          "On the transaction side, we ran the term sheet negotiation alongside the founders, managed the SHA drafting across three negotiating parties, and prepared the RBI filings in parallel so compliance was ready at close.",
-        ],
-        bold: "Across the engagement we handled:",
-        points: [
-          "Cap table clean-up and restructuring",
-          "Term sheet review and investor negotiations",
-          "SHA and SSA drafting and finalisation",
-          "ESOP plan restructuring for institutional investors",
-          "RBI filing and FEMA compliance",
-          "Post-round secretarial and regulatory obligations",
-        ],
-      },
-      challenges: [
-        "Fragmented cap table from multiple angel rounds",
-        "ESOP plan not structured for institutional investor requirements",
-        "Outstanding RBI compliance from a prior fundraise",
-        "Multiple negotiating parties across jurisdictions",
-        "First-time founders navigating institutional-grade term sheets",
-      ],
-      outcome: [
-        "The Series A closed at $12M within eleven weeks of engagement. The cap table was clean, all documentation was compliant, and the ESOP plan was structured to support two further funding rounds without restructuring.",
-        "The company has since retained us for ongoing managed services and cross-border compliance across India and Singapore.",
-      ],
-      services: ["Fundraising Advisory", "Pre-Round Structuring", "Cap Table Management", "Term Sheet Negotiation", "SHA & SSA Drafting", "ESOP Structuring", "RBI Filings", "Post-Round Compliance"],
     },
   },
   {
@@ -334,6 +281,86 @@ const ENGAGEMENTS = [
       services: ["Sell-side Advisory", "Financial Due Diligence", "Legal Due Diligence", "Exit Structure Design", "SPA Negotiation", "Tax Structuring", "RBI & FEMA Clearance", "Post-Closing Compliance"],
     },
   },
+  {
+    from: "AI-Native EdTech",
+    to: "Series B · US$15M+",
+    title: "Fundraising & Transaction Advisory",
+    items: [
+      "Term sheet review and negotiations",
+      "SHA / SSA documentation",
+      "Secondary transaction structuring",
+      "Founder representation throughout",
+    ],
+    service: "Deals & Transaction Advisory",
+    detail: {
+      heroTitle: "An AI language learning platform closes a US$15M+ Series B alongside a significant secondary transaction.",
+      heroDesc: "The company was undertaking a Series B fundraising round of over US$15 million, involving both a primary investment by institutional investors and a significant secondary transaction between existing shareholders. The round attracted participation from marquee investors and tier-one venture capital funds across India and overseas.",
+      stats: [
+        { val: "$15M+", label: "SERIES B\nRAISED" },
+        { val: "2",     label: "TRANSACTION\nTRACKS" },
+        { val: "10+",   label: "WORKSTREAMS\nMANAGED" },
+      ],
+      clientSnapshot: "AI-native language learning platform with millions of users and strong market traction, backed by leading investors from India and international markets.",
+      situation: [
+        "Given the complexity of the transaction, the founders required an advisor who could support them throughout the fundraising journey while safeguarding founder interests during negotiations.",
+      ],
+      approach: {
+        body: [
+          "We acted as the founders' transaction advisory partner throughout the fundraising process, providing end-to-end legal, corporate secretarial, diligence, and transaction support from the term sheet stage through final closing.",
+          "Working alongside some of the most respected investors and advisors in the ecosystem, we helped the founders evaluate proposed protections, negotiate commercial positions, and push for balanced governance provisions within the definitive agreements.",
+        ],
+        subheadings: [null, "FOUNDER REPRESENTATION"],
+        bold: "Across the engagement we handled:",
+        points: [
+          "Transaction structuring support",
+          "Term sheet review and negotiations",
+          "Share Subscription Agreement (SSA) support",
+          "Shareholders' Agreement (SHA) negotiations",
+          "SPA documentation for the secondary transaction",
+          "Corporate secretarial support",
+          "Board meetings and Extraordinary General Meetings",
+          "Regulatory and statutory filings",
+          "Data room preparation and coordination",
+          "Legal, financial, commercial and corporate DD",
+        ],
+      },
+      challenges: [
+        "Managing negotiations across multiple investor groups simultaneously",
+        "Coordinating legal, financial, commercial, and corporate due diligence processes",
+        "Supporting founders through extensive documentation and information requests",
+        "Addressing transaction-specific requirements from the secondary component",
+        "Balancing investor protections with founder interests during documentation negotiations",
+      ],
+      outcome: [
+        <>The transaction was successfully completed, resulting in the company securing <strong>over US$15 million</strong> in Series B funding while simultaneously facilitating a significant secondary transaction between existing shareholders.</>,
+        "The founders were able to focus on running the business while our team coordinated the legal, compliance, diligence, governance, and transaction workstreams through to completion.",
+      ],
+      services: [
+        "Fundraising Advisory", "Transaction Advisory",
+        "Founder Representation", "Corporate Secretarial",
+        "Legal Due Diligence", "Financial DD Coordination",
+        "Commercial DD Support", "Governance & Compliance",
+      ],
+      timeline: {
+        title: "Two transaction tracks, managed simultaneously",
+        subtitle: "The primary institutional raise and secondary shareholder transaction ran in parallel, not in sequence.",
+        phases: ["KICKOFF", "TERM SHEET", "SSA / SHA", "DUE DILIGENCE", "NEGOTIATIONS", "CLOSING"],
+        rows: [
+          {
+            flagCode: null, label: "PRIMARY", sublabel: "INSTITUTIONAL\nINVESTMENT",
+            steps: ["Scoping", "Review &\nnegotiate", "Documentation", "All workstreams", "Governance\nterms", "Completion"],
+            boldIndex: -1,
+          },
+          {
+            flagCode: null, label: "SECONDARY", sublabel: "EXISTING\nSHAREHOLDERS",
+            phases: ["KICKOFF", "STRUCTURE", "DOCUMENTATION", "DUE DILIGENCE", "NEGOTIATIONS", "CLOSING"],
+            steps: ["Scoping", "SPA\nframework", "SPA drafting", "Coordination", "Terms &\nsign-off", "Completion"],
+            boldIndex: -1,
+          },
+        ],
+      },
+    },
+  },
 ]
 
 function SectionLabel({ text, accent }) {
@@ -375,77 +402,185 @@ function CountUpStat({ val, delay = 0.3 }) {
   return <>{displayed}</>
 }
 
-function EngagementModal({ eng, onClose }) {
+function TimelineRow({ row, ri, sweepIdx, colorIdx, totalRows }) {
+  const rowRef = useRef(null)
+  const [positions, setPositions] = useState([])
+
+  useEffect(() => {
+    if (!rowRef.current) return
+    const t = setTimeout(() => {
+      if (!rowRef.current) return
+      const rowLeft = rowRef.current.getBoundingClientRect().left
+      const cells   = rowRef.current.querySelectorAll("[data-dot-cell]")
+      setPositions(Array.from(cells).map(cell => {
+        const r = cell.getBoundingClientRect()
+        return r.left - rowLeft + r.width / 2
+      }))
+    }, 350)
+    return () => clearTimeout(t)
+  }, [])
+
+  const isMoving    = sweepIdx >= 0 && positions.length > 0
+  const movingLeft  = positions[Math.min(Math.max(0, sweepIdx), positions.length - 1)] ?? 0
+  const atLast      = sweepIdx >= positions.length - 1
+
+  return (
+    <div
+      ref={rowRef}
+      style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: ri < totalRows - 1 ? "0.7rem" : 0, position: "relative" }}
+    >
+      {/* Travelling red dot */}
+      {isMoving && positions.length > 0 && (
+        <motion.div
+          initial={false}
+          animate={{ x: movingLeft - 9, opacity: atLast ? 0 : 1 }}
+          transition={{
+            x: { type: "tween", duration: 0.82, ease: [0.42, 0, 0.18, 1] },
+            opacity: { delay: 0.38, duration: 0.42 },
+          }}
+          style={{
+            position: "absolute", top: -3, left: 0,
+            width: 18, height: 18, borderRadius: "50%",
+            backgroundColor: C.red,
+            boxShadow: "0 0 12px 4px rgba(140,26,43,0.5)",
+            zIndex: 10, pointerEvents: "none",
+          }}
+        />
+      )}
+
+      {/* Flag + label */}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingRight: "0.5rem" }}>
+        {row.flagCode === "ae" && (
+          <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0, display: "block" }}>
+            <rect width="6" height="16" fill="#00732F"/>
+            <rect x="6" width="18" height="5.33" fill="#00732F"/>
+            <rect x="6" y="5.33" width="18" height="5.34" fill="#fff"/>
+            <rect x="6" y="10.67" width="18" height="5.33" fill="#000"/>
+            <rect width="6" height="16" fill="#FF0000"/>
+          </svg>
+        )}
+        {row.flagCode === "sg" && (
+          <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0, display: "block" }}>
+            <rect width="24" height="8" fill="#EF3340"/>
+            <rect y="8" width="24" height="8" fill="#fff"/>
+            <circle cx="7.5" cy="5" r="2.6" fill="#fff"/>
+            <circle cx="8.8" cy="5" r="2.1" fill="#EF3340"/>
+            <polygon points="10.5,3 11,4.6 12.5,4.6 11.3,5.5 11.7,7 10.5,6.1 9.3,7 9.7,5.5 8.5,4.6 10,4.6" fill="#fff" transform="scale(0.7) translate(5,2)"/>
+          </svg>
+        )}
+        <div>
+          <div style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, color: C.ink, letterSpacing: "0.03em" }}>{row.label}</div>
+          <div style={{ fontFamily: font.sans, fontSize: "0.64rem", color: "rgba(12,26,39,0.4)", whiteSpace: "pre-line", lineHeight: 1.15 }}>/ {row.sublabel}</div>
+        </div>
+      </div>
+
+      {/* Step dots */}
+      {row.steps.map((step, si) => {
+        const isLast  = si === row.steps.length - 1
+        const isBold  = row.boldIndex === si
+        const swept    = colorIdx > si
+        const dotColor = isLast ? C.red : swept ? C.ink : C.red
+        return (
+          <div
+            key={si}
+            data-dot-cell
+            style={{ textAlign: "center", position: "relative" }}
+          >
+            {si < row.steps.length - 1 && (
+              <div style={{ position: "absolute", top: 6, left: "50%", width: "100%", height: 1, backgroundColor: "rgba(12,26,39,0.15)", zIndex: 0 }} />
+            )}
+            <div style={{ width: isLast ? 18 : 12, height: isLast ? 18 : 12, margin: "0 auto 0.4rem", position: "relative" }}>
+              {isLast && (
+                <motion.div
+                  animate={{ scale: [1, 2.8], opacity: [0.5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeOut", repeatDelay: 0.4 }}
+                  style={{ position: "absolute", inset: 0, borderRadius: "50%", backgroundColor: C.red }}
+                />
+              )}
+              <div style={{
+                width: "100%", height: "100%", borderRadius: "50%",
+                backgroundColor: dotColor,
+                position: "relative", zIndex: 1,
+                transition: "background-color 0.5s ease",
+                boxShadow: isLast ? `0 0 0 3px rgba(140,26,43,0.15)` : "none",
+              }} />
+            </div>
+            <span style={{
+              fontFamily: font.sans, fontSize: "0.76rem",
+              fontWeight: isBold ? 700 : isLast ? 600 : 400,
+              color: isLast ? C.red : C.ink,
+              lineHeight: 1.3, whiteSpace: "pre-line", display: "block",
+            }}>{step}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function EngagementModal({ eng, onClose, heroImg }) {
   const { detail, title, service } = eng
   const accent = SERVICE_COLOR[service]
+  const [sweepIdx, setSweepIdx] = useState(-1)
+  const [colorIdx, setColorIdx] = useState(-1)
+  const [activeSection, setActiveSection] = useState("overview")
+  const scrollRef = useRef(null)
+  const sectionRefs = useRef({})
+
+  const SECTIONS = [
+    { id: "overview",  label: "Overview"      },
+    { id: "challenge", label: "Challenge"     },
+    { id: "solution",  label: "Solution"      },
+    { id: "scope",     label: "Scope of Work" },
+    { id: "results",   label: "Results"       },
+  ]
 
   useEffect(() => {
     document.body.style.overflow = "hidden"
     return () => { document.body.style.overflow = "" }
   }, [])
 
-  const COLS = [
-    {
-      num: "01", label: "The Brief",
-      content: (
-        <>
-          <p style={{ fontFamily: font.sans, fontSize: "0.77rem", color: "rgba(12,26,39,0.82)", lineHeight: 1.6, marginBottom: "0.85rem" }}>
-            {detail.clientSnapshot}
-          </p>
-          {detail.situation.map((p, i) => (
-            <p key={i} style={{ fontFamily: font.sans, fontSize: "0.77rem", color: "rgba(12,26,39,0.82)", lineHeight: 1.6, marginBottom: i < detail.situation.length - 1 ? "0.85rem" : 0 }}>
-              {p}
-            </p>
-          ))}
-        </>
-      ),
-    },
-    {
-      num: "02", label: "Approach",
-      content: (
-        <>
-          {detail.approach.body.map((p, i) => (
-            <div key={i} style={{ marginBottom: i < detail.approach.body.length - 1 ? "1rem" : 0 }}>
-              {detail.approach.subheadings?.[i] && (
-                <p style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: C.ink, marginBottom: "0.35rem", marginTop: 0 }}>
-                  {detail.approach.subheadings[i]}
-                </p>
-              )}
-              <p style={{ fontFamily: font.sans, fontSize: "0.77rem", color: "rgba(12,26,39,0.82)", lineHeight: 1.6, margin: 0 }}>
-                {p}
-              </p>
-            </div>
-          ))}
-        </>
-      ),
-    },
-    {
-      num: "03", label: "Scope of Work",
-      content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
-          {detail.approach.points.map((pt, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-              <span style={{ color: C.red, fontSize: "0.58rem", flexShrink: 0, marginTop: "0.28rem" }}>■</span>
-              <span style={{ fontFamily: font.sans, fontSize: "0.81rem", color: "rgba(12,26,39,0.82)", lineHeight: 1.65 }}>{pt}</span>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-    {
-      num: "04", label: "What Made It Hard",
-      content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
-          {detail.challenges.map((ch, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-              <span style={{ color: C.red, fontSize: "0.58rem", flexShrink: 0, marginTop: "0.28rem" }}>■</span>
-              <span style={{ fontFamily: font.sans, fontSize: "0.81rem", color: "rgba(12,26,39,0.82)", lineHeight: 1.65 }}>{ch}</span>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-  ]
+  useEffect(() => {
+    if (!detail.timeline) return
+    const total = detail.timeline.phases.length
+    setSweepIdx(-1)
+    setColorIdx(-1)
+    const timers = []
+    for (let i = 0; i < total; i++) {
+      const ci = i
+      const base = 1500 + i * 1100
+      timers.push(setTimeout(() => setSweepIdx(ci), base))
+      timers.push(setTimeout(() => setColorIdx(ci), base + 650))
+    }
+    return () => timers.forEach(clearTimeout)
+  }, [detail])
+
+  const scrollToSection = (id) => {
+    const el = sectionRefs.current[id]
+    const container = scrollRef.current
+    if (el && container) {
+      const top = el.offsetTop - 56
+      container.scrollTo({ top, behavior: "smooth" })
+      setActiveSection(id)
+    }
+  }
+
+  useEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+    const handleScroll = () => {
+      const scrollTop = container.scrollTop + 80
+      for (const sec of [...SECTIONS].reverse()) {
+        const el = sectionRefs.current[sec.id]
+        if (el && el.offsetTop <= scrollTop) {
+          setActiveSection(sec.id)
+          break
+        }
+      }
+    }
+    container.addEventListener("scroll", handleScroll, { passive: true })
+    return () => container.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
     <motion.div
@@ -456,34 +591,21 @@ function EngagementModal({ eng, onClose }) {
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 200,
-        backgroundColor: "rgba(4,10,18,0.7)",
+        backgroundColor: "rgba(4,10,18,0.72)",
         backdropFilter: "blur(6px)",
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "1vh 2vw",
+        padding: "2vh 2vw",
       }}
     >
       <style>{`
-        .cs-4col {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width: 860px) { .cs-4col { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 540px)  { .cs-4col { grid-template-columns: 1fr; } }
-        .cs-footer {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2.5rem;
-        }
-        @media (max-width: 640px) { .cs-footer { grid-template-columns: 1fr; gap: 1rem; } }
         .svc-box {
-          transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+          transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.18s ease;
           cursor: default;
         }
         .svc-box:hover {
           background-color: rgba(255,255,255,0.18) !important;
           border-color: rgba(255,255,255,0.55) !important;
           transform: translateY(-2px);
-          box-shadow: 0 4px 14px rgba(0,0,0,0.25);
         }
         @keyframes kpi-spin {
           from { transform: rotate(0deg); }
@@ -492,9 +614,9 @@ function EngagementModal({ eng, onClose }) {
         .kpi-wrap {
           position: relative;
           padding: 1.5px;
-          border-radius: 12px;
+          border-radius: 16px;
           overflow: hidden;
-          flex: 1;
+          min-width: 110px;
         }
         .kpi-wrap::before {
           content: '';
@@ -513,13 +635,19 @@ function EngagementModal({ eng, onClose }) {
         .kpi-inner {
           position: relative;
           z-index: 1;
-          background: #F8F7F5;
-          border-radius: 11px;
-          padding: 0.85rem 1rem;
+          background: rgba(255,255,255,0.12);
+          border-radius: 15px;
+          padding: 1rem 1.25rem;
           text-align: center;
           height: 100%;
           box-sizing: border-box;
         }
+        .cs-footer {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2.5rem;
+        }
+        @media (max-width: 640px) { .cs-footer { grid-template-columns: 1fr; gap: 1rem; } }
       `}</style>
 
       <motion.div
@@ -529,32 +657,33 @@ function EngagementModal({ eng, onClose }) {
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         onClick={e => e.stopPropagation()}
         style={{
-          width: "100%", maxWidth: 1540,
-          maxHeight: "98vh", overflowY: "auto",
+          width: "100%", maxWidth: 1400,
+          height: "90vh",
+          display: "flex", flexDirection: "column",
           backgroundColor: "#fff",
-          position: "relative",
-          boxShadow: "0 24px 80px rgba(0,0,0,0.45), 0 2px 0 rgba(140,26,43,0.6) inset",
-          outline: "none",
+          borderRadius: 24,
+          boxShadow: "0 0 0 1px rgba(12,26,39,0.06), 0 24px 64px rgba(12,26,39,0.28)",
+          overflow: "hidden",
         }}
       >
-
-        {/* ── BREADCRUMB BAR ── */}
+        {/* ── BREADCRUMB BAR (fixed, outside scroll) ── */}
         <div style={{
-          padding: "0.35rem 1.75rem",
+          flexShrink: 0,
+          padding: "0.85rem 2rem",
           borderBottom: "1px solid rgba(12,26,39,0.08)",
           backgroundColor: "#F8F7F5",
           display: "flex", justifyContent: "space-between", alignItems: "center",
         }}>
-          <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(12,26,39,0.32)" }}>
+          <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(12,26,39,0.32)" }}>
             Case Study / {service}
           </span>
           <button
             onClick={onClose}
             style={{
-              background: "none", border: "1px solid rgba(12,26,39,0.16)",
-              width: 24, height: 24, borderRadius: "50%",
+              background: "none", border: "1px solid rgba(12,26,39,0.18)",
+              width: 32, height: 32, borderRadius: "50%",
               display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "pointer", color: "rgba(12,26,39,0.4)", fontSize: "0.72rem",
+              cursor: "pointer", color: "rgba(12,26,39,0.45)", fontSize: "0.85rem",
               transition: "all 0.15s",
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = C.red; e.currentTarget.style.color = C.red }}
@@ -562,335 +691,439 @@ function EngagementModal({ eng, onClose }) {
           >✕</button>
         </div>
 
-        {/* ── HERO ROW ── */}
-        <div style={{ padding: "0.85rem 2rem 0.7rem", borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
-          <div style={{ marginBottom: "0.3rem" }}>
-            <span style={{ fontFamily: font.sans, fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: C.red }}>
-              {eng.from}
-            </span>
-            <span style={{ fontFamily: font.sans, fontSize: "0.55rem", color: C.red, margin: "0 0.35rem" }}>→</span>
-            <span style={{ fontFamily: font.sans, fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: C.red }}>
-              {eng.to}
-            </span>
+        {/* ── SCROLLABLE CONTENT ── */}
+        <div ref={scrollRef} style={{ flex: 1, overflowY: "auto" }}>
+
+          {/* ── HERO — blurry background image ── */}
+          <div style={{ position: "relative", overflow: "hidden", minHeight: 320, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            {heroImg && (
+              <img
+                src={heroImg}
+                alt=""
+                style={{
+                  position: "absolute", inset: 0,
+                  width: "100%", height: "100%",
+                  objectFit: "cover",
+                  filter: "blur(14px)",
+                  transform: "scale(1.1)",
+                  pointerEvents: "none",
+                }}
+              />
+            )}
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(6,14,28,0.72) 0%, rgba(10,20,40,0.82) 100%)" }} />
+
+            <div style={{ position: "relative", zIndex: 1, padding: "3rem 3rem 2.5rem" }}>
+              <div style={{ marginBottom: "1rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: accent }}>
+                  {eng.from}
+                </span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.52rem", color: accent, margin: "0 0.4rem" }}>→</span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: accent }}>
+                  {eng.to}
+                </span>
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "2rem", flexWrap: "wrap" }}>
+                <div style={{ flex: 1, minWidth: 240 }}>
+                  <h2 style={{
+                    fontFamily: font.sans,
+                    fontSize: "clamp(1.5rem, 2.4vw, 2.4rem)",
+                    fontWeight: 800, color: "#fff",
+                    lineHeight: 1.15, marginBottom: "1rem",
+                    letterSpacing: "-0.02em",
+                  }}>
+                    {detail.heroTitle || title}
+                  </h2>
+                  {detail.heroDesc && (
+                    <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0, maxWidth: 580 }}>
+                      {detail.heroDesc}
+                    </p>
+                  )}
+                  {!detail.heroDesc && detail.subtitle && (
+                    <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0, maxWidth: 580 }}>
+                      {detail.subtitle}
+                    </p>
+                  )}
+                </div>
+
+                <div style={{ display: "flex", gap: "0.75rem", flexShrink: 0 }}>
+                  {detail.stats.map((s, i) => (
+                    <div key={i} className="kpi-wrap">
+                      <motion.div
+                        className="kpi-inner"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.22 + i * 0.1, duration: 0.4 }}
+                      >
+                        <div style={{ fontFamily: font.serif, fontSize: "clamp(1.6rem, 2vw, 2rem)", fontWeight: 300, color: "#fff", lineHeight: 1 }}>
+                          <CountUpStat val={s.val} delay={0.28 + i * 0.1} />
+                        </div>
+                        <div style={{ fontFamily: font.sans, fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginTop: "0.35rem", whiteSpace: "pre-line", lineHeight: 1.4 }}>
+                          {s.label}
+                        </div>
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: 220 }}>
-              <h2 style={{
-                fontFamily: font.serif, fontSize: "clamp(1.85rem, 2.8vw, 2.5rem)",
-                fontWeight: 300, color: C.ink, lineHeight: 1.1, marginBottom: "0.35rem",
-                letterSpacing: "-0.01em",
-              }}>{title}</h2>
-              <p style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 600, color: "rgba(12,26,39,0.72)", lineHeight: 1.5, maxWidth: 500, margin: 0 }}>
-                {detail.subtitle}
-              </p>
+          {/* ── STICKY SECTION NAV ── */}
+          <div style={{
+            position: "sticky", top: 0, zIndex: 10,
+            backgroundColor: C.ink,
+            display: "flex", alignItems: "center",
+            padding: "0 2rem",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+          }}>
+            {SECTIONS.map(sec => (
+              <button
+                key={sec.id}
+                onClick={() => scrollToSection(sec.id)}
+                style={{
+                  background: "none", border: "none",
+                  cursor: "pointer",
+                  fontFamily: font.sans,
+                  fontSize: "0.72rem",
+                  fontWeight: 600,
+                  color: activeSection === sec.id ? "#fff" : "rgba(255,255,255,0.38)",
+                  padding: "1rem 1.25rem",
+                  borderBottom: activeSection === sec.id ? `2px solid ${C.red}` : "2px solid transparent",
+                  transition: "color 0.2s, border-color 0.2s",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={e => { if (activeSection !== sec.id) e.currentTarget.style.color = "rgba(255,255,255,0.7)" }}
+                onMouseLeave={e => { if (activeSection !== sec.id) e.currentTarget.style.color = "rgba(255,255,255,0.38)" }}
+              >
+                {sec.label}
+              </button>
+            ))}
+          </div>
+
+          {/* 01 OVERVIEW */}
+          <div
+            ref={el => sectionRefs.current["overview"] = el}
+            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}
+          >
+            <SectionLabel text="01  Overview" accent={accent} />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
+              <div>
+                <p style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
+                  {detail.clientSnapshot}
+                </p>
+              </div>
+              <div>
+                {detail.situation.map((p, i) => (
+                  <p key={i} style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, marginBottom: i < detail.situation.length - 1 ? "1rem" : 0, marginTop: 0 }}>
+                    {p}
+                  </p>
+                ))}
+              </div>
             </div>
-            <div style={{ display: "flex", alignItems: "stretch", gap: "0.65rem" }}>
-              {detail.stats.map((s, i) => (
-                <div key={i} className="kpi-wrap">
-                  <motion.div
-                    className="kpi-inner"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.22 + i * 0.1, duration: 0.4 }}
-                  >
-                    <div style={{ fontFamily: font.serif, fontSize: "clamp(2.2rem, 3vw, 2.8rem)", fontWeight: 300, color: C.ink, lineHeight: 1 }}>
-                      <CountUpStat val={s.val} delay={0.28 + i * 0.1} />
-                    </div>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.55 + i * 0.1, duration: 0.35 }}
-                      style={{ fontFamily: font.sans, fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(12,26,39,0.4)", marginTop: "0.4rem", whiteSpace: "pre-line", lineHeight: 1.4 }}
-                    >
-                      {s.label}
-                    </motion.div>
-                  </motion.div>
+          </div>
+
+          {/* 02 CHALLENGE */}
+          <div
+            ref={el => sectionRefs.current["challenge"] = el}
+            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)", backgroundColor: "#FAFAF8" }}
+          >
+            <SectionLabel text="02  Challenge" accent={accent} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 700 }}>
+              {detail.challenges.map((ch, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                  <span style={{ color: C.red, fontSize: "0.55rem", flexShrink: 0, marginTop: "0.32rem" }}>■</span>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8, margin: 0 }}>{ch}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* ── 4-COLUMN BODY ── */}
-        <div className="cs-4col" style={{ borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
-          {COLS.map((col, i) => (
-            <div key={i} style={{
-              padding: "0.85rem 1.2rem",
-              borderLeft: i > 0 ? "1px solid rgba(12,26,39,0.07)" : "none",
-              backgroundColor: i % 2 === 1 ? "#FAFAF8" : "#fff",
-            }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginBottom: "0.6rem", paddingBottom: "0.4rem", borderBottom: "1px solid rgba(12,26,39,0.09)" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, color: C.red }}>
-                  {col.num}
-                </span>
-                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "#000" }}>
-                  {col.label}
+          {/* 03 SOLUTION */}
+          <div
+            ref={el => sectionRefs.current["solution"] = el}
+            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}
+          >
+            <SectionLabel text="03  Solution" accent={accent} />
+            <div style={{ maxWidth: 720 }}>
+              {detail.approach.body.map((p, i) => (
+                <div key={i} style={{ marginBottom: i < detail.approach.body.length - 1 ? "1.25rem" : 0 }}>
+                  {detail.approach.subheadings?.[i] && (
+                    <p style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: C.ink, marginBottom: "0.4rem", marginTop: 0 }}>
+                      {detail.approach.subheadings[i]}
+                    </p>
+                  )}
+                  <p style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
+                    {p}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 04 SCOPE OF WORK */}
+          <div
+            ref={el => sectionRefs.current["scope"] = el}
+            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)", backgroundColor: "#FAFAF8" }}
+          >
+            <SectionLabel text="04  Scope of Work" accent={accent} />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem 3rem", maxWidth: 800 }}>
+              {detail.approach.points.map((pt, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.55rem" }}>
+                  <span style={{ color: C.red, fontSize: "0.55rem", flexShrink: 0, marginTop: "0.3rem" }}>■</span>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8 }}>{pt}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── TIMELINE ── */}
+          {detail.timeline && (() => {
+            const hasPerRowPhases = detail.timeline.rows.some(r => r.phases)
+            if (hasPerRowPhases) {
+              // Per-track rendering: each row gets its own phase header + background
+              return (
+                <div style={{ borderBottom: "1px solid rgba(12,26,39,0.08)" }}>
+                  {/* Title */}
+                  <div style={{ padding: "2rem 3rem 1.25rem", backgroundColor: "#F0EFEB" }}>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 700, color: C.ink }}>
+                      {detail.timeline.title}
+                    </span>
+                    <span style={{ fontFamily: font.sans, fontSize: "0.82rem", color: "rgba(12,26,39,0.4)", marginLeft: "0.75rem" }}>
+                      {detail.timeline.subtitle}
+                    </span>
+                  </div>
+                  {detail.timeline.rows.map((row, ri) => {
+                    const rowPhases = row.phases || detail.timeline.phases
+                    const isDark = ri % 2 === 1
+                    const bg = isDark ? "#1B2A3B" : "#F0EFEB"
+                    const phaseColor = (i) => i === rowPhases.length - 1 ? C.red : (isDark ? "rgba(255,255,255,0.3)" : "rgba(12,26,39,0.35)")
+                    const labelColor = isDark ? "#fff" : C.ink
+                    const sublabelColor = isDark ? "rgba(255,255,255,0.38)" : "rgba(12,26,39,0.4)"
+                    return (
+                      <div key={ri} style={{ padding: "1.5rem 3rem 2rem", backgroundColor: bg, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+                        <div style={{ overflowX: "auto" }}>
+                          <div style={{ minWidth: 600 }}>
+                            <div style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: "0.4rem" }}>
+                              <div>
+                                <div style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, color: labelColor, letterSpacing: "0.03em" }}>{row.label}</div>
+                                <div style={{ fontFamily: font.sans, fontSize: "0.64rem", color: sublabelColor, whiteSpace: "pre-line", lineHeight: 1.15, marginTop: "0.15rem" }}>{row.sublabel}</div>
+                              </div>
+                              {rowPhases.map((phase, i) => (
+                                <div key={i} style={{
+                                  fontFamily: font.sans, fontSize: "0.64rem", fontWeight: 700,
+                                  letterSpacing: "0.12em", textTransform: "uppercase",
+                                  color: phaseColor(i),
+                                  textAlign: "center", paddingBottom: "0.3rem",
+                                }}>{phase}</div>
+                              ))}
+                            </div>
+                            <TimelineRow row={{ ...row, label: "", sublabel: "" }} ri={0} sweepIdx={sweepIdx} colorIdx={colorIdx} totalRows={1} />
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            }
+            // Shared-header rendering (existing engagements with flags)
+            return (
+              <div style={{ padding: "2.5rem 3rem", borderBottom: "1px solid rgba(12,26,39,0.08)", backgroundColor: "#F0EFEB" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", marginBottom: "0.7rem", flexWrap: "wrap" }}>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 700, color: C.ink }}>{detail.timeline.title}</span>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.82rem", color: "rgba(12,26,39,0.4)" }}>{detail.timeline.subtitle}</span>
+                </div>
+                <div style={{ overflowX: "auto" }}>
+                  <div style={{ minWidth: 600 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: "0.15rem" }}>
+                      <div />
+                      {detail.timeline.phases.map((phase, i) => (
+                        <motion.div key={i} initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.05, duration: 0.3 }}
+                          style={{ fontFamily: font.sans, fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: i === detail.timeline.phases.length - 1 ? C.red : "rgba(12,26,39,0.35)", textAlign: "center", paddingBottom: "0.35rem" }}
+                        >{phase}</motion.div>
+                      ))}
+                    </div>
+                    {detail.timeline.rows.map((row, ri) => (
+                      <TimelineRow key={ri} row={row} ri={ri} sweepIdx={sweepIdx} colorIdx={colorIdx} totalRows={detail.timeline.rows.length} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
+
+          {/* ── 05 RESULTS + SERVICES ── */}
+          <div
+            ref={el => sectionRefs.current["results"] = el}
+            className="cs-footer"
+            style={{ backgroundColor: "#1B3558", padding: "3rem" }}
+          >
+            <div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginBottom: "1rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.8rem", fontWeight: 700, color: "#FF4458" }}>05</span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff" }}>Results</span>
+              </div>
+              {detail.outcome.map((p, i) => (
+                <p key={i} style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            <div>
+              <div style={{ marginBottom: "0.75rem" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>
+                  Services Delivered
                 </span>
               </div>
-              {col.content}
-            </div>
-          ))}
-        </div>
-
-        {/* ── TIMELINE ── */}
-        {detail.timeline && (
-          <div style={{ padding: "0.65rem 1.75rem 0.7rem", borderBottom: "1px solid rgba(12,26,39,0.08)", backgroundColor: "#F0EFEB" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", marginBottom: "0.7rem", flexWrap: "wrap" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.95rem", fontWeight: 700, color: C.ink }}>
-                {detail.timeline.title}
-              </span>
-              <span style={{ fontFamily: font.sans, fontSize: "0.82rem", color: "rgba(12,26,39,0.4)" }}>
-                {detail.timeline.subtitle}
-              </span>
-            </div>
-
-            <div style={{ overflowX: "auto" }}>
-              <div style={{ minWidth: 600 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: "0.15rem" }}>
-                  <div />
-                  {detail.timeline.phases.map((phase, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + i * 0.05, duration: 0.3 }}
-                      style={{
-                        fontFamily: font.sans, fontSize: "0.64rem", fontWeight: 700,
-                        letterSpacing: "0.12em", textTransform: "uppercase",
-                        color: i === detail.timeline.phases.length - 1 ? C.red : "rgba(12,26,39,0.35)",
-                        textAlign: "center", paddingBottom: "0.35rem",
-                      }}
-                    >{phase}</motion.div>
-                  ))}
-                </div>
-
-                {detail.timeline.rows.map((row, ri) => (
-                  <div key={ri} style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: ri < detail.timeline.rows.length - 1 ? "0.7rem" : 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingRight: "0.5rem" }}>
-                      {row.flagCode === "ae" ? (
-                        <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0, display: "block" }}>
-                          <rect width="6" height="16" fill="#00732F"/>
-                          <rect x="6" width="18" height="5.33" fill="#00732F"/>
-                          <rect x="6" y="5.33" width="18" height="5.34" fill="#fff"/>
-                          <rect x="6" y="10.67" width="18" height="5.33" fill="#000"/>
-                          <rect width="6" height="16" fill="#FF0000"/>
-                        </svg>
-                      ) : (
-                        <svg width="24" height="16" viewBox="0 0 24 16" style={{ flexShrink: 0, display: "block" }}>
-                          <rect width="24" height="8" fill="#EF3340"/>
-                          <rect y="8" width="24" height="8" fill="#fff"/>
-                          <circle cx="7.5" cy="5" r="2.6" fill="#fff"/>
-                          <circle cx="8.8" cy="5" r="2.1" fill="#EF3340"/>
-                          <polygon points="10.5,3 11,4.6 12.5,4.6 11.3,5.5 11.7,7 10.5,6.1 9.3,7 9.7,5.5 8.5,4.6 10,4.6" fill="#fff" transform="scale(0.7) translate(5,2)"/>
-                        </svg>
-                      )}
-                      <div>
-                        <div style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, color: C.ink, letterSpacing: "0.03em" }}>{row.label}</div>
-                        <div style={{ fontFamily: font.sans, fontSize: "0.64rem", color: "rgba(12,26,39,0.4)", whiteSpace: "pre-line", lineHeight: 1.15 }}>/ {row.sublabel}</div>
-                      </div>
-                    </div>
-
-                    {row.steps.map((step, si) => {
-                      const isLast = si === row.steps.length - 1
-                      const isBold = row.boldIndex === si
-                      const dotDelay = 0.45 + ri * 0.12 + si * 0.09
-                      return (
-                        <div key={si} style={{ textAlign: "center", position: "relative" }}>
-                          {si < row.steps.length - 1 && (
-                            <motion.div
-                              initial={{ scaleX: 0 }}
-                              animate={{ scaleX: 1 }}
-                              transition={{ delay: 0.38 + ri * 0.12 + si * 0.09, duration: 0.35, ease: "easeOut" }}
-                              style={{
-                                position: "absolute", top: 6, left: "50%", width: "100%",
-                                height: 1, backgroundColor: "rgba(12,26,39,0.15)", zIndex: 0,
-                                transformOrigin: "left",
-                              }}
-                            />
-                          )}
-                          <div style={{ width: isLast ? 18 : 12, height: isLast ? 18 : 12, margin: "0 auto 0.4rem", position: "relative" }}>
-                            {isLast && (
-                              <motion.div
-                                animate={{ scale: [1, 2.8], opacity: [0.5, 0] }}
-                                transition={{ repeat: Infinity, duration: 1.8, ease: "easeOut", repeatDelay: 0.4, delay: dotDelay + 0.3 }}
-                                style={{ position: "absolute", inset: 0, borderRadius: "50%", backgroundColor: C.red }}
-                              />
-                            )}
-                            <motion.div
-                              initial={{ scale: 0, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ delay: dotDelay, type: "spring", stiffness: 500, damping: 22 }}
-                              style={{
-                                width: "100%", height: "100%",
-                                borderRadius: "50%",
-                                backgroundColor: isLast ? C.red : C.ink,
-                                position: "relative", zIndex: 1,
-                                boxShadow: isLast ? `0 0 0 3px rgba(140,26,43,0.15)` : "none",
-                              }}
-                            />
-                          </div>
-                          <motion.span
-                            initial={{ opacity: 0, y: 4 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: dotDelay + 0.06, duration: 0.28 }}
-                            style={{
-                              fontFamily: font.sans, fontSize: "0.76rem",
-                              fontWeight: isBold ? 700 : isLast ? 600 : 400,
-                              color: isLast ? C.red : C.ink,
-                              lineHeight: 1.3, whiteSpace: "pre-line", display: "block",
-                            }}
-                          >{step}</motion.span>
-                        </div>
-                      )
-                    })}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.5rem" }}>
+                {detail.services.map((s) => (
+                  <div key={s} className="svc-box" style={{
+                    fontFamily: font.sans, fontSize: "0.75rem", fontWeight: 500,
+                    color: "#fff",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    backgroundColor: "rgba(255,255,255,0.07)",
+                    padding: "0.55rem 0.75rem",
+                    textAlign: "center", lineHeight: 1.35,
+                  }}>
+                    {s}
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        )}
 
-        {/* ── DARK FOOTER ── */}
-        <div className="cs-footer" style={{ backgroundColor: "#1B3558", padding: "0.7rem 1.75rem" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginBottom: "0.4rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.8rem", fontWeight: 700, color: "#FF4458" }}>05</span>
-              <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff" }}>Outcome</span>
-            </div>
-            {detail.outcome.map((p, i) => (
-              <p key={i} style={{ fontFamily: font.sans, fontSize: "0.86rem", color: "#fff", lineHeight: 1.55, marginBottom: i < detail.outcome.length - 1 ? "0.35rem" : 0 }}>
-                {p}
-              </p>
-            ))}
-          </div>
-
-          <div>
-            <div style={{ marginBottom: "0.4rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff" }}>
-                Services Delivered
-              </span>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.4rem" }}>
-              {detail.services.map((s) => (
-                <div key={s} className="svc-box" style={{
-                  fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 500,
-                  color: "#fff",
-                  border: "1px solid rgba(255,255,255,0.22)",
-                  backgroundColor: "rgba(255,255,255,0.07)",
-                  padding: "0.38rem 0.5rem",
-                  textAlign: "center",
-                  lineHeight: 1.3,
-                }}>
-                  {s}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
+        </div>{/* end scrollable */}
       </motion.div>
     </motion.div>
   )
 }
 
+const CARD_IMAGES = [
+  "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80", // Dubai skyline daytime, light blue sky — AdTech UAE/Singapore
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80", // Bright financial data on screen — Series A fundraising
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80", // Bright modern tech workspace — Manufacturing UAE
+  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80", // Person on laptop, light desk — D2C Delaware flip
+  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80", // Bright open office team — Global SaaS 5 jurisdictions
+  "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80", // Business document signing, bright — PE M&A exit
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80", // EdTech language learning
+]
+
 function EngagementCard({ eng, index, onLearnMore }) {
   const [hovered, setHovered] = useState(false)
-  const accent = SERVICE_COLOR[eng.service]
+  const accent  = SERVICE_COLOR[eng.service]
+  const img     = CARD_IMAGES[index % CARD_IMAGES.length]
+  const subText = eng.detail.heroTitle || eng.detail.subtitle || eng.title
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.55, delay: (index % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ position: "relative", overflow: "hidden", height: "clamp(400px, 34vw, 540px)", cursor: "pointer", borderRadius: 6, boxShadow: "0 2px 20px rgba(12,26,39,0.1)" }}
     >
+      {/* ── Background image layer — blurs on hover ── */}
       <motion.div
-        onHoverStart={() => setHovered(true)}
-        onHoverEnd={() => setHovered(false)}
-        animate={{
-          y: hovered ? -8 : 0,
-          boxShadow: hovered
-            ? `0 24px 60px rgba(0,0,0,0.1), 0 0 0 1px ${accent}30`
-            : "0 2px 16px rgba(12,26,39,0.06)",
-          backgroundColor: hovered ? "#FAFAFA" : "#ffffff",
-        }}
-        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          border: "1px solid rgba(12,26,39,0.09)",
-          display: "flex", flexDirection: "column",
-          height: "100%", overflow: "hidden",
-          cursor: "default", position: "relative",
-        }}
+        animate={{ filter: hovered ? "blur(6px) brightness(0.3)" : "blur(0px) brightness(0.85)" }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        style={{ position: "absolute", inset: 0 }}
       >
-        {/* Top accent line */}
-        <motion.div
-          animate={{ scaleX: hovered ? 1 : 0.35, backgroundColor: accent }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          style={{ height: 3, transformOrigin: "left", backgroundColor: accent }}
+        <img
+          src={img}
+          alt={eng.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 100%)" }} />
+      </motion.div>
 
-        <div style={{ padding: "1.75rem 2rem 2rem", flex: 1, display: "flex", flexDirection: "column" }}>
-
-          {/* Tags */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-            <span style={{
-              fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 600,
-              color: "rgba(12,26,39,0.6)", backgroundColor: "rgba(12,26,39,0.06)",
-              padding: "0.3rem 0.65rem", letterSpacing: "0.04em",
-            }}>{eng.from}</span>
-            <span style={{ fontFamily: font.sans, fontSize: "0.65rem", color: "rgba(12,26,39,0.3)" }}>→</span>
-            <motion.span
-              animate={{ backgroundColor: hovered ? `${accent}18` : "rgba(12,26,39,0.04)", color: hovered ? accent : "rgba(12,26,39,0.55)" }}
-              transition={{ duration: 0.25 }}
-              style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 600, padding: "0.3rem 0.65rem", letterSpacing: "0.04em" }}
-            >{eng.to}</motion.span>
-          </div>
-
-          {/* Title */}
-          <h3 style={{ fontFamily: font.serif, fontSize: "clamp(1.15rem, 1.5vw, 1.4rem)", fontWeight: 400, color: C.ink, lineHeight: 1.25, marginBottom: "1.25rem" }}>
-            {eng.title}
-          </h3>
-
-          {/* Items */}
-          <ul style={{ listStyle: "none", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
-            {eng.items.map((item, i) => (
-              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontFamily: font.sans, fontSize: "0.8rem", color: "rgba(12,26,39,0.55)", lineHeight: 1.5 }}>
-                <motion.span
-                  animate={{ color: hovered ? accent : "rgba(12,26,39,0.25)" }}
-                  transition={{ duration: 0.2, delay: i * 0.03 }}
-                  style={{ flexShrink: 0, marginTop: "0.2rem", fontSize: "0.5rem" }}
-                >◆</motion.span>
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          {/* Footer: service label + learn more */}
-          <div style={{ borderTop: "1px solid rgba(12,26,39,0.08)", paddingTop: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <motion.span
-              animate={{ color: hovered ? accent : "rgba(12,26,39,0.3)" }}
-              transition={{ duration: 0.25 }}
-              style={{ fontFamily: font.sans, fontSize: "0.57rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}
-            >{eng.service}</motion.span>
-
-            <button
-              onMouseEnter={() => onLearnMore()}
-              style={{
-                background: "none", border: "none", cursor: "pointer",
-                fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 600,
-                color: accent, display: "flex", alignItems: "center", gap: "0.3rem",
-                padding: 0, position: "relative",
-              }}
-            >
-              Learn more
-              <motion.span
-                animate={{ x: hovered ? 3 : 0 }}
-                transition={{ duration: 0.2 }}
-              >→</motion.span>
-            </button>
-          </div>
+      {/* ── DEFAULT state — journey tags + frosted subcard ── */}
+      <motion.div
+        animate={{ opacity: hovered ? 0 : 1 }}
+        transition={{ duration: 0.2 }}
+        style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "1.5rem", pointerEvents: hovered ? "none" : "auto" }}
+      >
+        {/* Journey tags — top left */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", flexWrap: "wrap" }}>
+          <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.05em" }}>
+            {eng.from}
+          </span>
+          <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.75rem" }}>→</span>
+          <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.05em" }}>
+            {eng.to}
+          </span>
         </div>
+
+        {/* Frosted glass subcard — bottom */}
+        <div style={{
+          backgroundColor: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderRadius: 10,
+          padding: "1.1rem 1.35rem",
+        }}>
+          <p style={{ fontFamily: font.sans, fontSize: "0.9rem", fontWeight: 500, color: C.ink, lineHeight: 1.55, margin: 0 }}>
+            {subText}
+          </p>
+        </div>
+      </motion.div>
+
+      {/* ── HOVER state — content panel ── */}
+      <motion.div
+        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 16 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", padding: "2rem", pointerEvents: hovered ? "auto" : "none" }}
+      >
+        {/* Service label */}
+        <p style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: accent, marginBottom: "0.75rem" }}>
+          {eng.service}
+        </p>
+
+        {/* Title */}
+        <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)", fontWeight: 700, color: "#fff", lineHeight: 1.3, marginBottom: "1.25rem" }}>
+          {eng.title}
+        </h3>
+
+        {/* Bullet items */}
+        <ul style={{ listStyle: "none", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.75rem" }}>
+          {eng.items.map((item, i) => (
+            <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", fontFamily: font.sans, fontSize: "0.8rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.5 }}>
+              <span style={{ color: accent, flexShrink: 0, marginTop: "0.28rem", fontSize: "0.42rem" }}>◆</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        {/* Pill CTA button */}
+        <button
+          onClick={(e) => { e.stopPropagation(); onLearnMore() }}
+          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.03)"}
+          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+          style={{
+            backgroundColor: accent,
+            color: "#fff",
+            border: "none",
+            padding: "0.9rem 1.75rem",
+            fontFamily: font.sans,
+            fontSize: "0.65rem",
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            borderRadius: 50,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            transition: "transform 0.2s ease",
+            alignSelf: "stretch",
+          }}
+        >
+          LEARN MORE →
+        </button>
       </motion.div>
     </motion.div>
   )
@@ -900,12 +1133,12 @@ export default function EngagementsSection() {
   const [activeIndex, setActiveIndex] = useState(null)
 
   return (
-    <section id="engagements" style={{ backgroundColor: C.bg, padding: "6rem 7vw" }}>
+    <section id="engagements" style={{ backgroundColor: C.bg, padding: "clamp(4rem, 5vw, 8rem) 7vw" }}>
       <style>{`
         .eng-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1.25rem;
+          gap: 1.5rem;
           margin-top: 3.5rem;
         }
         @media (max-width: 1024px) { .eng-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -923,9 +1156,9 @@ export default function EngagementsSection() {
           <span style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: C.red, display: "block", marginBottom: "1.1rem" }}>
             Recent Transactions & Engagements
           </span>
-          <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.2rem, 3.5vw, 3.2rem)", fontWeight: 300, color: C.ink, lineHeight: 1.18, marginBottom: "1.1rem" }}>
+          <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.2rem, 3.5vw, 3.2rem)", fontWeight: 800, color: C.ink, lineHeight: 1.12, marginBottom: "1.1rem" }}>
             Work that speaks{" "}
-            <em style={{ fontStyle: "italic", color: C.red }}>for itself.</em>
+            <em style={{ fontStyle: "normal", color: C.red }}>for itself.</em>
           </h2>
           <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(12,26,39,0.5)", lineHeight: 1.8 }}>
             A selection of recent mandates across our three practice areas.
@@ -936,7 +1169,7 @@ export default function EngagementsSection() {
         <div className="eng-grid">
           {ENGAGEMENTS.map((eng, i) => (
             <EngagementCard
-              key={eng.title}
+              key={i}
               eng={eng}
               index={i}
               onLearnMore={() => setActiveIndex(i)}
@@ -950,6 +1183,7 @@ export default function EngagementsSection() {
           <EngagementModal
             eng={ENGAGEMENTS[activeIndex]}
             onClose={() => setActiveIndex(null)}
+            heroImg={CARD_IMAGES[activeIndex % CARD_IMAGES.length]}
           />
         )}
       </AnimatePresence>

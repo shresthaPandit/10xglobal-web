@@ -13,8 +13,11 @@ export default function PageLoader() {
       setVisible(false)
       return
     }
-    sessionStorage.setItem("10x_loaded", "1")
-    const t = setTimeout(() => setVisible(false), 1600)
+    // Set key AFTER loader finishes so hero can detect first visit
+    const t = setTimeout(() => {
+      sessionStorage.setItem("10x_loaded", "1")
+      setVisible(false)
+    }, 1600)
     return () => clearTimeout(t)
   }, [])
 

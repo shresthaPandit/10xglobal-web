@@ -1,9 +1,57 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { C, font } from "@/lib/theme"
 import ContactModal from "@/components/ContactModal"
+
+const WORDS  = ["Expansion", "Finance", "Compliance", "Operations", "Growth"]
+const SUFFIX = " Partner."
+
+function CyclingPhrase({ onWordChange }) {
+  const [idx, setIdx]             = useState(0)
+  const [displayed, setDisplayed] = useState(WORDS[0] + SUFFIX)
+  const [phase, setPhase]         = useState("pause")
+
+  useEffect(() => { onWordChange?.(idx) }, [idx])
+
+  useEffect(() => {
+    const full = WORDS[idx] + SUFFIX
+    let t
+    if (phase === "pause") {
+      t = setTimeout(() => setPhase("erasing"), 1800)
+    } else if (phase === "erasing") {
+      if (displayed.length > 0) {
+        t = setTimeout(() => setDisplayed(d => d.slice(0, -1)), 28)
+      } else {
+        setIdx(i => (i + 1) % WORDS.length)
+        setPhase("typing")
+      }
+    } else {
+      if (displayed.length < full.length) {
+        t = setTimeout(() => setDisplayed(full.slice(0, displayed.length + 1)), 55)
+      } else {
+        setPhase("pause")
+      }
+    }
+    return () => clearTimeout(t)
+  }, [displayed, phase, idx])
+
+  const keywordDisplayed = displayed.slice(0, Math.min(displayed.length, WORDS[idx].length))
+  const suffixDisplayed  = displayed.length > WORDS[idx].length ? displayed.slice(WORDS[idx].length) : ""
+
+  return (
+    <>
+      <em style={{ fontFamily: font.serif, fontStyle: "italic", fontWeight: 400, color: C.red }}>{keywordDisplayed}</em>
+      <span style={{ color: "#fff" }}>{suffixDisplayed}</span>
+      <motion.span
+        animate={{ opacity: [1, 1, 0, 0] }}
+        transition={{ duration: 0.8, repeat: Infinity, ease: "linear", times: [0, 0.45, 0.5, 0.95] }}
+        style={{ color: C.red, marginLeft: "2px", fontWeight: 200 }}
+      >|</motion.span>
+    </>
+  )
+}
 
 const BULLETS = [
   "Entering a new market",
@@ -192,13 +240,14 @@ function OfficeTag({ office }) {
 }
 
 export default function CTASection() {
-  const [showContact, setShowContact] = useState(false)
+  const [showContact, setShowContact]     = useState(false)
+  const [activeWordIdx, setActiveWordIdx] = useState(0)
   return (
     <>
     <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
     <section id="cta">
       <style>{`
-        .cta-grid { display: grid; grid-template-columns: 55fr 45fr; min-height: 640px; }
+        .cta-grid { display: grid; grid-template-columns: 55fr 45fr; min-height: clamp(520px, 46vw, 800px); }
         @media (max-width: 767px) { .cta-grid { grid-template-columns: 1fr; } }
       `}</style>
 
@@ -210,15 +259,15 @@ export default function CTASection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          style={{ backgroundColor: "#EAE4D9", padding: "5.5rem 5vw", display: "flex", flexDirection: "column", justifyContent: "center" }}
+          style={{ backgroundColor: "#ffffff", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center" }}
         >
           <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8C1A2B", display: "block", marginBottom: "1.25rem" }}>
             Get Started
           </span>
 
-          <h2 style={{ fontFamily: font.serif, fontSize: "clamp(2.4rem, 4vw, 3.6rem)", fontWeight: 300, color: C.ink, lineHeight: 1.12, marginBottom: "1.25rem" }}>
+          <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.4rem, 4vw, 3.6rem)", fontWeight: 800, color: C.ink, lineHeight: 1.08, marginBottom: "1.25rem" }}>
             Where are you<br />going{" "}
-            <em style={{ fontStyle: "italic", color: C.red }}>next?</em>
+            <em style={{ fontStyle: "normal", color: C.red }}>next?</em>
           </h2>
 
           <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.58)", lineHeight: 1.8, marginBottom: "1.75rem", maxWidth: 480 }}>
@@ -250,20 +299,74 @@ export default function CTASection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, delay: 0.15 }}
-          style={{ backgroundColor: C.surface, padding: "5.5rem 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(12,26,39,0.07)" }}
+          style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(255,255,255,0.08)", borderTop: "1px solid rgba(255,255,255,0.12)", borderBottom: "1px solid rgba(255,255,255,0.12)" }}
         >
-          <div style={{ fontFamily: font.serif, fontSize: "4rem", color: C.red, lineHeight: 0.6, marginBottom: "2.25rem", userSelect: "none", opacity: 0.5 }}>"</div>
+          <span style={{
+            display:       "block",
+            fontFamily:    font.sans,
+            fontSize:      "0.58rem",
+            fontWeight:    700,
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            color:         "rgba(255,255,255,0.45)",
+            marginBottom:  "1.5rem",
+          }}>
+            Why Companies Choose 10x Global
+          </span>
 
-          <p style={{ fontFamily: font.serif, fontSize: "clamp(1.6rem, 2.4vw, 2.1rem)", color: C.ink, lineHeight: 1.5, fontStyle: "italic", marginBottom: "3rem" }}>
-            One firm that gets you <em style={{ color: C.red, fontStyle: "italic" }}>in,</em><br />
-            gets you <em style={{ color: C.red, fontStyle: "italic" }}>funded,</em><br />
-            and keeps you <em style={{ color: C.red, fontStyle: "italic" }}>running.</em>
+          <h2 style={{
+            fontFamily:          font.sans,
+            fontSize:            "clamp(1.6rem, 2.4vw, 3rem)",
+            fontWeight:          800,
+            color:               "#fff",
+            lineHeight:          1.1,
+            marginBottom:        "1.75rem",
+            WebkitFontSmoothing: "antialiased",
+            letterSpacing:       "-0.02em",
+            whiteSpace:          "nowrap",
+          }}>
+            Your Global <CyclingPhrase onWordChange={setActiveWordIdx} />
+          </h2>
+
+          <p style={{
+            fontFamily: font.sans,
+            fontSize:   "0.9rem",
+            color:      "rgba(255,255,255,0.48)",
+            lineHeight: 1.9,
+            maxWidth:   480,
+            marginBottom: "2rem",
+          }}>
+            Every business crossing a border needs to enter it, fund it, and operate it.{" "}
+            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>Most firms solve one.</strong>{" "}
+            We manage all three with a single integrated team across{" "}
+            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>finance, legal, and compliance.</strong>
           </p>
 
-          {/* Location tags with hover cards */}
-          <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
-            {OFFICES.map(office => (
-              <OfficeTag key={office.tag} office={office} />
+          {/* Animated word pills */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+            {WORDS.map((word, i) => (
+              <motion.span
+                key={word}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  fontFamily:    font.sans,
+                  fontSize:      "0.62rem",
+                  fontWeight:    700,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color:           i === activeWordIdx ? C.red : "rgba(255,255,255,0.5)",
+                  border:          `1px solid ${i === activeWordIdx ? C.red : "rgba(255,255,255,0.12)"}`,
+                  padding:         "0.45rem 0.9rem",
+                  borderRadius:    "4px",
+                  backgroundColor: i === activeWordIdx ? "rgba(184,50,40,0.12)" : "rgba(255,255,255,0.04)",
+                  transition:      "color 0.3s, border-color 0.3s, background-color 0.3s",
+                }}
+              >
+                {word}
+              </motion.span>
             ))}
           </div>
         </motion.div>
