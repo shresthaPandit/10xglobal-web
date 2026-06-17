@@ -7,6 +7,7 @@ import HowWeWork           from "@/components/sections/HowWeWork"
 import TestimonialsSection  from "@/components/sections/TestimonialsSection"
 import EngagementsSection   from "@/components/sections/EngagementsSection"
 import ClientTypesSection   from "@/components/sections/ClientTypesSection"
+import GlobalPartnerSection from "@/components/sections/GlobalPartnerSection"
 import CTASection           from "@/components/sections/CTASection"
 import Footer              from "@/components/layout/Footer"
 
@@ -22,6 +23,7 @@ export default function Home() {
       <TestimonialsSection />
       <EngagementsSection />
       <ClientTypesSection />
+      <GlobalPartnerSection />
       <CTASection />
       <Footer />
     </>
