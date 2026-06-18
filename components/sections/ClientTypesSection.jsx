@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { motion } from "framer-motion"
 import { C, font } from "@/lib/theme"
 
@@ -31,142 +30,99 @@ const CLIENTS = [
   },
 ]
 
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M2.5 7L5.5 10L11.5 4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 function ClientCard({ client, index }) {
-  const [hovered, setHovered] = useState(false)
-  const num = String(index + 1).padStart(2, "0")
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 48 }}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.65, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      style={{ perspective: "1000px", height: "100%" }}
+      transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="ct-card-wrap"
+      style={{ height: "100%" }}
     >
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          position:      "relative",
-          height:        "100%",
-          minHeight:     300,
-          borderRadius:  28,
-          background:    "linear-gradient(135deg, #ffffff 0%, #f4f6fa 100%)",
-          boxShadow:     hovered
-            ? "2px 2px 0 rgba(8,16,32,0.85), 0 32px 56px rgba(0,0,0,0.14), inset 0 1px 0 #fff"
-            : "7px 7px 0 rgba(8,16,32,0.75), 0 8px 24px rgba(0,0,0,0.1), inset 0 1px 0 #fff",
-          transform:     hovered ? "rotate3d(1, 1, 0, 18deg)" : "rotate3d(0,0,0,0deg)",
-          transformStyle:"preserve-3d",
-          transition:    "transform 0.5s ease, box-shadow 0.5s ease",
-          cursor:        "default",
-          overflow:      "hidden",
-        }}
-      >
-        {/* Glass inner layer — floats at z:25 */}
-        <div style={{
-          position:        "absolute",
-          inset:           8,
-          borderRadius:    22,
-          borderBottom:    "1px solid rgba(12,26,39,0.06)",
-          borderLeft:      "1px solid rgba(12,26,39,0.06)",
-          background:      "linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.2))",
-          backdropFilter:  "blur(4px)",
-          WebkitBackdropFilter: "blur(4px)",
-          transform:       "translate3d(0,0,25px)",
-          transformStyle:  "preserve-3d",
-          pointerEvents:   "none",
-        }} />
+      {/* Spinning border layer */}
+      <div className="ct-card-border" aria-hidden="true" />
 
-        {/* Number watermark */}
-        <span style={{
-          position:      "absolute",
-          top:           "0.5rem",
-          right:         "1.25rem",
-          fontFamily:    font.num,
-          fontSize:      "8rem",
-          fontWeight:    800,
-          lineHeight:    1,
-          color:         "rgba(12,26,39,0.06)",
-          userSelect:    "none",
-          pointerEvents: "none",
-          zIndex:        0,
-          transform:     `translate3d(0,0,${hovered ? 30 : 20}px)`,
-          transition:    "transform 0.5s ease",
-        }}>
-          {num}
-        </span>
+      {/* Card inner */}
+      <div className="ct-card-inner">
 
-        {/* Content — floats at z:26, just above glass layer */}
-        <div style={{
-          position:        "relative",
-          zIndex:          1,
-          transform:       "translate3d(0,0,26px)",
-          transformStyle:  "preserve-3d",
-          padding:         "2.25rem 1.75rem 1.75rem",
-          boxSizing:       "border-box",
-        }}>
-          {/* Subtitle */}
-          <span style={{
-            display:       "block",
-            fontFamily:    font.sans,
-            fontSize:      "0.65rem",
-            fontWeight:    700,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color:         C.red,
-            marginBottom:  "0.65rem",
-          }}>
-            {client.sub}
-          </span>
-
-          {/* Title */}
+        {/* Title block */}
+        <div style={{ marginBottom: "0.6rem" }}>
           <h3 style={{
             fontFamily:   font.sans,
-            fontSize:     "clamp(1.3rem, 1.8vw, 1.65rem)",
+            fontSize:     "clamp(1.15rem, 1.6vw, 1.45rem)",
             fontWeight:   800,
-            color:        C.ink,
+            color:        "#0a0a0a",
             lineHeight:   1.2,
-            marginBottom: "0.85rem",
+            margin:       0,
           }}>
             {client.title}
           </h3>
-
-          {/* Body */}
           <p style={{
-            fontFamily:   font.sans,
-            fontSize:     "0.9rem",
-            color:        "rgba(12,26,39,0.55)",
-            lineHeight:   1.8,
-            marginBottom: "1.25rem",
+            fontFamily:    font.sans,
+            fontSize:      "0.6rem",
+            fontWeight:    700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color:         "rgba(184,50,40,0.85)",
+            marginTop:     "0.4rem",
+            marginBottom:  0,
           }}>
-            {client.body}
+            {client.sub}
           </p>
+        </div>
 
-          {/* Tags row */}
-          <div style={{
-            display:  "flex",
-            gap:      "0.4rem",
-            flexWrap: "wrap",
-          }}>
-            {client.tags.map(tag => (
-              <span key={tag} style={{
+        {/* Divider */}
+        <hr style={{ border: "none", borderTop: "1px solid rgba(0,0,0,0.1)", margin: "0.75rem 0" }} />
+
+        {/* Body */}
+        <p style={{
+          fontFamily:   font.sans,
+          fontSize:     "0.9rem",
+          color:        "rgba(30,30,30,0.72)",
+          lineHeight:   1.8,
+          marginBottom: "1rem",
+        }}>
+          {client.body}
+        </p>
+
+        {/* Tag list with check icons */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "auto" }}>
+          {client.tags.map(tag => (
+            <div key={tag} style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+              <div style={{
+                display:         "flex",
+                alignItems:      "center",
+                justifyContent:  "center",
+                width:           20,
+                height:          20,
+                borderRadius:    "50%",
+                backgroundColor: C.red,
+                flexShrink:      0,
+              }}>
+                <CheckIcon />
+              </div>
+              <span style={{
                 fontFamily:    font.sans,
-                fontSize:      "0.65rem",
-                fontWeight:    600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color:           "rgba(12,26,39,0.55)",
-                border:          "1px solid rgba(12,26,39,0.15)",
-                borderRadius:    20,
-                padding:         "0.25rem 0.65rem",
-                backgroundColor: "rgba(12,26,39,0.04)",
+                fontSize:      "0.82rem",
+                fontWeight:    500,
+                color:         "rgba(20,20,20,0.75)",
+                letterSpacing: "0.01em",
               }}>
                 {tag}
               </span>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
+
       </div>
     </motion.div>
   )
@@ -179,10 +135,72 @@ export default function ClientTypesSection() {
         .ct-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 2rem;
+          gap: 1.5rem;
           margin-top: 3.5rem;
+          align-items: stretch;
         }
         @media (max-width: 767px) { .ct-grid { grid-template-columns: 1fr; } }
+
+        /* Card wrapper — provides the 1.5px border space */
+        .ct-card-wrap {
+          position: relative;
+          border-radius: 1rem;
+          overflow: hidden;
+          padding: 1.5px;
+          height: 100%;
+          box-sizing: border-box;
+        }
+
+        /* Spinning conic-gradient border */
+        .ct-card-border {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          z-index: 0;
+          overflow: hidden;
+        }
+        .ct-card-border::before {
+          content: '';
+          position: absolute;
+          inset: -120%;
+          background: conic-gradient(
+            from 0deg,
+            transparent 0%,
+            transparent 32%,
+            rgba(184,50,40,0.9) 44%,
+            rgba(220,80,60,0.75) 50%,
+            rgba(184,50,40,0.9) 56%,
+            transparent 68%,
+            transparent 100%
+          );
+          animation: ct-spin 5s linear infinite;
+        }
+        @keyframes ct-spin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ct-card-border::before { animation: none; }
+        }
+
+        /* Inner card — sits above border */
+        .ct-card-inner {
+          position: relative;
+          z-index: 1;
+          border-radius: calc(1rem - 1.5px);
+          padding: 1.5rem;
+          background-color: rgba(255, 255, 255, 0.82);
+          background-image:
+            radial-gradient(at 0% 100%,   rgba(184,50,40,0.18) 0px, transparent 65%),
+            radial-gradient(at 100% 100%, rgba(184,50,40,0.13) 0px, transparent 60%);
+          backdrop-filter: blur(18px);
+          -webkit-backdrop-filter: blur(18px);
+          box-shadow: 0 -12px 24px 0 rgba(255,255,255,0.18) inset;
+          height: 100%;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+        }
       `}</style>
 
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>

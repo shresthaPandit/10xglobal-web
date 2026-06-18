@@ -367,7 +367,7 @@ function SectionLabel({ text, accent }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.75rem" }}>
       <div style={{ width: 2, height: 13, backgroundColor: accent, flexShrink: 0 }} />
-      <span style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: accent }}>
+      <span style={{ fontFamily: font.sans, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: accent }}>
         {text}
       </span>
     </div>
@@ -543,16 +543,27 @@ function EngagementModal({ eng, onClose, heroImg }) {
   useEffect(() => {
     if (!detail.timeline) return
     const total = detail.timeline.phases.length
-    setSweepIdx(-1)
-    setColorIdx(-1)
-    const timers = []
-    for (let i = 0; i < total; i++) {
-      const ci = i
-      const base = 1500 + i * 1100
-      timers.push(setTimeout(() => setSweepIdx(ci), base))
-      timers.push(setTimeout(() => setColorIdx(ci), base + 650))
+    const cycleDuration = 1500 + (total - 1) * 1100 + 650 + 2000
+
+    const runCycle = () => {
+      setSweepIdx(-1); setColorIdx(-1)
+      const timers = []
+      for (let i = 0; i < total; i++) {
+        const ci = i
+        const base = 1500 + i * 1100
+        timers.push(setTimeout(() => setSweepIdx(ci), base))
+        timers.push(setTimeout(() => setColorIdx(ci), base + 650))
+      }
+      return timers
     }
-    return () => timers.forEach(clearTimeout)
+
+    let currentTimers = runCycle()
+    const interval = setInterval(() => {
+      currentTimers.forEach(clearTimeout)
+      currentTimers = runCycle()
+    }, cycleDuration)
+
+    return () => { currentTimers.forEach(clearTimeout); clearInterval(interval) }
   }, [detail])
 
   const isProgrammaticScroll = useRef(false)
@@ -740,18 +751,18 @@ function EngagementModal({ eng, onClose, heroImg }) {
                   {detail.heroTitle || title}
                 </h2>
                 {detail.heroDesc && (
-                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: "0 0 1.75rem", maxWidth: 680 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: "0 0 1.75rem", maxWidth: 680 }}>
                     {detail.heroDesc}
                   </p>
                 )}
                 {!detail.heroDesc && detail.subtitle && (
-                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: "0 0 1.75rem", maxWidth: 680 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: "0 0 1.75rem", maxWidth: 680 }}>
                     {detail.subtitle}
                   </p>
                 )}
 
                 {/* KPI stats — below paragraph */}
-                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
                   {detail.stats.map((s, i) => (
                     <div key={i} className="kpi-wrap" style={{ minWidth: 160 }}>
                       <motion.div
@@ -788,19 +799,22 @@ function EngagementModal({ eng, onClose, heroImg }) {
                 key={sec.id}
                 onClick={() => scrollToSection(sec.id)}
                 style={{
-                  background: "none", border: "none",
-                  cursor: "pointer",
-                  fontFamily: font.sans,
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  color: activeSection === sec.id ? "#fff" : "rgba(255,255,255,0.38)",
-                  padding: "1rem 1.25rem",
-                  borderBottom: activeSection === sec.id ? `2px solid ${C.red}` : "2px solid transparent",
-                  transition: "color 0.2s, border-color 0.2s",
-                  whiteSpace: "nowrap",
+                  background:    activeSection === sec.id ? "rgba(255,255,255,0.08)" : "none",
+                  border:        "none",
+                  cursor:        "pointer",
+                  fontFamily:    font.sans,
+                  fontSize:      "0.9rem",
+                  fontWeight:    activeSection === sec.id ? 700 : 500,
+                  color:         activeSection === sec.id ? "#fff" : "rgba(255,255,255,0.45)",
+                  padding:       "1.1rem 1.5rem",
+                  borderBottom:  activeSection === sec.id ? `2px solid ${C.red}` : "2px solid transparent",
+                  borderRadius:  activeSection === sec.id ? "6px 6px 0 0" : "0",
+                  transition:    "color 0.2s, border-color 0.2s, background 0.2s",
+                  whiteSpace:    "nowrap",
+                  letterSpacing: "0.01em",
                 }}
-                onMouseEnter={e => { if (activeSection !== sec.id) e.currentTarget.style.color = "rgba(255,255,255,0.7)" }}
-                onMouseLeave={e => { if (activeSection !== sec.id) e.currentTarget.style.color = "rgba(255,255,255,0.38)" }}
+                onMouseEnter={e => { if (activeSection !== sec.id) { e.currentTarget.style.color = "rgba(255,255,255,0.8)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)" } }}
+                onMouseLeave={e => { if (activeSection !== sec.id) { e.currentTarget.style.color = "rgba(255,255,255,0.45)"; e.currentTarget.style.background = "none" } }}
               >
                 {sec.label}
               </button>
@@ -815,13 +829,13 @@ function EngagementModal({ eng, onClose, heroImg }) {
             <SectionLabel text="01  Overview" accent={accent} />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
               <div>
-                <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
+                <p style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
                   {detail.clientSnapshot}
                 </p>
               </div>
               <div>
                 {detail.situation.map((p, i) => (
-                  <p key={i} style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, marginBottom: i < detail.situation.length - 1 ? "1rem" : 0, marginTop: 0 }}>
+                  <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, marginBottom: i < detail.situation.length - 1 ? "1rem" : 0, marginTop: 0 }}>
                     {p}
                   </p>
                 ))}
@@ -839,7 +853,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
               {detail.challenges.map((ch, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
                   <span style={{ color: C.red, fontSize: "0.55rem", flexShrink: 0, marginTop: "0.32rem" }}>■</span>
-                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8, margin: 0 }}>{ch}</p>
+                  <p style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8, margin: 0 }}>{ch}</p>
                 </div>
               ))}
             </div>
@@ -859,7 +873,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
                       {detail.approach.subheadings[i]}
                     </p>
                   )}
-                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
                     {p}
                   </p>
                 </div>
@@ -877,7 +891,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
               {detail.approach.points.map((pt, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.55rem" }}>
                   <span style={{ color: C.red, fontSize: "0.55rem", flexShrink: 0, marginTop: "0.3rem" }}>■</span>
-                  <span style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8 }}>{pt}</span>
+                  <span style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8 }}>{pt}</span>
                 </div>
               ))}
             </div>
@@ -971,7 +985,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
                 <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff" }}>Results</span>
               </div>
               {detail.outcome.map((p, i) => (
-                <p key={i} style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
+                <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
                   {p}
                 </p>
               ))}
