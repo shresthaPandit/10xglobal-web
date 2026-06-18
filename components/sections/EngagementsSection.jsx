@@ -642,11 +642,11 @@ function EngagementModal({ eng, onClose, heroImg }) {
           background: conic-gradient(
             from 0deg,
             transparent 0%,
-            transparent 38%,
-            rgba(220,60,50,0.95) 46%,
-            #ffffff 50%,
-            rgba(220,60,50,0.95) 54%,
-            transparent 62%,
+            transparent 40%,
+            rgba(220,60,50,0.6) 46%,
+            rgba(220,60,50,0.95) 50%,
+            rgba(220,60,50,0.6) 54%,
+            transparent 60%,
             transparent 100%
           );
           animation: kpi-spin 2.8s linear infinite;
@@ -979,15 +979,15 @@ function EngagementModal({ eng, onClose, heroImg }) {
           <div
             ref={el => sectionRefs.current["results"] = el}
             className="cs-footer"
-            style={{ backgroundColor: "#1B3558", padding: "3rem" }}
+            style={{ backgroundColor: "#ffffff", padding: "3rem", borderTop: "1px solid rgba(12,26,39,0.08)" }}
           >
             <div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginBottom: "1rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.8rem", fontWeight: 700, color: "#FF4458" }}>05</span>
-                <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff" }}>Results</span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.8rem", fontWeight: 700, color: C.red }}>05</span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: C.ink }}>Results</span>
               </div>
               {detail.outcome.map((p, i) => (
-                <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
+                <p key={i} style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.7)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
                   {p}
                 </p>
               ))}
@@ -995,22 +995,34 @@ function EngagementModal({ eng, onClose, heroImg }) {
 
             <div>
               <div style={{ marginBottom: "0.75rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.85rem", fontWeight: 800, color: C.ink }}>
                   Services Delivered
                 </span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.5rem" }}>
-                {detail.services.map((s) => (
-                  <div key={s} className="svc-box" style={{
-                    fontFamily: font.sans, fontSize: "0.75rem", fontWeight: 500,
-                    color: "#fff",
-                    border: "1px solid rgba(255,255,255,0.18)",
-                    backgroundColor: "rgba(255,255,255,0.07)",
-                    padding: "0.55rem 0.75rem",
-                    textAlign: "center", lineHeight: 1.35,
-                  }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.6rem" }}>
+                {detail.services.map((s, i) => (
+                  <motion.div
+                    key={s}
+                    initial={{ opacity: 0, scale: 0.85, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.07, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ scale: 1.04, backgroundColor: "#8C1A2B" }}
+                    style={{
+                      fontFamily:      font.sans,
+                      fontSize:        "0.75rem",
+                      fontWeight:      600,
+                      color:           "#ffffff",
+                      backgroundColor: C.red,
+                      padding:         "0.75rem 0.75rem",
+                      textAlign:       "center",
+                      lineHeight:      1.35,
+                      borderRadius:    10,
+                      cursor:          "default",
+                      boxShadow:       "0 4px 12px rgba(184,50,40,0.3)",
+                    }}
+                  >
                     {s}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

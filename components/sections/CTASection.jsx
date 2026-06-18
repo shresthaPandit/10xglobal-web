@@ -293,25 +293,29 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          style={{ display: "flex", alignItems: "center", gap: "3rem", flexWrap: "wrap" }}
+          style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
         >
-          <p style={{ fontFamily: font.sans, fontSize: "1.05rem", color: "rgba(12,26,39,0.52)", lineHeight: 1.75, margin: 0, flex: "1 1 260px" }}>
-            A free 30-minute strategy session with our senior partners. No jargon, no obligation.
-          </p>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "3rem", flexWrap: "wrap" }}>
+            <p style={{ fontFamily: font.sans, fontSize: "1.05rem", color: "rgba(12,26,39,0.52)", lineHeight: 1.75, margin: 0, flex: "1 1 260px" }}>
+              A free 30-minute strategy session with our senior partners. No jargon, no obligation.
+            </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: "1 1 200px" }}>
-            {BULLETS.map(b => (
-              <span key={b} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontFamily: font.sans, fontSize: "0.95rem", color: "rgba(12,26,39,0.6)" }}>
-                <span style={{ color: C.red, fontSize: "0.55rem" }}>◆</span>
-                {b}
-              </span>
-            ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: "1 1 200px" }}>
+              {BULLETS.map(b => (
+                <span key={b} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontFamily: font.sans, fontSize: "0.95rem", color: "rgba(12,26,39,0.6)" }}>
+                  <span style={{ color: C.red, fontSize: "0.55rem" }}>◆</span>
+                  {b}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <button className="cta-btn" onClick={() => setShowContact(true)}>
-            <span>Book a Strategy Session</span>
-            <span className="arrow">→</span>
-          </button>
+          <div>
+            <button className="cta-btn" onClick={() => setShowContact(true)}>
+              <span>Book a Strategy Session</span>
+              <span className="arrow">→</span>
+            </button>
+          </div>
         </motion.div>
 
       </div>
