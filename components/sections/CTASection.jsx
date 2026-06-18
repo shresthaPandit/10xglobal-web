@@ -245,87 +245,74 @@ export default function CTASection() {
   return (
     <>
     <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
-    <section id="cta">
+    <section id="cta" style={{ backgroundColor: "#ffffff", borderTop: "1px solid rgba(12,26,39,0.08)", padding: "9rem 7vw" }}>
       <style>{`
-        .cta-grid { display: grid; grid-template-columns: 65fr 35fr; min-height: clamp(360px, 32vw, 560px); }
-        @media (max-width: 767px) { .cta-grid { grid-template-columns: 1fr; } }
+        .cta-btn {
+          position: relative; overflow: hidden;
+          background: ${C.ink}; color: #fff;
+          padding: 1rem 2.25rem; border: none; cursor: pointer;
+          font-family: ${font.sans}; font-weight: 700; font-size: 0.68rem;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          display: inline-flex; align-items: center; gap: 0.65rem;
+          transition: color 0.3s;
+        }
+        .cta-btn::before {
+          content: ''; position: absolute; inset: 0;
+          background: ${C.red};
+          transform: translateX(-100%);
+          transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+        }
+        .cta-btn:hover::before { transform: translateX(0); }
+        .cta-btn span { position: relative; z-index: 1; }
+        .cta-btn .arrow { position: relative; z-index: 1; transition: transform 0.3s ease; }
+        .cta-btn:hover .arrow { transform: translateX(5px); }
       `}</style>
 
-      <div className="cta-grid">
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
-        {/* Left — Get Started */}
+        {/* Heading — full width above */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          style={{ backgroundColor: "#ffffff", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center" }}
+          transition={{ duration: 0.5 }}
+          style={{ marginBottom: "2.5rem" }}
         >
-          <span style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8C1A2B", display: "block", marginBottom: "1.5rem" }}>
+          <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(12,26,39,0.35)", display: "block", marginBottom: "0.9rem" }}>
             Get Started
           </span>
-
-          <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.8rem, 5vw, 4.5rem)", fontWeight: 800, color: C.ink, lineHeight: 1.08, marginBottom: "1.5rem" }}>
-            Where are you<br />going{" "}
+          <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.6rem, 4.2vw, 4.6rem)", fontWeight: 800, color: C.ink, lineHeight: 1.1, margin: 0 }}>
+            Where are you going{" "}
             <em style={{ fontStyle: "normal", color: C.red }}>next?</em>
           </h2>
+        </motion.div>
 
-          <p style={{ fontFamily: font.sans, fontSize: "1.05rem", color: "rgba(12,26,39,0.58)", lineHeight: 1.8, marginBottom: "2rem", maxWidth: 560 }}>
-            Let's build the roadmap together. A free 30-minute strategy session with our partners. No jargon, no obligation.
+        {/* Bottom row — description + bullets + button side by side */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          style={{ display: "flex", alignItems: "center", gap: "3rem", flexWrap: "wrap" }}
+        >
+          <p style={{ fontFamily: font.sans, fontSize: "1.05rem", color: "rgba(12,26,39,0.52)", lineHeight: 1.75, margin: 0, flex: "1 1 260px" }}>
+            A free 30-minute strategy session with our senior partners. No jargon, no obligation.
           </p>
 
-          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2.5rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: "1 1 200px" }}>
             {BULLETS.map(b => (
-              <li key={b} style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.65)" }}>
-                <span style={{ color: C.red, fontSize: "0.85rem", flexShrink: 0 }}>→</span>
+              <span key={b} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontFamily: font.sans, fontSize: "0.95rem", color: "rgba(12,26,39,0.6)" }}>
+                <span style={{ color: C.red, fontSize: "0.55rem" }}>◆</span>
                 {b}
-              </li>
+              </span>
             ))}
-          </ul>
+          </div>
 
-          <button
-            onClick={() => setShowContact(true)}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#7e6232"}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = C.gold}
-            style={{ backgroundColor: C.gold, color: "#fff", padding: "1.25rem 2rem", border: "none", cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", transition: "background-color 0.2s", width: "100%", maxWidth: 560 }}
-          >
-            Book a Strategy Session
+          <button className="cta-btn" onClick={() => setShowContact(true)}>
+            <span>Book a Strategy Session</span>
+            <span className="arrow">→</span>
           </button>
         </motion.div>
-
-        {/* Right — Quote panel */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          style={{ backgroundColor: "#F5E8E6", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(12,26,39,0.07)" }}
-        >
-          {/* Big quote mark */}
-          <div style={{
-            fontFamily:   font.serif,
-            fontSize:     "8rem",
-            color:        C.red,
-            lineHeight:   0.7,
-            marginBottom: "2rem",
-            userSelect:   "none",
-            opacity:      0.55,
-          }}>"</div>
-
-          <p style={{
-            fontFamily:   font.serif,
-            fontSize:     "clamp(1.8rem, 3vw, 2.8rem)",
-            fontWeight:   400,
-            fontStyle:    "italic",
-            color:        C.ink,
-            lineHeight:   1.45,
-            margin:       0,
-          }}>
-            Built for companies that mean{" "}
-            <em style={{ color: C.red, fontStyle: "italic" }}>business.</em>
-          </p>
-        </motion.div>
-
 
       </div>
     </section>

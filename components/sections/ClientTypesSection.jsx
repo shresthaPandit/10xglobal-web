@@ -251,7 +251,7 @@ export default function ClientTypesSection() {
             >
               <span style={{
                 fontFamily:    font.sans,
-                fontSize:      "0.58rem",
+                fontSize:      "0.72rem",
                 fontWeight:    700,
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
@@ -259,12 +259,12 @@ export default function ClientTypesSection() {
                 display:       "block",
                 marginBottom:  "1.1rem",
               }}>
-                Why Companies Choose 10x Global
+                Who We Work With
               </span>
 
               <h2 style={{
                 fontFamily:          font.sans,
-                fontSize:            "clamp(2rem, 3.5vw, 3.5rem)",
+                fontSize:            "clamp(2.4rem, 4.2vw, 4.2rem)",
                 fontWeight:          800,
                 color:               "#fff",
                 lineHeight:          1.12,
@@ -275,18 +275,6 @@ export default function ClientTypesSection() {
                 Your Global <CyclingPhrase onWordChange={setActiveWordIdx} />
               </h2>
 
-              <p style={{
-                fontFamily:   font.sans,
-                fontSize:     "0.9rem",
-                color:        "#ffffff",
-                lineHeight:   1.85,
-                marginBottom: "0",
-              }}>
-                Every business crossing a border needs to enter it, fund it, and operate it.{" "}
-                <strong style={{ color: "#ffffff" }}>Most firms solve one.</strong>{" "}
-                We manage all three with a single integrated team across{" "}
-                <strong style={{ color: "#ffffff" }}>finance, legal, and compliance.</strong>
-              </p>
 
             </motion.div>
 
