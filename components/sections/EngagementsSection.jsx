@@ -774,7 +774,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
                         transition={{ delay: 0.22 + i * 0.1, duration: 0.4 }}
                         style={{ padding: "1.4rem 1.75rem" }}
                       >
-                        <div style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 2.8vw, 2.8rem)", fontWeight: 300, color: "#fff", lineHeight: 1 }}>
+                        <div style={{ fontFamily: font.num, fontSize: "clamp(2rem, 2.8vw, 2.8rem)", fontWeight: 700, color: "#fff", lineHeight: 1 }}>
                           <CountUpStat val={s.val} delay={0.28 + i * 0.1} />
                         </div>
                         <div style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginTop: "0.5rem", whiteSpace: "pre-line", lineHeight: 1.5 }}>
@@ -1006,19 +1006,20 @@ function EngagementModal({ eng, onClose, heroImg }) {
                     initial={{ opacity: 0, scale: 0.85, y: 12 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 0.1 + i * 0.07, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.04, backgroundColor: "#8C1A2B" }}
+                    whileHover={{ scale: 1.04, backgroundColor: C.red, color: "#fff" }}
                     style={{
                       fontFamily:      font.sans,
                       fontSize:        "0.75rem",
                       fontWeight:      600,
-                      color:           "#ffffff",
-                      backgroundColor: C.red,
+                      color:           C.red,
+                      backgroundColor: "#ffffff",
+                      border:          `1.5px solid ${C.red}`,
                       padding:         "0.75rem 0.75rem",
                       textAlign:       "center",
                       lineHeight:      1.35,
                       borderRadius:    10,
                       cursor:          "default",
-                      boxShadow:       "0 4px 12px rgba(184,50,40,0.3)",
+                      boxShadow:       "0 2px 8px rgba(184,50,40,0.12)",
                     }}
                   >
                     {s}
