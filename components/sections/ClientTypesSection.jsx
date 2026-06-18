@@ -52,10 +52,10 @@ function ClientCard({ client, index }) {
           height:        "100%",
           minHeight:     300,
           borderRadius:  28,
-          background:    "linear-gradient(135deg, #0e2040 0%, #060d1c 100%)",
+          background:    "linear-gradient(135deg, #ffffff 0%, #f4f6fa 100%)",
           boxShadow:     hovered
-            ? "rgba(0,0,0,0.35) 30px 50px 25px -40px, rgba(0,0,0,0.15) 0px 25px 30px 0px"
-            : "rgba(0,0,0,0.3) 8px 16px 30px 0px",
+            ? "2px 2px 0 rgba(8,16,32,0.85), 0 32px 56px rgba(0,0,0,0.14), inset 0 1px 0 #fff"
+            : "7px 7px 0 rgba(8,16,32,0.75), 0 8px 24px rgba(0,0,0,0.1), inset 0 1px 0 #fff",
           transform:     hovered ? "rotate3d(1, 1, 0, 18deg)" : "rotate3d(0,0,0,0deg)",
           transformStyle:"preserve-3d",
           transition:    "transform 0.5s ease, box-shadow 0.5s ease",
@@ -68,9 +68,9 @@ function ClientCard({ client, index }) {
           position:        "absolute",
           inset:           8,
           borderRadius:    22,
-          borderBottom:    "1px solid rgba(255,255,255,0.12)",
-          borderLeft:      "1px solid rgba(255,255,255,0.12)",
-          background:      "linear-gradient(to bottom, rgba(255,255,255,0.07), rgba(255,255,255,0.02))",
+          borderBottom:    "1px solid rgba(12,26,39,0.06)",
+          borderLeft:      "1px solid rgba(12,26,39,0.06)",
+          background:      "linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.2))",
           backdropFilter:  "blur(4px)",
           WebkitBackdropFilter: "blur(4px)",
           transform:       "translate3d(0,0,25px)",
@@ -87,7 +87,7 @@ function ClientCard({ client, index }) {
           fontSize:      "8rem",
           fontWeight:    800,
           lineHeight:    1,
-          color:         "rgba(255,255,255,0.06)",
+          color:         "rgba(12,26,39,0.06)",
           userSelect:    "none",
           pointerEvents: "none",
           zIndex:        0,
@@ -114,7 +114,7 @@ function ClientCard({ client, index }) {
             fontWeight:    700,
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color:         "rgba(255,130,110,0.85)",
+            color:         C.red,
             marginBottom:  "0.65rem",
           }}>
             {client.sub}
@@ -125,7 +125,7 @@ function ClientCard({ client, index }) {
             fontFamily:   font.sans,
             fontSize:     "clamp(1.3rem, 1.8vw, 1.65rem)",
             fontWeight:   800,
-            color:        "#ffffff",
+            color:        C.ink,
             lineHeight:   1.2,
             marginBottom: "0.85rem",
           }}>
@@ -136,7 +136,7 @@ function ClientCard({ client, index }) {
           <p style={{
             fontFamily:   font.sans,
             fontSize:     "0.92rem",
-            color:        "rgba(255,255,255,0.48)",
+            color:        "rgba(12,26,39,0.55)",
             lineHeight:   1.8,
             marginBottom: "1.25rem",
           }}>
@@ -156,11 +156,11 @@ function ClientCard({ client, index }) {
                 fontWeight:    600,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color:         "rgba(255,255,255,0.55)",
-                border:        "1px solid rgba(255,255,255,0.12)",
-                borderRadius:  20,
-                padding:       "0.25rem 0.65rem",
-                backgroundColor: "rgba(255,255,255,0.05)",
+                color:           "rgba(12,26,39,0.55)",
+                border:          "1px solid rgba(12,26,39,0.15)",
+                borderRadius:    20,
+                padding:         "0.25rem 0.65rem",
+                backgroundColor: "rgba(12,26,39,0.04)",
               }}>
                 {tag}
               </span>
