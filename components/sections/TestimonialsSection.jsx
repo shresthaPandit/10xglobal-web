@@ -15,6 +15,7 @@ const TESTIMONIALS = [
     title: "Co-founder, Mobikwik",
     tag:   "IPO Journey · Fintech",
     photo: "/testimonials/UPSANA TAKU.avif",
+    photoPos: "65% top",
   },
   {
     quote: "10x Global was pivotal in securing our Series A and navigating unexpected challenges with shareholders and investors. Their flexibility and commitment, even on weekends, were invaluable.",
@@ -113,7 +114,7 @@ function TestimonialCard({ t, position, handleShuffle }) {
           src={t.photo}
           alt={t.name}
           width={112} height={112}
-          style={{ objectFit: "cover", objectPosition: "center top" }}
+          style={{ objectFit: "cover", objectPosition: t.photoPos || "center top" }}
           draggable={false}
         />
       </div>
