@@ -22,7 +22,7 @@ const LINES = [
   { x1: 588, y1: 227, x2: 732, y2: 300, label: "EXPANSION",     lx: 673, ly: 256 },
 ]
 
-const TRAVEL = "M61,183 L653,217 L588,227 L732,300 L61,183"
+const TRAVEL = "M61,183 L653,217 L588,227 L732,300"
 
 function MapSVG() {
   return (
@@ -101,18 +101,26 @@ function MapSVG() {
         <path id="travel-route" d={TRAVEL} />
       </defs>
 
-      {/* Glow — larger */}
-      <circle r={13} fill={C.red} opacity={0.14}>
-        <animateMotion dur="14s" repeatCount="indefinite" calcMode="paced">
+      {/* Glow */}
+      <circle r={13} fill={C.red}>
+        <animateMotion dur="11s" repeatCount="indefinite" calcMode="paced">
           <mpath href="#travel-route" />
         </animateMotion>
+        <animate attributeName="opacity"
+          values="0.14;0.14;0;0"
+          keyTimes="0;0.93;0.99;1"
+          dur="11s" repeatCount="indefinite" calcMode="linear" />
       </circle>
 
-      {/* Core — larger */}
-      <circle r={5.5} fill={C.red} opacity={0.95}>
-        <animateMotion dur="14s" repeatCount="indefinite" calcMode="paced">
+      {/* Core */}
+      <circle r={5.5} fill={C.red}>
+        <animateMotion dur="11s" repeatCount="indefinite" calcMode="paced">
           <mpath href="#travel-route" />
         </animateMotion>
+        <animate attributeName="opacity"
+          values="0.95;0.95;0;0"
+          keyTimes="0;0.93;0.99;1"
+          dur="11s" repeatCount="indefinite" calcMode="linear" />
       </circle>
     </ComposableMap>
   )
@@ -182,8 +190,12 @@ export default function HeroSection() {
     <>
     <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
     <section style={{
-      backgroundColor: C.bg,
-      padding: "clamp(3rem, 4vw, 5.5rem) 0",
+      backgroundColor:  C.bg,
+      padding:          "clamp(3rem, 4vw, 5.5rem) 0",
+      minHeight:        "calc(100vh - 70px)",
+      display:          "flex",
+      flexDirection:    "column",
+      justifyContent:   "center",
     }}>
       <style>{`
         .hero-two-col {

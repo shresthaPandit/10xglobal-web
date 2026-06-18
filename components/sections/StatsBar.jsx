@@ -107,7 +107,7 @@ export default function StatsBar() {
               fontFamily:    font.sans,
               fontSize:      "0.72rem",
               fontWeight:    600,
-              color:         "rgba(255,255,255,0.55)",
+              color:         "#ffffff",
               letterSpacing: "0.04em",
               marginBottom:  "0.25rem",
             }}>
