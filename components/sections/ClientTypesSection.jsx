@@ -202,7 +202,7 @@ export default function ClientTypesSection() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1.5rem;
-          margin-top: 3.5rem;
+          margin-top: 2rem;
           align-items: stretch;
         }
         @media (max-width: 767px) { .ct-grid { grid-template-columns: 1fr; } }
@@ -280,7 +280,7 @@ export default function ClientTypesSection() {
                 fontSize:     "0.9rem",
                 color:        "#ffffff",
                 lineHeight:   1.85,
-                marginBottom: "1.5rem",
+                marginBottom: "0",
               }}>
                 Every business crossing a border needs to enter it, fund it, and operate it.{" "}
                 <strong style={{ color: "#ffffff" }}>Most firms solve one.</strong>{" "}
@@ -288,33 +288,6 @@ export default function ClientTypesSection() {
                 <strong style={{ color: "#ffffff" }}>finance, legal, and compliance.</strong>
               </p>
 
-              {/* Word pills */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
-                {WORDS.map((word, i) => (
-                  <motion.span
-                    key={word}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                      fontFamily:      font.sans,
-                      fontSize:        "0.62rem",
-                      fontWeight:      700,
-                      letterSpacing:   "0.16em",
-                      textTransform:   "uppercase",
-                      color:           i === activeWordIdx ? C.red : "rgba(255,255,255,0.5)",
-                      border:          `1px solid ${i === activeWordIdx ? C.red : "rgba(255,255,255,0.18)"}`,
-                      padding:         "0.45rem 0.9rem",
-                      borderRadius:    "4px",
-                      backgroundColor: i === activeWordIdx ? "rgba(184,50,40,0.15)" : "rgba(255,255,255,0.05)",
-                      transition:      "color 0.3s, border-color 0.3s, background-color 0.3s",
-                    }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </div>
             </motion.div>
 
         <div className="ct-grid">
