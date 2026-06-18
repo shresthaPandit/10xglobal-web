@@ -289,7 +289,7 @@ export default function CTASection() {
 
           <p style={{
             fontFamily: font.sans,
-            fontSize:   "1rem",
+            fontSize:   "0.9rem",
             color:      "rgba(255,255,255,0.48)",
             lineHeight: 1.9,
             maxWidth:   520,
@@ -353,7 +353,7 @@ export default function CTASection() {
 
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "2.25rem" }}>
             {BULLETS.map(b => (
-              <li key={b} style={{ display: "flex", alignItems: "center", gap: "0.65rem", fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(12,26,39,0.65)" }}>
+              <li key={b} style={{ display: "flex", alignItems: "center", gap: "0.65rem", fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.65)" }}>
                 <span style={{ color: C.red, fontSize: "0.75rem", flexShrink: 0 }}>→</span>
                 {b}
               </li>

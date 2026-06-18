@@ -86,7 +86,7 @@ export default function HowWeWork() {
 
           <motion.p
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-            style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(28,23,18,0.48)", lineHeight: 1.85, marginBottom: "3rem", maxWidth: "34ch" }}
+            style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(28,23,18,0.48)", lineHeight: 1.85, marginBottom: "3rem", maxWidth: "34ch" }}
           >
             Most professional services firms were designed for a world that no longer exists.
           </motion.p>
@@ -203,7 +203,7 @@ export default function HowWeWork() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
-                style={{ fontFamily: font.sans, fontSize: "1rem", color: "rgba(28,23,18,0.52)", lineHeight: 1.9, marginBottom: "2.5rem", maxWidth: "38ch" }}
+                style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(28,23,18,0.52)", lineHeight: 1.9, marginBottom: "2.5rem", maxWidth: "38ch" }}
               >
                 {f.body}
               </motion.p>

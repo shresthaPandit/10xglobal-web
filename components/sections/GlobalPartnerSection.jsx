@@ -98,7 +98,7 @@ export default function GlobalPartnerSection() {
         {/* Body */}
         <p style={{
           fontFamily: font.sans,
-          fontSize:   "clamp(1rem, 1.3vw, 1.25rem)",
+          fontSize:   "0.9rem",
           color:      "rgba(255,255,255,0.48)",
           lineHeight: 1.9,
           maxWidth:   620,

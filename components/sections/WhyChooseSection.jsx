@@ -137,7 +137,7 @@ function ServiceCard({ service, index }) {
           <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1.1rem, 1.5vw, 1.4rem)", fontWeight: 700, color: hovered ? "#0d1b35" : "#fff", lineHeight: 1.2, marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.4rem", transition: "color 0.25s ease" }}>
             {title} <span style={{ color: C.red, fontWeight: 400, fontSize: "1.1em" }}>›</span>
           </h3>
-          <p style={{ fontFamily: font.sans, fontSize: "0.85rem", color: hovered ? "rgba(13,27,53,0.62)" : "rgba(255,255,255,0.85)", lineHeight: 1.75, marginBottom: "1.1rem", transition: "color 0.25s ease" }}>
+          <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: hovered ? "rgba(13,27,53,0.62)" : "rgba(255,255,255,0.85)", lineHeight: 1.75, marginBottom: "1.1rem", transition: "color 0.25s ease" }}>
             {desc}
           </p>
 
@@ -215,7 +215,7 @@ export default function () {
         </div>
 
         {/* Paragraph */}
-        <p style={{ fontFamily: font.sans, fontSize: "0.95rem", lineHeight: 1.85, color: "rgba(255,255,255,0.48)", margin: "0 auto", maxWidth: 580 }}>
+        <p style={{ fontFamily: font.sans, fontSize: "0.9rem", lineHeight: 1.85, color: "rgba(255,255,255,0.48)", margin: "0 auto", maxWidth: 580 }}>
           Every business crossing a border needs to enter it, fund it, and operate it.{" "}
           <strong style={{ color: "rgba(255,255,255,0.72)", fontWeight: 600 }}>Most firms solve one.</strong>{" "}
           We manage all three with a single integrated team across{" "}

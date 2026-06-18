@@ -135,7 +135,7 @@ function ClientCard({ client, index }) {
           {/* Body */}
           <p style={{
             fontFamily:   font.sans,
-            fontSize:     "0.92rem",
+            fontSize:     "0.9rem",
             color:        "rgba(12,26,39,0.55)",
             lineHeight:   1.8,
             marginBottom: "1.25rem",

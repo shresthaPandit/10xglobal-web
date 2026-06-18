@@ -132,7 +132,7 @@ function TestimonialCard({ t, position, handleShuffle }) {
 
       {/* Quote */}
       <p style={{
-        fontFamily: font.sans, fontSize: "1rem",
+        fontFamily: font.sans, fontSize: "0.9rem",
         color: "rgba(255,255,255,0.75)", lineHeight: 1.8,
         textAlign: "center", flex: 1,
         display: "-webkit-box", WebkitLineClamp: 6, WebkitBoxOrient: "vertical", overflow: "hidden",

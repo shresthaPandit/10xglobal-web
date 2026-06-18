@@ -815,13 +815,13 @@ function EngagementModal({ eng, onClose, heroImg }) {
             <SectionLabel text="01  Overview" accent={accent} />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
               <div>
-                <p style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
+                <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
                   {detail.clientSnapshot}
                 </p>
               </div>
               <div>
                 {detail.situation.map((p, i) => (
-                  <p key={i} style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, marginBottom: i < detail.situation.length - 1 ? "1rem" : 0, marginTop: 0 }}>
+                  <p key={i} style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, marginBottom: i < detail.situation.length - 1 ? "1rem" : 0, marginTop: 0 }}>
                     {p}
                   </p>
                 ))}
@@ -839,7 +839,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
               {detail.challenges.map((ch, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
                   <span style={{ color: C.red, fontSize: "0.55rem", flexShrink: 0, marginTop: "0.32rem" }}>■</span>
-                  <p style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8, margin: 0 }}>{ch}</p>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8, margin: 0 }}>{ch}</p>
                 </div>
               ))}
             </div>
@@ -859,7 +859,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
                       {detail.approach.subheadings[i]}
                     </p>
                   )}
-                  <p style={{ fontFamily: font.sans, fontSize: "0.92rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.85, margin: 0 }}>
                     {p}
                   </p>
                 </div>
@@ -877,7 +877,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
               {detail.approach.points.map((pt, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.55rem" }}>
                   <span style={{ color: C.red, fontSize: "0.55rem", flexShrink: 0, marginTop: "0.3rem" }}>■</span>
-                  <span style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8 }}>{pt}</span>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.68)", lineHeight: 1.8 }}>{pt}</span>
                 </div>
               ))}
             </div>
@@ -971,7 +971,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
                 <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff" }}>Results</span>
               </div>
               {detail.outcome.map((p, i) => (
-                <p key={i} style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
+                <p key={i} style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: i < detail.outcome.length - 1 ? "0.85rem" : 0, marginTop: 0 }}>
                   {p}
                 </p>
               ))}
@@ -1166,7 +1166,7 @@ export default function EngagementsSection() {
             Work that speaks{" "}
             <em style={{ fontStyle: "normal", color: C.red }}>for itself.</em>
           </h2>
-          <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(12,26,39,0.5)", lineHeight: 1.8 }}>
+          <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.5)", lineHeight: 1.8 }}>
             A selection of recent mandates across our three practice areas.
             Client names withheld where confidentiality applies.
           </p>
