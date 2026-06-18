@@ -6,26 +6,31 @@ import { C, font } from "@/lib/theme"
 
 const CLIENTS = [
   {
-    title:    "Venture-Backed Companies",
-    sub:      "From Seed to IPO",
-    body:     "We've advised founders through every funding round, regulatory challenge, and international expansion milestone. We understand what it means when a term sheet is on the table and the structure isn't ready.",
+    title: "Venture-Backed Companies",
+    sub:   "From Seed to IPO",
+    body:  "We've advised founders through every funding round, regulatory challenge, and international expansion milestone. We understand what it means when a term sheet is on the table and the structure isn't ready.",
+    tags:  ["Fundraising", "M&A", "Cap Table"],
   },
   {
-    title:    "Global Enterprises",
-    sub:      "Entering Asia and the Middle East",
-    body:     "International companies setting up in India or the UAE need a partner who understands the regulatory landscape, the pace of business, and how to build an operation that actually works.",
+    title: "Global Enterprises",
+    sub:   "Entering Asia and the Middle East",
+    body:  "International companies setting up in India or the UAE need a partner who understands the regulatory landscape, the pace of business, and how to build an operation that actually works.",
+    tags:  ["Market Entry", "Operations", "Compliance"],
   },
   {
-    title:    "PE & VC Funds",
-    sub:      "Portfolio Expansion and Governance",
-    body:     "Fund managers and their portfolio companies need integrated due diligence, ongoing compliance, and cross-border structuring across multiple entities without managing a dozen advisors.",
+    title: "PE & VC Funds",
+    sub:   "Portfolio Expansion and Governance",
+    body:  "Fund managers and their portfolio companies need integrated due diligence, ongoing compliance, and cross-border structuring across multiple entities without managing a dozen advisors.",
+    tags:  ["Due Diligence", "Portfolio", "Governance"],
   },
   {
-    title:    "Founder-Led Businesses",
-    sub:      "Growth Without Operational Complexity",
-    body:     "Ambitious founders who want to grow across borders without building an in-house finance, legal, and compliance team in every country. We become that team.",
+    title: "Founder-Led Businesses",
+    sub:   "Growth Without Operational Complexity",
+    body:  "Ambitious founders who want to grow across borders without building an in-house finance, legal, and compliance team in every country. We become that team.",
+    tags:  ["Finance", "Legal", "Cross-border"],
   },
 ]
+
 
 function ClientCard({ client, index }) {
   const [hovered, setHovered] = useState(false)
@@ -33,106 +38,136 @@ function ClientCard({ client, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay: (index % 2) * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.65, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      style={{ perspective: "1000px", height: "100%" }}
     >
-      <motion.div
-        onHoverStart={() => setHovered(true)}
-        onHoverEnd={()  => setHovered(false)}
-        animate={{
-          y:         hovered ? -6 : 0,
-          boxShadow: hovered ? "0 28px 64px rgba(0,0,0,0.28)" : "0 2px 16px rgba(0,0,0,0.12)",
-        }}
-        transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{
-          backgroundColor: "#ffffff",
-          display:         "flex",
-          cursor:          "default",
-          height:          "100%",
-          overflow:        "hidden",
-          position:        "relative",
+          position:      "relative",
+          height:        "100%",
+          minHeight:     300,
+          borderRadius:  28,
+          background:    "linear-gradient(135deg, #0e2040 0%, #060d1c 100%)",
+          boxShadow:     hovered
+            ? "rgba(0,0,0,0.35) 30px 50px 25px -40px, rgba(0,0,0,0.15) 0px 25px 30px 0px"
+            : "rgba(0,0,0,0.3) 8px 16px 30px 0px",
+          transform:     hovered ? "rotate3d(1, 1, 0, 18deg)" : "rotate3d(0,0,0,0deg)",
+          transformStyle:"preserve-3d",
+          transition:    "transform 0.5s ease, box-shadow 0.5s ease",
+          cursor:        "default",
+          overflow:      "hidden",
         }}
       >
-        {/* Animated left border */}
-        <motion.div
-          animate={{ scaleY: hovered ? 1 : 0, backgroundColor: C.red }}
-          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            width:           4,
-            flexShrink:      0,
-            transformOrigin: "top",
-            backgroundColor: C.red,
-          }}
-        />
+        {/* Glass inner layer — floats at z:25 */}
+        <div style={{
+          position:        "absolute",
+          inset:           8,
+          borderRadius:    22,
+          borderBottom:    "1px solid rgba(255,255,255,0.12)",
+          borderLeft:      "1px solid rgba(255,255,255,0.12)",
+          background:      "linear-gradient(to bottom, rgba(255,255,255,0.07), rgba(255,255,255,0.02))",
+          backdropFilter:  "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          transform:       "translate3d(0,0,25px)",
+          transformStyle:  "preserve-3d",
+          pointerEvents:   "none",
+        }} />
 
-        {/* Card content */}
-        <div style={{ padding: "2.25rem 2rem 2.25rem 2rem", flex: 1, position: "relative" }}>
+        {/* Number watermark */}
+        <span style={{
+          position:      "absolute",
+          top:           "0.5rem",
+          right:         "1.25rem",
+          fontFamily:    font.num,
+          fontSize:      "8rem",
+          fontWeight:    800,
+          lineHeight:    1,
+          color:         "rgba(255,255,255,0.06)",
+          userSelect:    "none",
+          pointerEvents: "none",
+          zIndex:        0,
+          transform:     `translate3d(0,0,${hovered ? 30 : 20}px)`,
+          transition:    "transform 0.5s ease",
+        }}>
+          {num}
+        </span>
 
-          {/* Number watermark */}
+        {/* Content — floats at z:26, just above glass layer */}
+        <div style={{
+          position:        "relative",
+          zIndex:          1,
+          transform:       "translate3d(0,0,26px)",
+          transformStyle:  "preserve-3d",
+          padding:         "2.25rem 1.75rem 1.75rem",
+          boxSizing:       "border-box",
+        }}>
+          {/* Subtitle */}
           <span style={{
-            position:      "absolute",
-            top:           "1.25rem",
-            right:         "1.75rem",
-            fontFamily:    font.num,
-            fontSize:      "5rem",
+            display:       "block",
+            fontFamily:    font.sans,
+            fontSize:      "0.65rem",
             fontWeight:    700,
-            color:         "rgba(12,26,39,0.05)",
-            lineHeight:    1,
-            userSelect:    "none",
-            pointerEvents: "none",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color:         "rgba(255,130,110,0.85)",
+            marginBottom:  "0.65rem",
           }}>
-            {num}
-          </span>
-
-          {/* Subtitle tag */}
-          <motion.span
-            animate={{ color: hovered ? C.red : "rgba(184,50,40,0.7)" }}
-            transition={{ duration: 0.22 }}
-            style={{
-              display:       "block",
-              fontFamily:    font.sans,
-              fontSize:      "0.56rem",
-              fontWeight:    700,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              marginBottom:  "0.75rem",
-            }}
-          >
             {client.sub}
-          </motion.span>
+          </span>
 
           {/* Title */}
           <h3 style={{
             fontFamily:   font.sans,
-            fontSize:     "clamp(1.25rem, 1.6vw, 1.5rem)",
-            fontWeight:   700,
-            color:        C.ink,
+            fontSize:     "clamp(1.3rem, 1.8vw, 1.65rem)",
+            fontWeight:   800,
+            color:        "#ffffff",
             lineHeight:   1.2,
-            marginBottom: "1rem",
+            marginBottom: "0.85rem",
           }}>
             {client.title}
           </h3>
 
-          {/* Divider */}
-          <motion.div
-            animate={{ width: hovered ? "100%" : "2rem", backgroundColor: hovered ? C.red : "rgba(12,26,39,0.12)" }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{ height: 1, marginBottom: "1rem" }}
-          />
-
           {/* Body */}
           <p style={{
-            fontFamily: font.sans,
-            fontSize:   "0.83rem",
-            color:      "rgba(12,26,39,0.52)",
-            lineHeight: 1.85,
+            fontFamily:   font.sans,
+            fontSize:     "0.92rem",
+            color:        "rgba(255,255,255,0.48)",
+            lineHeight:   1.8,
+            marginBottom: "1.25rem",
           }}>
             {client.body}
           </p>
+
+          {/* Tags row */}
+          <div style={{
+            display:  "flex",
+            gap:      "0.4rem",
+            flexWrap: "wrap",
+          }}>
+            {client.tags.map(tag => (
+              <span key={tag} style={{
+                fontFamily:    font.sans,
+                fontSize:      "0.65rem",
+                fontWeight:    600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color:         "rgba(255,255,255,0.55)",
+                border:        "1px solid rgba(255,255,255,0.12)",
+                borderRadius:  20,
+                padding:       "0.25rem 0.65rem",
+                backgroundColor: "rgba(255,255,255,0.05)",
+              }}>
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   )
 }
@@ -144,7 +179,7 @@ export default function ClientTypesSection() {
         .ct-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 1.25rem;
+          gap: 2rem;
           margin-top: 3.5rem;
         }
         @media (max-width: 767px) { .ct-grid { grid-template-columns: 1fr; } }
@@ -152,7 +187,6 @@ export default function ClientTypesSection() {
 
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -174,14 +208,13 @@ export default function ClientTypesSection() {
           </span>
 
           <h2 style={{
-            fontFamily:            font.sans,
-            fontSize:              "clamp(2.2rem, 3.5vw, 3.2rem)",
-            fontWeight:            800,
-            color:                 "#fff",
-            lineHeight:            1.12,
-            marginBottom:          "1.25rem",
-            WebkitFontSmoothing:   "antialiased",
-            MozOsxFontSmoothing:   "grayscale",
+            fontFamily:          font.sans,
+            fontSize:            "clamp(2.2rem, 3.5vw, 3.2rem)",
+            fontWeight:          800,
+            color:               "#fff",
+            lineHeight:          1.12,
+            marginBottom:        "1.25rem",
+            WebkitFontSmoothing: "antialiased",
           }}>
             Built for companies that mean{" "}
             <em style={{ fontStyle: "normal", color: C.red }}>business.</em>
@@ -198,7 +231,6 @@ export default function ClientTypesSection() {
           </p>
         </motion.div>
 
-        {/* Cards */}
         <div className="ct-grid">
           {CLIENTS.map((c, i) => (
             <ClientCard key={c.title} client={c} index={i} />

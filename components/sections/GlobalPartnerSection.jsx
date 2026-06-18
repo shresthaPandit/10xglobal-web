@@ -56,7 +56,7 @@ function CyclingPhrase() {
 
 export default function GlobalPartnerSection() {
   return (
-    <section style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5vw, 8rem) 7vw" }}>
+    <section style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5vw, 8rem) 7vw", borderTop: "1px solid rgba(255,255,255,0.15)", borderBottom: "1px solid rgba(255,255,255,0.15)" }}>
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,8 @@ export default function GlobalPartnerSection() {
           letterSpacing: "0.24em",
           textTransform: "uppercase",
           color:         "rgba(255,255,255,0.55)",
-          marginBottom:  "1.75rem",
+          fontSize:      "0.72rem",
+          marginBottom:  "2rem",
         }}>
           Why Companies Choose 10x Global
         </span>
@@ -81,7 +82,7 @@ export default function GlobalPartnerSection() {
         {/* Headline */}
         <h2 style={{
           fontFamily:          font.sans,
-          fontSize:            "clamp(1.6rem, 3.2vw, 5rem)",
+          fontSize:            "clamp(2.4rem, 5vw, 7rem)",
           fontWeight:          800,
           color:               "#fff",
           lineHeight:          1.06,
@@ -97,7 +98,7 @@ export default function GlobalPartnerSection() {
         {/* Body */}
         <p style={{
           fontFamily: font.sans,
-          fontSize:   "clamp(0.95rem, 1.1vw, 1.1rem)",
+          fontSize:   "clamp(1rem, 1.3vw, 1.25rem)",
           color:      "rgba(255,255,255,0.48)",
           lineHeight: 1.9,
           maxWidth:   620,

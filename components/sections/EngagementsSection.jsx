@@ -365,7 +365,7 @@ const ENGAGEMENTS = [
 
 function SectionLabel({ text, accent }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.75rem" }}>
       <div style={{ width: 2, height: 13, backgroundColor: accent, flexShrink: 0 }} />
       <span style={{ fontFamily: font.sans, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: accent }}>
         {text}
@@ -555,26 +555,32 @@ function EngagementModal({ eng, onClose, heroImg }) {
     return () => timers.forEach(clearTimeout)
   }, [detail])
 
+  const isProgrammaticScroll = useRef(false)
+
   const scrollToSection = (id) => {
     const el = sectionRefs.current[id]
     const container = scrollRef.current
-    if (el && container) {
-      const top = el.offsetTop - 56
-      container.scrollTo({ top, behavior: "smooth" })
-      setActiveSection(id)
-    }
+    if (!el || !container) return
+    const containerRect = container.getBoundingClientRect()
+    const elRect = el.getBoundingClientRect()
+    const top = container.scrollTop + elRect.top - containerRect.top - 56
+    isProgrammaticScroll.current = true
+    setActiveSection(id)
+    container.scrollTo({ top, behavior: "smooth" })
+    setTimeout(() => { isProgrammaticScroll.current = false }, 900)
   }
 
   useEffect(() => {
     const container = scrollRef.current
     if (!container) return
     const handleScroll = () => {
-      const scrollTop = container.scrollTop + 80
+      if (isProgrammaticScroll.current) return
+      const containerRect = container.getBoundingClientRect()
       for (const sec of [...SECTIONS].reverse()) {
         const el = sectionRefs.current[sec.id]
-        if (el && el.offsetTop <= scrollTop) {
-          setActiveSection(sec.id)
-          break
+        if (el) {
+          const elTop = el.getBoundingClientRect().top - containerRect.top
+          if (elTop <= 80) { setActiveSection(sec.id); break }
         }
       }
     }
@@ -723,42 +729,42 @@ function EngagementModal({ eng, onClose, heroImg }) {
                 </span>
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "2rem", flexWrap: "wrap" }}>
-                <div style={{ flex: 1, minWidth: 240 }}>
-                  <h2 style={{
-                    fontFamily: font.sans,
-                    fontSize: "clamp(1.5rem, 2.4vw, 2.4rem)",
-                    fontWeight: 800, color: "#fff",
-                    lineHeight: 1.15, marginBottom: "1rem",
-                    letterSpacing: "-0.02em",
-                  }}>
-                    {detail.heroTitle || title}
-                  </h2>
-                  {detail.heroDesc && (
-                    <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0, maxWidth: 580 }}>
-                      {detail.heroDesc}
-                    </p>
-                  )}
-                  {!detail.heroDesc && detail.subtitle && (
-                    <p style={{ fontFamily: font.sans, fontSize: "0.875rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0, maxWidth: 580 }}>
-                      {detail.subtitle}
-                    </p>
-                  )}
-                </div>
+              <div>
+                <h2 style={{
+                  fontFamily: font.sans,
+                  fontSize: "clamp(1.5rem, 2.4vw, 2.4rem)",
+                  fontWeight: 800, color: "#fff",
+                  lineHeight: 1.15, marginBottom: "1rem",
+                  letterSpacing: "-0.02em",
+                }}>
+                  {detail.heroTitle || title}
+                </h2>
+                {detail.heroDesc && (
+                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: "0 0 1.75rem", maxWidth: 680 }}>
+                    {detail.heroDesc}
+                  </p>
+                )}
+                {!detail.heroDesc && detail.subtitle && (
+                  <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: "0 0 1.75rem", maxWidth: 680 }}>
+                    {detail.subtitle}
+                  </p>
+                )}
 
-                <div style={{ display: "flex", gap: "0.75rem", flexShrink: 0 }}>
+                {/* KPI stats — below paragraph */}
+                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                   {detail.stats.map((s, i) => (
-                    <div key={i} className="kpi-wrap">
+                    <div key={i} className="kpi-wrap" style={{ minWidth: 160 }}>
                       <motion.div
                         className="kpi-inner"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.22 + i * 0.1, duration: 0.4 }}
+                        style={{ padding: "1.4rem 1.75rem" }}
                       >
-                        <div style={{ fontFamily: font.serif, fontSize: "clamp(1.6rem, 2vw, 2rem)", fontWeight: 300, color: "#fff", lineHeight: 1 }}>
+                        <div style={{ fontFamily: font.serif, fontSize: "clamp(2rem, 2.8vw, 2.8rem)", fontWeight: 300, color: "#fff", lineHeight: 1 }}>
                           <CountUpStat val={s.val} delay={0.28 + i * 0.1} />
                         </div>
-                        <div style={{ fontFamily: font.sans, fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginTop: "0.35rem", whiteSpace: "pre-line", lineHeight: 1.4 }}>
+                        <div style={{ fontFamily: font.sans, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginTop: "0.5rem", whiteSpace: "pre-line", lineHeight: 1.5 }}>
                           {s.label}
                         </div>
                       </motion.div>
@@ -804,7 +810,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
           {/* 01 OVERVIEW */}
           <div
             ref={el => sectionRefs.current["overview"] = el}
-            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}
+            style={{ padding: "4rem 3rem 3.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}
           >
             <SectionLabel text="01  Overview" accent={accent} />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
@@ -826,7 +832,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
           {/* 02 CHALLENGE */}
           <div
             ref={el => sectionRefs.current["challenge"] = el}
-            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)", backgroundColor: "#FAFAF8" }}
+            style={{ padding: "4rem 3rem 3.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)", backgroundColor: "#FAFAF8" }}
           >
             <SectionLabel text="02  Challenge" accent={accent} />
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 700 }}>
@@ -842,7 +848,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
           {/* 03 SOLUTION */}
           <div
             ref={el => sectionRefs.current["solution"] = el}
-            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}
+            style={{ padding: "4rem 3rem 3.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)" }}
           >
             <SectionLabel text="03  Solution" accent={accent} />
             <div style={{ maxWidth: 720 }}>
@@ -864,7 +870,7 @@ function EngagementModal({ eng, onClose, heroImg }) {
           {/* 04 SCOPE OF WORK */}
           <div
             ref={el => sectionRefs.current["scope"] = el}
-            style={{ padding: "3rem 3rem 2.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)", backgroundColor: "#FAFAF8" }}
+            style={{ padding: "4rem 3rem 3.5rem", borderBottom: "1px solid rgba(12,26,39,0.07)", backgroundColor: "#FAFAF8" }}
           >
             <SectionLabel text="04  Scope of Work" accent={accent} />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem 3rem", maxWidth: 800 }}>

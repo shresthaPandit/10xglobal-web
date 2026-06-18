@@ -247,19 +247,96 @@ export default function CTASection() {
     <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
     <section id="cta">
       <style>{`
-        .cta-grid { display: grid; grid-template-columns: 55fr 45fr; min-height: clamp(520px, 46vw, 800px); }
+        .cta-grid { display: grid; grid-template-columns: 62fr 38fr; min-height: clamp(520px, 46vw, 800px); }
         @media (max-width: 767px) { .cta-grid { grid-template-columns: 1fr; } }
       `}</style>
 
       <div className="cta-grid">
 
-        {/* Left */}
+        {/* Left — Why Companies (was Right) */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          style={{ backgroundColor: "#ffffff", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center" }}
+          style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(255,255,255,0.3)", borderBottom: "2px solid rgba(255,255,255,0.3)" }}
+        >
+          <span style={{
+            display:       "block",
+            fontFamily:    font.sans,
+            fontSize:      "0.72rem",
+            fontWeight:    700,
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            color:         "rgba(255,255,255,0.45)",
+            marginBottom:  "1.75rem",
+          }}>
+            Why Companies Choose 10x Global
+          </span>
+
+          <h2 style={{
+            fontFamily:          font.sans,
+            fontSize:            "clamp(2rem, 3.5vw, 4.5rem)",
+            fontWeight:          800,
+            color:               "#fff",
+            lineHeight:          1.1,
+            marginBottom:        "1.75rem",
+            WebkitFontSmoothing: "antialiased",
+            letterSpacing:       "-0.02em",
+          }}>
+            Your Global <CyclingPhrase onWordChange={setActiveWordIdx} />
+          </h2>
+
+          <p style={{
+            fontFamily: font.sans,
+            fontSize:   "1rem",
+            color:      "rgba(255,255,255,0.48)",
+            lineHeight: 1.9,
+            maxWidth:   520,
+            marginBottom: "2rem",
+          }}>
+            Every business crossing a border needs to enter it, fund it, and operate it.{" "}
+            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>Most firms solve one.</strong>{" "}
+            We manage all three with a single integrated team across{" "}
+            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>finance, legal, and compliance.</strong>
+          </p>
+
+          {/* Animated word pills */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+            {WORDS.map((word, i) => (
+              <motion.span
+                key={word}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  fontFamily:    font.sans,
+                  fontSize:      "0.72rem",
+                  fontWeight:    700,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color:           i === activeWordIdx ? C.red : "rgba(255,255,255,0.5)",
+                  border:          `1px solid ${i === activeWordIdx ? C.red : "rgba(255,255,255,0.12)"}`,
+                  padding:         "0.45rem 0.9rem",
+                  borderRadius:    "4px",
+                  backgroundColor: i === activeWordIdx ? "rgba(184,50,40,0.12)" : "rgba(255,255,255,0.04)",
+                  transition:      "color 0.3s, border-color 0.3s, background-color 0.3s",
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Right — Get Started (was Left) */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, delay: 0.15 }}
+          style={{ backgroundColor: "#ffffff", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(12,26,39,0.07)" }}
         >
           <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8C1A2B", display: "block", marginBottom: "1.25rem" }}>
             Get Started
@@ -291,84 +368,6 @@ export default function CTASection() {
           >
             Book a Strategy Session
           </button>
-        </motion.div>
-
-        {/* Right */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(255,255,255,0.08)", borderTop: "1px solid rgba(255,255,255,0.12)", borderBottom: "1px solid rgba(255,255,255,0.12)" }}
-        >
-          <span style={{
-            display:       "block",
-            fontFamily:    font.sans,
-            fontSize:      "0.58rem",
-            fontWeight:    700,
-            letterSpacing: "0.24em",
-            textTransform: "uppercase",
-            color:         "rgba(255,255,255,0.45)",
-            marginBottom:  "1.5rem",
-          }}>
-            Why Companies Choose 10x Global
-          </span>
-
-          <h2 style={{
-            fontFamily:          font.sans,
-            fontSize:            "clamp(1.6rem, 2.4vw, 3rem)",
-            fontWeight:          800,
-            color:               "#fff",
-            lineHeight:          1.1,
-            marginBottom:        "1.75rem",
-            WebkitFontSmoothing: "antialiased",
-            letterSpacing:       "-0.02em",
-            whiteSpace:          "nowrap",
-          }}>
-            Your Global <CyclingPhrase onWordChange={setActiveWordIdx} />
-          </h2>
-
-          <p style={{
-            fontFamily: font.sans,
-            fontSize:   "0.9rem",
-            color:      "rgba(255,255,255,0.48)",
-            lineHeight: 1.9,
-            maxWidth:   480,
-            marginBottom: "2rem",
-          }}>
-            Every business crossing a border needs to enter it, fund it, and operate it.{" "}
-            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>Most firms solve one.</strong>{" "}
-            We manage all three with a single integrated team across{" "}
-            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>finance, legal, and compliance.</strong>
-          </p>
-
-          {/* Animated word pills */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
-            {WORDS.map((word, i) => (
-              <motion.span
-                key={word}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  fontFamily:    font.sans,
-                  fontSize:      "0.62rem",
-                  fontWeight:    700,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color:           i === activeWordIdx ? C.red : "rgba(255,255,255,0.5)",
-                  border:          `1px solid ${i === activeWordIdx ? C.red : "rgba(255,255,255,0.12)"}`,
-                  padding:         "0.45rem 0.9rem",
-                  borderRadius:    "4px",
-                  backgroundColor: i === activeWordIdx ? "rgba(184,50,40,0.12)" : "rgba(255,255,255,0.04)",
-                  transition:      "color 0.3s, border-color 0.3s, background-color 0.3s",
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </div>
         </motion.div>
 
       </div>
