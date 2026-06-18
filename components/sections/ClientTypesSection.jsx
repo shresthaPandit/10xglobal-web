@@ -36,7 +36,7 @@ function CyclingPhrase({ onWordChange }) {
 
   return (
     <>
-      <em style={{ fontFamily: font.serif, fontStyle: "italic", fontWeight: 400, color: C.red }}>{keywordDisplayed}</em>
+      <em style={{ fontFamily: font.sans, fontStyle: "normal", fontWeight: 800, color: C.red }}>{keywordDisplayed}</em>
       <span style={{ color: "#fff" }}>{suffixDisplayed}</span>
       <motion.span
         animate={{ opacity: [1, 1, 0, 0] }}
@@ -278,14 +278,14 @@ export default function ClientTypesSection() {
               <p style={{
                 fontFamily:   font.sans,
                 fontSize:     "0.9rem",
-                color:        "rgba(255,255,255,0.52)",
+                color:        "#ffffff",
                 lineHeight:   1.85,
                 marginBottom: "1.5rem",
               }}>
                 Every business crossing a border needs to enter it, fund it, and operate it.{" "}
-                <strong style={{ color: "rgba(255,255,255,0.82)" }}>Most firms solve one.</strong>{" "}
+                <strong style={{ color: "#ffffff" }}>Most firms solve one.</strong>{" "}
                 We manage all three with a single integrated team across{" "}
-                <strong style={{ color: "rgba(255,255,255,0.82)" }}>finance, legal, and compliance.</strong>
+                <strong style={{ color: "#ffffff" }}>finance, legal, and compliance.</strong>
               </p>
 
               {/* Word pills */}
