@@ -642,17 +642,19 @@ function EngagementModal({ eng, onClose, heroImg }) {
           background: conic-gradient(
             from 0deg,
             transparent 0%,
-            rgba(180,180,180,0.12) 12%,
-            rgba(140,26,43,0.8) 24%,
-            rgba(180,180,180,0.12) 36%,
-            transparent 50%
+            transparent 38%,
+            rgba(220,60,50,0.95) 46%,
+            #ffffff 50%,
+            rgba(220,60,50,0.95) 54%,
+            transparent 62%,
+            transparent 100%
           );
           animation: kpi-spin 2.8s linear infinite;
         }
         .kpi-inner {
           position: relative;
           z-index: 1;
-          background: rgba(255,255,255,0.12);
+          background: rgba(8,18,36,0.92);
           border-radius: 15px;
           padding: 1rem 1.25rem;
           text-align: center;

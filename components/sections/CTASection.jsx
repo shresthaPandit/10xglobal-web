@@ -247,114 +247,37 @@ export default function CTASection() {
     <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
     <section id="cta">
       <style>{`
-        .cta-grid { display: grid; grid-template-columns: 62fr 38fr; min-height: clamp(520px, 46vw, 800px); }
+        .cta-grid { display: grid; grid-template-columns: 65fr 35fr; min-height: clamp(360px, 32vw, 560px); }
         @media (max-width: 767px) { .cta-grid { grid-template-columns: 1fr; } }
       `}</style>
 
       <div className="cta-grid">
 
-        {/* Left — Why Companies (was Right) */}
+        {/* Left — Get Started */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          style={{ backgroundColor: C.ink, padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(255,255,255,0.3)", borderBottom: "2px solid rgba(255,255,255,0.3)" }}
+          style={{ backgroundColor: "#ffffff", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center" }}
         >
-          <span style={{
-            display:       "block",
-            fontFamily:    font.sans,
-            fontSize:      "0.72rem",
-            fontWeight:    700,
-            letterSpacing: "0.24em",
-            textTransform: "uppercase",
-            color:         "rgba(255,255,255,0.45)",
-            marginBottom:  "1.75rem",
-          }}>
-            Why Companies Choose 10x Global
-          </span>
-
-          <h2 style={{
-            fontFamily:          font.sans,
-            fontSize:            "clamp(2rem, 3.5vw, 4.5rem)",
-            fontWeight:          800,
-            color:               "#fff",
-            lineHeight:          1.1,
-            marginBottom:        "1.75rem",
-            WebkitFontSmoothing: "antialiased",
-            letterSpacing:       "-0.02em",
-          }}>
-            Your Global <CyclingPhrase onWordChange={setActiveWordIdx} />
-          </h2>
-
-          <p style={{
-            fontFamily: font.sans,
-            fontSize:   "0.9rem",
-            color:      "rgba(255,255,255,0.48)",
-            lineHeight: 1.9,
-            maxWidth:   520,
-            marginBottom: "2rem",
-          }}>
-            Every business crossing a border needs to enter it, fund it, and operate it.{" "}
-            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>Most firms solve one.</strong>{" "}
-            We manage all three with a single integrated team across{" "}
-            <strong style={{ color: "rgba(255,255,255,0.82)", fontWeight: 700 }}>finance, legal, and compliance.</strong>
-          </p>
-
-          {/* Animated word pills */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
-            {WORDS.map((word, i) => (
-              <motion.span
-                key={word}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  fontFamily:    font.sans,
-                  fontSize:      "0.72rem",
-                  fontWeight:    700,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color:           i === activeWordIdx ? C.red : "rgba(255,255,255,0.5)",
-                  border:          `1px solid ${i === activeWordIdx ? C.red : "rgba(255,255,255,0.12)"}`,
-                  padding:         "0.45rem 0.9rem",
-                  borderRadius:    "4px",
-                  backgroundColor: i === activeWordIdx ? "rgba(184,50,40,0.12)" : "rgba(255,255,255,0.04)",
-                  transition:      "color 0.3s, border-color 0.3s, background-color 0.3s",
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Right — Get Started (was Left) */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          style={{ backgroundColor: "#ffffff", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(12,26,39,0.07)" }}
-        >
-          <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8C1A2B", display: "block", marginBottom: "1.25rem" }}>
+          <span style={{ fontFamily: font.sans, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8C1A2B", display: "block", marginBottom: "1.5rem" }}>
             Get Started
           </span>
 
-          <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.4rem, 4vw, 3.6rem)", fontWeight: 800, color: C.ink, lineHeight: 1.08, marginBottom: "1.25rem" }}>
+          <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.8rem, 5vw, 4.5rem)", fontWeight: 800, color: C.ink, lineHeight: 1.08, marginBottom: "1.5rem" }}>
             Where are you<br />going{" "}
             <em style={{ fontStyle: "normal", color: C.red }}>next?</em>
           </h2>
 
-          <p style={{ fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.58)", lineHeight: 1.8, marginBottom: "1.75rem", maxWidth: 480 }}>
+          <p style={{ fontFamily: font.sans, fontSize: "1.05rem", color: "rgba(12,26,39,0.58)", lineHeight: 1.8, marginBottom: "2rem", maxWidth: 560 }}>
             Let's build the roadmap together. A free 30-minute strategy session with our partners. No jargon, no obligation.
           </p>
 
-          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "2.25rem" }}>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2.5rem" }}>
             {BULLETS.map(b => (
-              <li key={b} style={{ display: "flex", alignItems: "center", gap: "0.65rem", fontFamily: font.sans, fontSize: "0.9rem", color: "rgba(12,26,39,0.65)" }}>
-                <span style={{ color: C.red, fontSize: "0.75rem", flexShrink: 0 }}>→</span>
+              <li key={b} style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontFamily: font.sans, fontSize: "1rem", color: "rgba(12,26,39,0.65)" }}>
+                <span style={{ color: C.red, fontSize: "0.85rem", flexShrink: 0 }}>→</span>
                 {b}
               </li>
             ))}
@@ -364,11 +287,45 @@ export default function CTASection() {
             onClick={() => setShowContact(true)}
             onMouseEnter={e => e.currentTarget.style.backgroundColor = "#7e6232"}
             onMouseLeave={e => e.currentTarget.style.backgroundColor = C.gold}
-            style={{ backgroundColor: C.gold, color: "#fff", padding: "1.1rem 2rem", border: "none", cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.18em", textTransform: "uppercase", transition: "background-color 0.2s", width: "100%", maxWidth: 480 }}
+            style={{ backgroundColor: C.gold, color: "#fff", padding: "1.25rem 2rem", border: "none", cursor: "pointer", fontFamily: font.sans, fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", transition: "background-color 0.2s", width: "100%", maxWidth: 560 }}
           >
             Book a Strategy Session
           </button>
         </motion.div>
+
+        {/* Right — Quote panel */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, delay: 0.15 }}
+          style={{ backgroundColor: "#F5E8E6", padding: "clamp(4rem, 5.5vw, 7rem) 5vw", display: "flex", flexDirection: "column", justifyContent: "center", borderLeft: "1px solid rgba(12,26,39,0.07)" }}
+        >
+          {/* Big quote mark */}
+          <div style={{
+            fontFamily:   font.serif,
+            fontSize:     "8rem",
+            color:        C.red,
+            lineHeight:   0.7,
+            marginBottom: "2rem",
+            userSelect:   "none",
+            opacity:      0.55,
+          }}>"</div>
+
+          <p style={{
+            fontFamily:   font.serif,
+            fontSize:     "clamp(1.8rem, 3vw, 2.8rem)",
+            fontWeight:   400,
+            fontStyle:    "italic",
+            color:        C.ink,
+            lineHeight:   1.45,
+            margin:       0,
+          }}>
+            Built for companies that mean{" "}
+            <em style={{ color: C.red, fontStyle: "italic" }}>business.</em>
+          </p>
+        </motion.div>
+
 
       </div>
     </section>
