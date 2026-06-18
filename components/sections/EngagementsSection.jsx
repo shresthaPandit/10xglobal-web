@@ -6,8 +6,8 @@ import { C, font } from "@/lib/theme"
 
 const SERVICE_COLOR = {
   "Global Market Entry":          C.red,
-  "Deals & Transaction Advisory": C.gold,
-  "Managed Services":             C.ink,
+  "Deals & Transaction Advisory": C.red,
+  "Managed Services":             C.red,
 }
 
 const ENGAGEMENTS = [
@@ -1038,13 +1038,11 @@ function EngagementModal({ eng, onClose, heroImg }) {
                   </div>
                   {detail.timeline.rows.map((row, ri) => {
                     const rowPhases = row.phases || detail.timeline.phases
-                    const isDark = ri % 2 === 1
-                    const bg = isDark ? "#1B2A3B" : "#F0EFEB"
-                    const phaseColor = (i) => i === rowPhases.length - 1 ? C.red : (isDark ? "rgba(255,255,255,0.3)" : "rgba(12,26,39,0.35)")
-                    const labelColor = isDark ? "#fff" : C.ink
-                    const sublabelColor = isDark ? "rgba(255,255,255,0.38)" : "rgba(12,26,39,0.4)"
+                    const phaseColor = (i) => i === rowPhases.length - 1 ? C.red : "rgba(12,26,39,0.35)"
+                    const labelColor = C.ink
+                    const sublabelColor = "rgba(12,26,39,0.4)"
                     return (
-                      <div key={ri} style={{ padding: "1.5rem 3rem 2rem", backgroundColor: bg, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+                      <div key={ri} style={{ padding: "1.5rem 3rem 2rem", backgroundColor: "#F0EFEB", borderTop: "1px solid rgba(12,26,39,0.07)" }}>
                         <div style={{ overflowX: "auto" }}>
                           <div style={{ minWidth: 600 }}>
                             <div style={{ display: "grid", gridTemplateColumns: "110px repeat(6, 1fr)", marginBottom: "0.4rem" }}>
@@ -1157,12 +1155,12 @@ function EngagementModal({ eng, onClose, heroImg }) {
 }
 
 const CARD_IMAGES = [
-  "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80",
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
-  "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
-  "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=800&q=80",
-  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80",
-  "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80",
+  "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80",  // Dubai skyline — US AdTech UAE
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80", // Team collab — AI EdTech
+  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80", // Laptop/office — EU Footwear
+  "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80", // City skyline — Singapore Tech
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80", // Tech workspace — India FMCG
+  "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80", // Document signing — India Media
 ]
 
 function EngagementCard({ eng, index, onLearnMore }) {
