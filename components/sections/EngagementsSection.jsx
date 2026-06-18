@@ -78,210 +78,6 @@ const ENGAGEMENTS = [
     },
   },
   {
-    from: "Manufacturing", to: "UAE Entry",
-    title: "Holding Structure & UAE Expansion",
-    items: [
-      "Freezone entity selection & incorporation",
-      "Holding company design & tax structuring",
-      "VAT registration & economic substance",
-      "Operational setup & banking",
-    ],
-    service: "Global Market Entry",
-    detail: {
-      subtitle: "A holding structure built for tax efficiency and future growth.",
-      stats: [
-        { val: "3 wks",  label: "UAE entity\noperational" },
-        { val: "0%",     label: "corporate tax on\nqualifying income" },
-        { val: "45+",    label: "free zones\nevaluated" },
-      ],
-      clientSnapshot: "A mid-size Indian manufacturing company with growing export revenues wanted to establish a UAE presence for trade facilitation, business development, and long-term tax efficiency.",
-      situation: [
-        "The client had been exploring a UAE setup informally for over a year, but every local advisor they spoke to recommended a different free zone without adequately explaining the trade-offs.",
-        "The holding structure also needed to account for future capital flows between India and the UAE, including transfer pricing obligations and RBI reporting on outbound investment.",
-      ],
-      approach: {
-        body: [
-          "We started by mapping the client's revenue flows, supplier relationships, and future expansion plans to identify which free zone genuinely fit their business model. The choice was not the cheapest option — it was the one that offered the right economic substance pathway and commercial flexibility.",
-          "The India holding structure was designed in parallel, ensuring clean intercompany flow documentation and transfer pricing compliance from day one.",
-        ],
-        bold: "The engagement covered:",
-        points: [
-          "Free zone selection and comparative analysis",
-          "UAE entity incorporation and trade licence",
-          "Holding structure design between India and UAE",
-          "Transfer pricing policy documentation",
-          "VAT registration and economic substance filings",
-          "Bank account opening and treasury coordination",
-        ],
-      },
-      challenges: [
-        "Choosing between 45+ UAE free zones with different regulatory regimes",
-        "Designing a holding structure that satisfies both RBI and UAE requirements",
-        "Economic substance obligations for the UAE entity",
-        "Banking as a foreign-owned entity in the UAE",
-        "Transfer pricing between India and UAE from day one",
-      ],
-      outcome: [
-        "The UAE entity was operational within three weeks of engagement, with a bank account open and the trade licence active. The holding structure was designed with a clear roadmap for future capital deployment.",
-        "Twelve months on, the UAE office handles over 40% of the group's international trade flows, with zero compliance incidents across either jurisdiction.",
-      ],
-      services: ["UAE Entity Formation", "Holding Structure Design", "Freezone Advisory", "Transfer Pricing", "VAT Registration", "Economic Substance", "Banking Setup", "RBI ODI Compliance"],
-    },
-  },
-  {
-    from: "Indian D2C", to: "Delaware Flip",
-    title: "Pre-Series B Restructuring",
-    items: [
-      "Delaware C-Corp incorporation",
-      "ESOP migration & re-grant",
-      "FEMA compliance & transfer pricing",
-      "Investor documentation support",
-    ],
-    service: "Deals & Transaction Advisory",
-    detail: {
-      subtitle: "A clean flip, completed before the next round opened.",
-      stats: [
-        { val: "8 wks",  label: "full restructure\ncompleted" },
-        { val: "$0",     label: "tax leakage\non the flip" },
-        { val: "3",      label: "ESOPs re-granted\nunder new structure" },
-      ],
-      clientSnapshot: "A fast-growing Indian D2C brand preparing for a Series B with US institutional investors. Their lead investor had flagged that a Delaware C-Corp holding structure was a prerequisite for the round.",
-      situation: [
-        "The company had been incorporated in India from day one. Converting to a Delaware-held structure required a FEMA-compliant share swap, migration of ESOPs, and clean documentation for incoming investors.",
-        "The timeline was tight — the Series B process was already underway and the restructure had to be completed before due diligence formally began.",
-      ],
-      approach: {
-        body: [
-          "We designed the flip structure to avoid triggering Indian tax on the share swap, using valuation methodology that satisfied both Indian tax authorities and the incoming investors.",
-          "ESOPs were cancelled at the Indian entity level and re-granted under a new Delaware equity plan, preserving vesting schedules and keeping employee equity whole.",
-        ],
-        bold: "The engagement included:",
-        points: [
-          "Delaware C-Corp incorporation and charter drafting",
-          "FEMA-compliant share swap and ODI structuring",
-          "Valuation for tax compliance purposes",
-          "ESOP plan migration and re-grant documentation",
-          "Transfer pricing documentation post-flip",
-          "Investor documentation and data room support",
-        ],
-      },
-      challenges: [
-        "Completing the flip without triggering Indian capital gains tax",
-        "Migrating ESOPs without employee disruption or loss of vesting",
-        "Simultaneous RBI reporting and FEMA compliance across both entities",
-        "Coordinating with investor legal counsel on US documentation",
-        "Compressing an eight-week process into a live fundraise timeline",
-      ],
-      outcome: [
-        "The restructure was completed in eight weeks, with zero tax leakage on the flip and all ESOP holders' interests preserved. The Series B due diligence found the structure clean.",
-        "The company raised its Series B the following quarter. The Delaware entity now serves as the group holding company across four jurisdictions.",
-      ],
-      services: ["Delaware C-Corp Incorporation", "FEMA Compliance", "ODI Structuring", "Share Swap Execution", "ESOP Migration & Re-grant", "Valuation", "Transfer Pricing", "Investor Documentation"],
-    },
-  },
-  {
-    from: "Global SaaS", to: "5 Jurisdictions",
-    title: "Multi-Jurisdiction Managed Services",
-    items: [
-      "India, UAE, Singapore, US, Netherlands",
-      "Monthly accounting & tax compliance",
-      "Payroll across all entities",
-      "Board packs & investor reporting",
-    ],
-    service: "Managed Services",
-    detail: {
-      subtitle: "One team managing five compliance calendars. Nothing missed.",
-      stats: [
-        { val: "5",    label: "jurisdictions\nmanaged" },
-        { val: "60+",  label: "filings\nper year" },
-        { val: "100%", label: "on-time delivery\nfor 3 years" },
-      ],
-      clientSnapshot: "A B2B SaaS company with entities in India, UAE, Singapore, the United States, and the Netherlands engaged us to consolidate their finance and compliance function after their previous multi-advisor setup began generating gaps and missed deadlines.",
-      situation: [
-        "Each jurisdiction had a different local advisor. None of them talked to each other. Transfer pricing documentation was out of date, and the board had no single view of the group's compliance status.",
-        "With a Series C imminent, the CFO needed clean books, current compliance, and investor-ready reporting across the entire group before due diligence began.",
-      ],
-      approach: {
-        body: [
-          "We replaced the fragmented advisor setup with a single integrated team. One point of contact, one compliance calendar, one set of monthly reporting packs.",
-          "Intercompany flows and transfer pricing were restructured in the first ninety days. Monthly board packs were standardised across all entities into a single format the investors could read at a glance.",
-        ],
-        bold: "The ongoing retainer covers:",
-        points: [
-          "Monthly accounting and management accounts across all entities",
-          "Tax compliance — GST, VAT, corporate tax in all jurisdictions",
-          "Payroll processing and PF/ESI compliance",
-          "Transfer pricing documentation and updates",
-          "Board packs and investor reporting",
-          "Intercompany reconciliation and treasury reporting",
-        ],
-      },
-      challenges: [
-        "Five separate compliance regimes with no shared visibility",
-        "Transfer pricing documentation significantly behind",
-        "Board packs produced in different formats by different advisors",
-        "Intercompany transactions not documented to investor standard",
-        "Series C due diligence expected within six months of engagement",
-      ],
-      outcome: [
-        "Within ninety days, the group had a single compliance calendar, standardised board packs, and current transfer pricing documentation. The Series C due diligence passed without a finance-related query.",
-        "Three years on, the company has expanded into two additional markets and the retainer has grown with them — same team, same standard, across every jurisdiction.",
-      ],
-      services: ["Virtual CFO", "Monthly Accounting", "Tax Compliance", "Payroll Management", "Transfer Pricing", "Board Pack Preparation", "Investor Reporting", "Intercompany Reconciliation"],
-    },
-  },
-  {
-    from: "PE Portfolio", to: "M&A Exit",
-    title: "Cross-Border M&A Advisory",
-    items: [
-      "Sell-side financial & legal due diligence",
-      "SPA negotiation & documentation",
-      "Tax-efficient exit structure",
-      "Post-closing filings across jurisdictions",
-    ],
-    service: "Deals & Transaction Advisory",
-    detail: {
-      subtitle: "A cross-border exit, structured for maximum after-tax value.",
-      stats: [
-        { val: "9 wks",  label: "from mandate\nto signing" },
-        { val: "3",      label: "bidders in\nfinal round" },
-        { val: "4",      label: "jurisdictions\ninvolved in exit" },
-      ],
-      clientSnapshot: "A PE-backed portfolio company in the B2B services sector engaged us to lead the sell-side advisory for a strategic exit, with interested buyers across India, the UAE, and the US.",
-      situation: [
-        "The company had entities in India, the UAE, and Singapore, each with its own compliance history. The PE sponsor needed clean sell-side diligence prepared before buyers began their own process.",
-        "The exit structure needed to be designed to minimise tax leakage across jurisdictions while satisfying the regulatory requirements of both the seller and the acquirer.",
-      ],
-      approach: {
-        body: [
-          "We prepared the sell-side financial and legal due diligence reports before approaching buyers — a step that materially shortened the deal timeline and prevented issues from surfacing in buyer DD.",
-          "The exit structure was designed with two holding layers to manage tax efficiently across India and the UAE, with the SPA drafted to reflect the multi-jurisdiction reality of the transaction.",
-        ],
-        bold: "The advisory mandate covered:",
-        points: [
-          "Sell-side financial and legal due diligence preparation",
-          "Tax-efficient exit structure design across four jurisdictions",
-          "SPA negotiation and final documentation",
-          "Management of buyer due diligence queries",
-          "RBI and FEMA clearance on the outbound remittance",
-          "Post-closing filings and regulatory notifications",
-        ],
-      },
-      challenges: [
-        "Entities across four jurisdictions with different regulatory clearance timelines",
-        "Tax exposure on exit in both India and the UAE",
-        "Managing three bidders simultaneously through a competitive process",
-        "Compliance gaps in the UAE entity that needed resolution before signing",
-        "Coordinating post-closing obligations across multiple regulatory authorities",
-      ],
-      outcome: [
-        "The transaction signed within nine weeks of engagement. The exit structure achieved a materially better after-tax outcome than the initial structure the PE sponsor had assumed.",
-        "Post-closing filings were completed across all four jurisdictions within the agreed timelines, with no regulatory complications during the transition period.",
-      ],
-      services: ["Sell-side Advisory", "Financial Due Diligence", "Legal Due Diligence", "Exit Structure Design", "SPA Negotiation", "Tax Structuring", "RBI & FEMA Clearance", "Post-Closing Compliance"],
-    },
-  },
-  {
     from: "AI-Native EdTech",
     to: "Series B · US$15M+",
     title: "Fundraising & Transaction Advisory",
@@ -355,6 +151,331 @@ const ENGAGEMENTS = [
             flagCode: null, label: "SECONDARY", sublabel: "EXISTING\nSHAREHOLDERS",
             phases: ["KICKOFF", "STRUCTURE", "DOCUMENTATION", "DUE DILIGENCE", "NEGOTIATIONS", "CLOSING"],
             steps: ["Scoping", "SPA\nframework", "SPA drafting", "Coordination", "Terms &\nsign-off", "Completion"],
+            boldIndex: -1,
+          },
+        ],
+      },
+    },
+  },
+  {
+    from: "European Footwear Brand", to: "India D2C Retail Operations",
+    title: "India Operations & Managed Services",
+    items: [
+      "Finance and accounting management",
+      "Tax and regulatory compliance",
+      "Treasury and cash flow management",
+      "Vendor payment and supplier management",
+    ],
+    service: "Managed Services",
+    detail: {
+      heroTitle: "A premium European footwear brand establishes and scales its India D2C retail operations.",
+      heroDesc: "As part of its India growth strategy, the company decided to establish and scale its own retail operations rather than pursue a franchise-led model. This required a robust operating framework capable of supporting rapid store expansion while maintaining alignment with global financial, operational, and governance standards.",
+      stats: [
+        { val: "3",          label: "JURISDICTIONS"    },
+        { val: "D2C",        label: "RETAIL MODEL"     },
+        { val: "End-to-End", label: "MANAGED SERVICES" },
+      ],
+      clientSnapshot: "One of the world's fastest-growing premium footwear and sneaker brands, headquartered in Europe, with a strategic focus on building a direct-to-consumer retail footprint in India.",
+      situation: [
+        "The management team required a partner capable of supporting finance and compliance functions while acting as an extension of the company's regional and global leadership teams.",
+      ],
+      approach: {
+        subheadings: ["INDIA OPERATIONS STRUCTURE", "EXTENSION OF GLOBAL MANAGEMENT"],
+        body: [
+          "We designed the initial funding framework for India operations, structured capital inflows and commercial funding mechanisms, established treasury and payment workflows, and implemented financial controls and reporting structures to support store expansion.",
+          "Leveraging our presence across India and the UAE, we worked closely with global leadership in Europe, regional headquarters in Dubai, and India operating teams to maintain visibility across markets while ensuring local execution remained efficient.",
+        ],
+        bold: "The engagement covered:",
+        points: [
+          "Finance and accounting management",
+          "Tax and regulatory compliance",
+          "Audit support and coordination",
+          "Treasury and cash flow management",
+          "Vendor payment and supplier management",
+          "India entity governance and compliance",
+          "Retail operations support",
+          "Management reporting",
+          "Recruitment and finance team support",
+          "Cross-jurisdiction leadership coordination",
+        ],
+      },
+      challenges: [
+        "Supporting rapid retail expansion while maintaining compliance and governance standards",
+        "Managing multi-jurisdiction stakeholder coordination across Europe, UAE, and India",
+        "Establishing treasury controls while maintaining operational agility",
+        "Managing supplier and vendor payment processes across jurisdictions",
+        "Ensuring compliance without slowing business execution",
+        "Building scalable finance and reporting processes for a high-growth environment",
+      ],
+      outcome: [
+        "The company successfully established and expanded its India operations while maintaining alignment with global reporting, governance, and operational requirements.",
+        <>By functioning as an <strong>integrated managed services partner</strong>, we enabled the management team to focus on growth and retail expansion while we managed the finance, treasury, compliance, and operational support functions required to scale the business.</>,
+      ],
+      services: [
+        "Managed Services", "India Operations Support",
+        "Treasury Management", "Finance & Accounting",
+        "Tax & Compliance", "Audit Support",
+        "Retail Operations Advisory", "Management Reporting",
+        "Global Capability Support",
+      ],
+      timeline: {
+        title: "One integrated operating model across three regions",
+        subtitle: "India operations, UAE regional HQ, and Europe global headquarters managed as a single coordinated function.",
+        phases: ["ENTITY SETUP", "FINANCE", "TREASURY", "RETAIL OPS", "COMPLIANCE", "SCALE"],
+        rows: [
+          {
+            flagCode: null, label: "INDIA", sublabel: "OPERATIONS",
+            steps: ["Structure", "Framework", "Workflows", "Store support", "Ongoing", "Expansion"],
+            boldIndex: -1,
+          },
+          {
+            flagCode: null, label: "CROSS-BORDER", sublabel: "COORDINATION",
+            phases: ["EUROPE HQ", "UAE REGIONAL", "INDIA OPS", "BANKING", "REPORTING", "ONGOING"],
+            steps: ["Alignment", "Coordination", "Execution", "Setup", "MIS", "Operations"],
+            boldIndex: -1,
+          },
+        ],
+      },
+    },
+  },
+  {
+    from: "Singapore Tech", to: "India · UAE · United States",
+    title: "Multi-Jurisdiction Expansion & Managed Operations",
+    items: [
+      "Fundraising advisory and transaction support",
+      "India, UAE and US market entry",
+      "Corporate structuring across jurisdictions",
+      "Multi-jurisdiction compliance management",
+    ],
+    service: "Global Market Entry",
+    detail: {
+      heroTitle: "A Singapore-headquartered technology company builds a multi-jurisdiction operating structure across four markets.",
+      heroDesc: "The company began its growth journey in Singapore and subsequently expanded into India, the UAE, and the United States. As the business scaled, management required a trusted partner capable of supporting fundraising, corporate structuring, governance, expansion, and the day-to-day operational requirements of building a multinational technology company.",
+      stats: [
+        { val: "4",          label: "JURISDICTIONS"      },
+        { val: "Multi-Year", label: "ENGAGEMENT"         },
+        { val: "10+",        label: "SERVICES DELIVERED" },
+      ],
+      clientSnapshot: "Singapore-headquartered technology company with operations across Asia, the Middle East, and North America, serving enterprise clients through a rapidly growing global delivery model.",
+      situation: [
+        "We have served as the company's strategic advisory and operations partner since its early growth stage, remaining deeply involved across fundraising, governance, expansion, and managed operations across all jurisdictions.",
+      ],
+      approach: {
+        subheadings: ["FUNDRAISING & STRUCTURING", "GLOBAL EXPANSION", "STRATEGIC FINANCIAL ADVISORY"],
+        body: [
+          "We advised on investment structuring, fundraising instruments, capitalisation strategy, shareholder and governance considerations, and transaction execution across multiple rounds.",
+          "We led the design and implementation of the company's global operating structure across India, UAE, and the US — covering entity setup, banking, immigration, regulatory registrations, and governance frameworks in each market.",
+          "At various stages, we advised on cross-border financing structures, debt transactions, cash flow planning, working capital optimisation, and financial restructuring initiatives.",
+        ],
+        bold: "Across the engagement we handled:",
+        points: [
+          "Fundraising advisory and transaction support",
+          "India, UAE and US market entry",
+          "Corporate structuring across jurisdictions",
+          "Banking and operational setup",
+          "Investor reporting support",
+          "Corporate secretarial functions",
+          "Multi-jurisdiction compliance management",
+          "Debt transaction advisory",
+          "Cash flow and working capital planning",
+          "Strategic financial advisory",
+        ],
+      },
+      challenges: [
+        "Managing corporate structuring, governance, and compliance across four jurisdictions",
+        "Supporting multiple fundraising and financing transactions at different growth stages",
+        "Maintaining operational continuity during periods of rapid growth and market change",
+        "Coordinating investor relations and governance obligations across markets",
+        "Navigating financial and operational challenges during market cycles",
+        "Building scalable finance, treasury, and reporting frameworks across geographies",
+      ],
+      outcome: [
+        "Today, the company operates successfully across Singapore, India, the UAE, and the United States through a structure built and supported over several years.",
+        <>From the first fundraising transaction through international expansion and ongoing operations, we have remained closely involved in helping the business <strong>establish, scale, govern, and manage its global footprint</strong>.</>,
+      ],
+      services: [
+        "Global Expansion", "Fundraising Advisory",
+        "Investor Relations", "Corporate Governance",
+        "Multi-Jurisdiction Compliance", "Debt Advisory",
+        "Finance & Treasury Support", "Corporate Secretarial",
+        "Strategic Financial Advisory", "Managed Operations",
+      ],
+      timeline: {
+        title: "A single partner across four markets and multiple growth stages",
+        subtitle: "From the first fundraising round through international expansion and ongoing operations across four jurisdictions.",
+        phases: ["SINGAPORE", "INDIA", "UAE", "UNITED STATES", "GOVERNANCE", "ONGOING"],
+        rows: [
+          {
+            flagCode: null, label: "EXPANSION", sublabel: "MARKET ENTRY\nADVISORY",
+            steps: ["Origin", "Entry", "Entry", "Entry", "All markets", "Operations"],
+            boldIndex: -1,
+          },
+          {
+            flagCode: null, label: "MANAGED\nOPERATIONS", sublabel: "",
+            phases: ["FUNDRAISING", "STRUCTURING", "GOVERNANCE", "DEBT", "FINANCE OPS", "STRATEGIC"],
+            steps: ["Round 1+", "Corp design", "Investors", "Transactions", "Ongoing", "Advisory"],
+            boldIndex: -1,
+          },
+        ],
+      },
+    },
+  },
+  {
+    from: "India FMCG", to: "UAE Manufacturing & Distribution",
+    title: "UAE Market Entry — Manufacturing & Distribution",
+    items: [
+      "Jurisdiction and free zone evaluation",
+      "Entity structure design and incorporation",
+      "Trademark and product registration support",
+      "Banking and operational setup",
+    ],
+    service: "Global Market Entry",
+    detail: {
+      heroTitle: "One of India's largest listed FMCG companies builds a manufacturing and distribution platform in the UAE.",
+      heroDesc: "The company was evaluating the UAE as a strategic hub for manufacturing and regional distribution. The engagement involved navigating a highly regulated environment — free zone selection, industry-specific approvals, warehousing requirements, trademark protection, and product registrations — alongside full operational setup.",
+      stats: [
+        { val: "2",   label: "EMIRATES\nCOVERED"       },
+        { val: "45+", label: "FREE ZONES\nEVALUATED"   },
+        { val: "8+",  label: "REGULATORY\nWORKSTREAMS" },
+      ],
+      clientSnapshot: "One of India's largest listed FMCG companies, expanding operations into the UAE to establish a regional manufacturing, warehousing, and distribution presence.",
+      situation: [
+        "The objective was not simply to incorporate an entity, but to design and implement a scalable UAE operating platform capable of supporting long-term regional growth.",
+      ],
+      approach: {
+        subheadings: ["SHARJAH — SAIF ZONE", "DUBAI — CORPORATE PRESENCE"],
+        body: [
+          "Following an extensive evaluation, we assisted the client in selecting the Sharjah Airport International Free Zone (SAIF Zone) for warehousing and operational activities, driven by cost efficiency, warehousing availability, and proximity to logistics infrastructure.",
+          "In parallel, our team coordinated the approvals, No Objection Certificates (NOCs), and related requirements necessary to maintain a corporate and business presence in Dubai alongside the Sharjah operations.",
+        ],
+        bold: "The engagement covered:",
+        points: [
+          "Jurisdiction and free zone evaluation",
+          "Entity structure design and incorporation",
+          "Holding and operating structure recommendations",
+          "Regulatory approval mapping",
+          "Trademark registration support",
+          "Product registration support",
+          "Manufacturing and warehousing advisory",
+          "Banking and operational setup",
+          "Government authority coordination",
+          "Cross-emirate licensing support",
+        ],
+      },
+      challenges: [
+        "Identifying the most suitable jurisdiction for manufacturing and warehousing across 45+ UAE free zones",
+        "Balancing operational efficiency with long-term commercial objectives",
+        "Managing multiple product registrations required for FMCG operations",
+        "Coordinating trademark protection and food safety compliance requirements",
+        "Managing product labelling, legal translation, and packaging requirements",
+        "Aligning the corporate and operational footprint across multiple emirates",
+      ],
+      outcome: [
+        "The client successfully established its UAE operating platform with a structure designed to support manufacturing, warehousing, and regional distribution activities.",
+        <>By combining regulatory, legal, operational, and commercial considerations into a single market entry strategy, the company established a <strong>scalable UAE presence</strong> compliant with industry-specific requirements and positioned for future regional expansion.</>,
+      ],
+      services: [
+        "Global Market Entry", "UAE Expansion",
+        "Entity Structuring", "Regulatory Advisory",
+        "Trademark Support", "Product Registration",
+        "Warehousing Strategy", "Banking Setup",
+        "Operational Readiness", "FMCG Compliance",
+      ],
+      timeline: {
+        title: "Two locations, established in parallel",
+        subtitle: "The Sharjah operating base and Dubai corporate presence were developed simultaneously across both emirates.",
+        phases: ["SCOPING", "ZONE SELECTION", "INCORPORATION", "REGULATORY", "WAREHOUSING", "OPERATIONAL"],
+        rows: [
+          {
+            flagCode: null, label: "SAIF ZONE", sublabel: "SHARJAH —\nOPERATIONS",
+            steps: ["Requirements", "SAIF Zone", "Entity set up", "Approvals", "Facility setup", "Live"],
+            boldIndex: -1,
+          },
+          {
+            flagCode: null, label: "DUBAI", sublabel: "CORPORATE\nPRESENCE",
+            phases: ["SCOPING", "STRUCTURE", "NOC", "LICENSING", "CORPORATE", "OPERATIONAL"],
+            steps: ["Requirements", "Model set", "Approvals", "Dubai licence", "Office setup", "Live"],
+            boldIndex: -1,
+          },
+        ],
+      },
+    },
+  },
+  {
+    from: "India Media Group", to: "Beverly Hills Acquisition",
+    title: "Cross-Border M&A — Beverly Hills LBO",
+    items: [
+      "Transaction strategy and deal structuring",
+      "Cross-border acquisition structuring",
+      "LBO framework structuring",
+      "Post-acquisition integration planning",
+    ],
+    service: "Deals & Transaction Advisory",
+    detail: {
+      heroTitle: "An Indian media group acquires a Beverly Hills creative services company in a cross-border LBO transaction.",
+      heroDesc: "The client identified an opportunity to acquire one of Hollywood's most established trailer production and creative services companies, known for its work on major studio productions and global entertainment franchises. The cross-border transaction required careful coordination across legal, financial, regulatory, tax, financing, and post-acquisition integration workstreams.",
+      stats: [
+        { val: "2",          label: "JURISDICTIONS"  },
+        { val: "LBO",        label: "DEAL STRUCTURE" },
+        { val: "End-to-End", label: "ADVISORY SCOPE" },
+      ],
+      clientSnapshot: "Leading India-based film production and media services company pursuing a strategic acquisition in the United States to strengthen global capabilities and expand within the Hollywood ecosystem.",
+      situation: [
+        "The acquisition provided immediate access to premium creative capabilities, marquee industry relationships, and a strong operating presence in the United States.",
+      ],
+      approach: {
+        subheadings: ["DEAL STRUCTURE & FINANCING", "POST-ACQUISITION INTEGRATION"],
+        body: [
+          "We assisted in establishing a US C-Corporation as the acquisition vehicle, designing the cross-border holding structure, and coordinating a leveraged buyout (LBO) framework alongside equity capital from the Indian parent. Acquisition financing was arranged within the United States.",
+          "Following closing, we supported governance alignment, corporate compliance, reporting frameworks, and coordination between US and India leadership teams to streamline the integration phase.",
+        ],
+        bold: "The engagement covered:",
+        points: [
+          "Transaction strategy and deal structuring",
+          "Indicative offer and term sheet negotiations",
+          "Cross-border acquisition structuring",
+          "Legal, financial, commercial and corporate DD",
+          "Acquisition financing support",
+          "US C-Corporation establishment",
+          "LBO framework structuring",
+          "Closing support and execution",
+          "Post-acquisition integration planning",
+          "India regulatory and compliance advisory",
+        ],
+      },
+      challenges: [
+        "Cross-border acquisition considerations spanning India and the United States",
+        "Designing a capital-efficient financing and leverage structure for the acquisition",
+        "Regulatory and corporate structuring requirements across two jurisdictions",
+        "Multi-party negotiations involving founders, management, advisors, and financiers",
+        "Integration planning across geographically distributed teams",
+        "Aligning operating, reporting, and governance frameworks post-acquisition",
+      ],
+      outcome: [
+        "The acquisition was successfully completed, enabling the client to establish a meaningful presence within the Hollywood media ecosystem through the acquisition of a highly respected creative services business.",
+        <>The transaction delivered <strong>strategic expansion into the United States</strong>, enhanced creative capabilities, deeper industry relationships, and a stronger platform for future global growth.</>,
+      ],
+      services: [
+        "Cross-Border M&A Advisory", "Acquisition Structuring",
+        "LBO Advisory", "Transaction Management",
+        "Due Diligence Coordination", "Capital Raising Support",
+        "Corporate Structuring", "Post-Merger Integration",
+        "US Market Entry",
+      ],
+      timeline: {
+        title: "Two jurisdictions, one transaction lifecycle",
+        subtitle: "The India parent and US acquisition vehicle were structured and executed in parallel through to closing and integration.",
+        phases: ["STRUCTURING", "CAPITAL RAISE", "REGULATORY", "DOCUMENTATION", "CLOSING", "INTEGRATION"],
+        rows: [
+          {
+            flagCode: null, label: "INDIA", sublabel: "PARENT ENTITY",
+            steps: ["Deal design", "Equity support", "Compliance", "India side", "Completion", "PMI support"],
+            boldIndex: -1,
+          },
+          {
+            flagCode: null, label: "UNITED STATES", sublabel: "ACQUISITION\nVEHICLE",
+            phases: ["SCOPING", "C-CORP", "LBO", "DUE DILIGENCE", "CLOSING", "INTEGRATION"],
+            steps: ["Deal review", "Entity setup", "Financing", "All streams", "Completion", "PMI support"],
             boldIndex: -1,
           },
         ],
@@ -1036,13 +1157,12 @@ function EngagementModal({ eng, onClose, heroImg }) {
 }
 
 const CARD_IMAGES = [
-  "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80", // Dubai skyline daytime, light blue sky — AdTech UAE/Singapore
-  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80", // Bright financial data on screen — Series A fundraising
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80", // Bright modern tech workspace — Manufacturing UAE
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80", // Person on laptop, light desk — D2C Delaware flip
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80", // Bright open office team — Global SaaS 5 jurisdictions
-  "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80", // Business document signing, bright — PE M&A exit
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80", // EdTech language learning
+  "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80",
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
+  "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+  "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=800&q=80",
+  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80",
+  "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80",
 ]
 
 function EngagementCard({ eng, index, onLearnMore }) {

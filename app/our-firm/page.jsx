@@ -907,7 +907,7 @@ export default function OurFirmPage() {
           </div>
 
           {/* Bottom CTA bar */}
-          <div style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}>
+          <div>
             <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.75rem 0", flexWrap: "wrap", gap: "1.25rem" }}>
                 <p style={{ fontFamily: font.sans, fontSize: "1rem", fontWeight: 700, color: "#fff" }}>

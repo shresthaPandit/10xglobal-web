@@ -11,18 +11,21 @@ const LOADER_DURATION = 2.3
 // geoMercator, scale=170, center=[-8,18] — tighter zoom on the SF→Delhi→Dubai→Singapore route
 const CITIES = [
   { x: 61,  y: 183, name: "San Francisco", sub: "United States",  anchor: "start", lx:  13 },
+  { x: 204, y: 172, name: "New York",      sub: "United States",  anchor: "start", lx:  13 },
   { x: 653, y: 217, name: "New Delhi",     sub: "India · HQ",     anchor: "start", lx:  13 },
   { x: 588, y: 227, name: "Dubai",         sub: "UAE",            anchor: "end",   lx: -13 },
   { x: 732, y: 300, name: "Singapore",     sub: "Southeast Asia", anchor: "end",   lx: -13 },
 ]
 
 const LINES = [
-  { x1: 61,  y1: 183, x2: 653, y2: 217, label: "CAPITAL FLOWS", lx: 357, ly: 192 },
-  { x1: 653, y1: 217, x2: 588, y2: 227, label: "OPERATIONS",    lx: 635, ly: 214 },
-  { x1: 588, y1: 227, x2: 732, y2: 300, label: "EXPANSION",     lx: 673, ly: 256 },
+  { x1: 61,  y1: 183, x2: 204, y2: 172 },
+  { x1: 204, y1: 172, x2: 653, y2: 217 },
+  { x1: 653, y1: 217, x2: 588, y2: 227 },
+  { x1: 588, y1: 227, x2: 732, y2: 300 },
+  { x1: 732, y1: 300, x2: 61,  y2: 183 },
 ]
 
-const TRAVEL = "M61,183 L653,217 L588,227 L732,300"
+const TRAVEL = "M61,183 L204,172 L653,217 L588,227 L732,300 L61,183"
 
 function MapSVG() {
   return (
@@ -102,25 +105,17 @@ function MapSVG() {
       </defs>
 
       {/* Glow */}
-      <circle r={13} fill={C.red}>
-        <animateMotion dur="11s" repeatCount="indefinite" calcMode="paced">
+      <circle r={13} fill={C.red} opacity={0.14}>
+        <animateMotion dur="16s" repeatCount="indefinite" calcMode="paced">
           <mpath href="#travel-route" />
         </animateMotion>
-        <animate attributeName="opacity"
-          values="0.14;0.14;0;0"
-          keyTimes="0;0.93;0.99;1"
-          dur="11s" repeatCount="indefinite" calcMode="linear" />
       </circle>
 
       {/* Core */}
-      <circle r={5.5} fill={C.red}>
-        <animateMotion dur="11s" repeatCount="indefinite" calcMode="paced">
+      <circle r={5.5} fill={C.red} opacity={0.95}>
+        <animateMotion dur="16s" repeatCount="indefinite" calcMode="paced">
           <mpath href="#travel-route" />
         </animateMotion>
-        <animate attributeName="opacity"
-          values="0.95;0.95;0;0"
-          keyTimes="0;0.93;0.99;1"
-          dur="11s" repeatCount="indefinite" calcMode="linear" />
       </circle>
     </ComposableMap>
   )
