@@ -5,6 +5,9 @@ import Image from "next/image"
 import { C, font } from "@/lib/theme"
 import ContactModal from "@/components/ContactModal"
 
+const RED = "#8C1A2B"
+const INK = "#1C1712"
+
 const LINKS = [
   { label: "Our Firm",             href: "/our-firm"       },
   { label: "Global Market Entry",  href: "/global-market-entry" },
@@ -67,15 +70,15 @@ export default function Navbar() {
         backgroundColor: scrolled ? "rgba(255,255,255,0.97)" : C.bg,
         backdropFilter:  scrolled ? "blur(20px)" : "none",
         transition:      "background-color 0.35s, box-shadow 0.35s",
-        boxShadow:       scrolled ? `0 1px 0 rgba(154,123,60,0.18), 0 4px 24px rgba(12,26,39,0.06)` : `0 1px 0 rgba(154,123,60,0.1)`,
+        boxShadow:       scrolled ? `0 1px 0 rgba(28,23,18,0.1), 0 4px 24px rgba(12,26,39,0.06)` : `0 1px 0 rgba(28,23,18,0.06)`,
       }}>
 
-        {/* Top gold line */}
+        {/* Top red line */}
         <div style={{
           position:   "absolute",
           top:        0, left: 0, right: 0,
           height:     2,
-          background: `linear-gradient(to right, transparent 0%, ${C.gold} 35%, rgba(154,123,60,0.6) 65%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, ${RED} 35%, rgba(140,26,43,0.5) 65%, transparent 100%)`,
         }} />
 
         <div style={{
@@ -120,7 +123,7 @@ export default function Navbar() {
                   bottom:     0, left: 0,
                   width:      hovered === label ? "100%" : "0%",
                   height:     1,
-                  background: `linear-gradient(to right, ${C.gold}, rgba(154,123,60,0.2))`,
+                  background: `linear-gradient(to right, ${RED}, rgba(140,26,43,0.2))`,
                   transition: "width 0.28s ease",
                   display:    "block",
                 }} />
@@ -133,25 +136,23 @@ export default function Navbar() {
 
             {/* Desktop CTA */}
             <div className="nav-desktop-cta" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <div style={{ width: 1, height: 20, backgroundColor: "rgba(154,123,60,0.25)" }} />
               <a href="/#engagements" style={{ textDecoration: "none" }}>
                 <button
-                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = "rgba(154,123,60,0.08)"; e.currentTarget.style.transform = "translateY(-1px)" }}
-                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent";            e.currentTarget.style.transform = "translateY(0)" }}
+                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = RED; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = RED; e.currentTarget.style.transform = "translateY(-1px)" }}
+                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = INK; e.currentTarget.style.borderColor = "rgba(28,23,18,0.2)"; e.currentTarget.style.transform = "translateY(0)" }}
                   style={{
                     backgroundColor: "transparent",
-                    color:           C.gold,
+                    color:           INK,
                     padding:         "0.65rem 1.25rem",
                     borderRadius:    4,
-                    fontSize:        "0.82rem",
                     fontFamily:      font.sans,
                     fontWeight:      600,
-                    border:          `1px solid ${C.gold}`,
+                    border:          `1px solid rgba(28,23,18,0.2)`,
                     cursor:          "pointer",
                     letterSpacing:   "0.06em",
                     textTransform:   "uppercase",
                     fontSize:        "0.72rem",
-                    transition:      "background-color 0.2s, transform 0.15s",
+                    transition:      "background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.15s",
                     whiteSpace:      "nowrap",
                   }}
                 >
@@ -160,10 +161,10 @@ export default function Navbar() {
               </a>
               <button
                 onClick={openCalendly}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#7e6232"; e.currentTarget.style.transform = "translateY(-1px)" }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = C.gold;    e.currentTarget.style.transform = "translateY(0)" }}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#6e1522"; e.currentTarget.style.transform = "translateY(-1px)" }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = RED;       e.currentTarget.style.transform = "translateY(0)" }}
                 style={{
-                  backgroundColor: C.gold,
+                  backgroundColor: RED,
                   color:           "#fff",
                   padding:         "0.65rem 1.5rem",
                   borderRadius:    4,
@@ -171,7 +172,7 @@ export default function Navbar() {
                   fontWeight:      600,
                   fontSize:        "0.82rem",
                   letterSpacing:   "0.02em",
-                  boxShadow:       `0 2px 14px rgba(154,123,60,0.3)`,
+                  boxShadow:       `0 2px 14px rgba(140,26,43,0.25)`,
                   transition:      "background-color 0.2s, transform 0.15s",
                   whiteSpace:      "nowrap",
                   border:          "none",
@@ -200,7 +201,7 @@ export default function Navbar() {
         {menuOpen && (
           <div className="nav-mobile-drawer" style={{
             backgroundColor: C.bg,
-            borderTop:       `1px solid rgba(154,123,60,0.15)`,
+            borderTop:       `1px solid rgba(28,23,18,0.08)`,
             boxShadow:       "0 8px 32px rgba(12,26,39,0.1)",
             padding:         "0.5rem 5vw 1.25rem",
           }}>
@@ -209,12 +210,12 @@ export default function Navbar() {
                 key={label}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                style={{ display: "block", textDecoration: "none", padding: "0.875rem 0", borderBottom: `1px solid rgba(154,123,60,0.1)`, fontFamily: font.sans, color: C.ink, fontSize: "0.95rem", fontWeight: 500 }}
+                style={{ display: "block", textDecoration: "none", padding: "0.875rem 0", borderBottom: `1px solid rgba(28,23,18,0.07)`, fontFamily: font.sans, color: INK, fontSize: "0.95rem", fontWeight: 500 }}
               >
                 {label}
               </a>
             ))}
-            <button onClick={() => { setMenuOpen(false); openCalendly() }} style={{ width: "100%", backgroundColor: C.gold, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
+            <button onClick={() => { setMenuOpen(false); openCalendly() }} style={{ width: "100%", backgroundColor: RED, color: "#fff", padding: "0.875rem", borderRadius: 4, fontSize: "0.9rem", fontFamily: font.sans, fontWeight: 600, border: "none", cursor: "pointer", marginTop: "1rem" }}>
               Book a call
             </button>
           </div>
