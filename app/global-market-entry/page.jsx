@@ -7,6 +7,7 @@ import { font } from "@/lib/theme"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import ContactModal from "@/components/ContactModal"
+import { EngagementModal, ENGAGEMENTS, CARD_IMAGES } from "@/components/sections/EngagementsSection"
 
 const RED   = "#8C1A2B"
 const WHITE = "#FFFFFF"
@@ -184,11 +185,11 @@ function ServiceCard({ s, i, onContact }) {
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", padding: "1.75rem", pointerEvents: hovered ? "auto" : "none" }}
       >
-        <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1rem, 1.3vw, 1.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.3, marginBottom: "0.75rem" }}>{s.title}</h3>
-        <p style={{ fontFamily: font.sans, fontSize: "0.77rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.65, marginBottom: "0.85rem", flex: 1 }}>{s.body}</p>
+        <h3 style={{ fontFamily: font.sans, fontSize: "clamp(1rem, 1.3vw, 1.2rem)", fontWeight: 800, color: "#fff", lineHeight: 1.3, marginBottom: "0.75rem", textShadow: "none" }}>{s.title}</h3>
+        <p style={{ fontFamily: font.sans, fontSize: "0.77rem", fontWeight: 600, color: "rgba(255,255,255,0.92)", lineHeight: 1.65, marginBottom: "0.85rem", flex: 1, textShadow: "none" }}>{s.body}</p>
         <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.32rem", margin: "0 0 1.4rem", padding: 0 }}>
           {s.scope.slice(0, 3).map((item, si) => (
-            <li key={si} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontFamily: font.sans, fontSize: "0.72rem", color: "rgba(255,255,255,0.7)" }}>
+            <li key={si} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 600, color: "rgba(255,255,255,0.92)", textShadow: "none" }}>
               <span style={{ color: RED, fontSize: "0.4rem", flexShrink: 0 }}>◆</span>
               {item}
             </li>
@@ -278,8 +279,7 @@ function GlobeBackground() {
       // Play frames over 4 screen-heights, capped at 50% of total so globe never fully reveals
       const animDist   = window.innerHeight * 4
       const p          = Math.min(1, scrollY / animDist)
-      const MAX_FRAME  = Math.floor(TOTAL_FRAMES * 0.50)
-      targetIdxRef.current = Math.min(Math.floor(p * (TOTAL_FRAMES - 1)), MAX_FRAME)
+      targetIdxRef.current = Math.floor(p * (TOTAL_FRAMES - 1))
 
       // Fade opacity as page scrolls, but floor at 0.14 so globe stays faint below the steps section
       const totalHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
@@ -338,8 +338,9 @@ function GlobeBackground() {
 // ─── Page ──────────────────────────────────────────────────────────────────
 
 export default function GlobalMarketEntryPage() {
-  const [openFaq,     setOpenFaq]     = useState(0)
-  const [showContact, setShowContact] = useState(false)
+  const [openFaq,       setOpenFaq]       = useState(0)
+  const [showContact,   setShowContact]   = useState(false)
+  const [showCaseStudy, setShowCaseStudy] = useState(false)
 
   useEffect(() => {
     const css = document.createElement("link")
@@ -358,6 +359,15 @@ export default function GlobalMarketEntryPage() {
       <GlobeBackground />
 
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
+      <AnimatePresence>
+        {showCaseStudy && (
+          <EngagementModal
+            eng={ENGAGEMENTS[0]}
+            onClose={() => setShowCaseStudy(false)}
+            heroImg={CARD_IMAGES[0]}
+          />
+        )}
+      </AnimatePresence>
       <Navbar />
       <style>{`
         /* Headings: strong white glow so they lift off the globe */
@@ -417,13 +427,29 @@ export default function GlobalMarketEntryPage() {
             <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }}
               style={{ padding: "4rem 0 4rem 5vw", overflow: "visible", position: "relative", zIndex: 2 }}>
               <div style={{ marginBottom: "1.75rem" }}>
-                <span style={{ fontFamily: font.sans, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: RED }}>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED }}>
                   Global Market Entry
                 </span>
               </div>
-              <h1 style={{ fontFamily: font.sans, fontSize: "clamp(3.6rem, 6vw, 7.5rem)", fontWeight: 800, lineHeight: 1.0, color: INK, letterSpacing: "-0.03em", margin: 0, width: "155%", position: "relative" }}>
-                Enter new<br />markets.<br />Without the<br />
-                <em style={{ fontStyle: "normal", color: RED }}>expensive<br />mistakes.</em>
+              <h1 style={{ fontFamily: font.sans, fontSize: "clamp(3.6rem, 6vw, 7.5rem)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.03em", margin: 0, width: "155%", position: "relative" }}>
+                {[
+                  { text: "Enter new",   color: INK },
+                  { text: "markets.",    color: INK },
+                  { text: "Without the", color: INK },
+                  { text: "expensive",   color: RED },
+                  { text: "mistakes.",   color: RED },
+                ].map((line, idx) => (
+                  <span key={idx} style={{ display: "block", overflow: "hidden", lineHeight: 1.08 }}>
+                    <motion.span
+                      initial={{ y: "105%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.15 + idx * 0.09, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ display: "block", color: line.color }}
+                    >
+                      {line.text}
+                    </motion.span>
+                  </span>
+                ))}
               </h1>
             </motion.div>
 
@@ -529,7 +555,7 @@ export default function GlobalMarketEntryPage() {
             {/* Centered heading */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "0.75rem" }}>What We Cover</span>
+              <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "0.75rem" }}>What We Cover</span>
               <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2rem, 3.5vw, 3.2rem)", fontWeight: 800, color: INK, lineHeight: 1.1, margin: 0 }}>
                 End-to-end entry.<br />
                 <em style={{ fontStyle: "normal", color: RED }}>One integrated team.</em>
@@ -556,61 +582,89 @@ export default function GlobalMarketEntryPage() {
 
         {/* ── TESTIMONIAL ───────────────────────────────────────────── */}
         <section style={{ padding: "7rem 0" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{ maxWidth: 760, margin: "0 auto", padding: "0 5vw", textAlign: "center" }}
-          >
-            {/* Eyebrow */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "2.5rem" }}>
-              <div style={{ width: 32, height: 1, backgroundColor: RED, opacity: 0.5 }} />
-              <span style={{ fontFamily: font.sans, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: RED, textShadow: "0 0 20px rgba(255,255,255,1)" }}>
-                Client Testimonial
-              </span>
-              <div style={{ width: 32, height: 1, backgroundColor: RED, opacity: 0.5 }} />
-            </div>
+          <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              style={{ display: "grid", gridTemplateColumns: "1fr 200px", gap: "4rem", alignItems: "center" }}
+            >
+              {/* Left — eyebrow + quote */}
+              <div>
+                <div style={{ marginBottom: "2.5rem" }}>
+                  <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED, textShadow: "0 0 20px rgba(255,255,255,1)" }}>
+                    Client Testimonial
+                  </span>
+                </div>
+                <svg width="48" height="36" viewBox="0 0 48 36" fill="none" style={{ marginBottom: "1.75rem", opacity: 0.75 }}>
+                  <path d="M0 36V22.5C0 10.5 6 3 18 0l3 4.5C13.5 6.75 10.5 11.25 10.5 18H18V36H0ZM30 36V22.5C30 10.5 36 3 48 0l3 4.5C43.5 6.75 40.5 11.25 40.5 18H48V36H30Z" fill={RED}/>
+                </svg>
+                <p style={{
+                  fontFamily:    font.sans,
+                  fontSize:      "clamp(1.1rem, 1.4vw, 1.32rem)",
+                  fontWeight:    500,
+                  color:         INK,
+                  lineHeight:    1.84,
+                  letterSpacing: "0.01em",
+                  textShadow:    "0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.9)",
+                }}>
+                  Two markets, set up at the same time, and we hardly felt the lift. I'd budgeted months for this. Inside eight weeks both entities were live, accounts open, and our first hires cleared to start. When Europe came up later, we didn't even think about going elsewhere.
+                </p>
+                <button
+                  onClick={() => setShowCaseStudy(true)}
+                  style={{
+                    marginTop: "2rem", textShadow: "none",
+                    display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                    padding: "0.7rem 1.5rem",
+                    background: RED, color: "#fff",
+                    border: `1.5px solid ${RED}`,
+                    fontFamily: font.sans, fontWeight: 700,
+                    fontSize: "0.72rem", letterSpacing: "0.1em",
+                    textTransform: "uppercase", cursor: "pointer",
+                    transition: "background 0.25s, border-color 0.25s",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#5a0f1a"; e.currentTarget.style.borderColor = "#5a0f1a" }}
+                  onMouseLeave={e => { e.currentTarget.style.background = RED; e.currentTarget.style.borderColor = RED }}
+                >
+                  See how we did it →
+                </button>
+              </div>
 
-            {/* SVG quote mark — crisp at any size */}
-            <svg width="48" height="36" viewBox="0 0 48 36" fill="none" style={{ marginBottom: "1.75rem", opacity: 0.75 }}>
-              <path d="M0 36V22.5C0 10.5 6 3 18 0l3 4.5C13.5 6.75 10.5 11.25 10.5 18H18V36H0ZM30 36V22.5C30 10.5 36 3 48 0l3 4.5C43.5 6.75 40.5 11.25 40.5 18H48V36H30Z" fill={RED}/>
-            </svg>
-
-            {/* Quote */}
-            <p style={{
-              fontFamily:   font.sans,
-              fontSize:     "clamp(1.15rem, 1.5vw, 1.4rem)",
-              fontWeight:   500,
-              color:        INK,
-              lineHeight:   1.8,
-              letterSpacing: "0.01em",
-              marginBottom: "2.5rem",
-              textShadow:   "0 0 20px rgba(255,255,255,1), 0 0 40px rgba(255,255,255,0.9)",
-            }}>
-              We had spent months trying to structure our India entry through local advisors.
-              10x Global identified a structural issue in one call that would have cost us
-              years to unwind. That review alone was worth more than everything else combined.
-            </p>
-
-            {/* Attribution */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
-              <div style={{ width: 40, height: 1.5, backgroundColor: RED, opacity: 0.4, marginBottom: "0.6rem" }} />
-              <span style={{ fontFamily: font.sans, fontWeight: 700, fontSize: "0.82rem", color: INK, textShadow: "0 0 12px rgba(255,255,255,1)" }}>
-                Senior Partner
-              </span>
-              <span style={{ fontFamily: font.sans, fontSize: "0.7rem", color: MUTED, letterSpacing: "0.08em", textShadow: "0 0 12px rgba(255,255,255,1)" }}>
-                European Multinational · India Market Entry
-              </span>
-            </div>
-          </motion.div>
+              {/* Right — photo + attribution, no card */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div style={{ borderRadius: 8, overflow: "hidden", aspectRatio: "3/4", boxShadow: "0 12px 48px rgba(28,23,18,0.18), 0 2px 10px rgba(28,23,18,0.1)", background: "#e8e4de" }}>
+                  <Image
+                    src="/team/rayomand.jpeg"
+                    alt="Rayomand Engineer"
+                    width={200}
+                    height={267}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+                  />
+                </div>
+                <div style={{ marginTop: "1.1rem", paddingTop: "1.1rem", borderTop: `2px solid ${RED}`, textAlign: "center" }}>
+                  <p style={{ fontFamily: font.sans, fontWeight: 700, fontSize: "0.88rem", color: INK, margin: 0, textShadow: "0 0 12px rgba(255,255,255,1)" }}>
+                    Rayomand Engineer
+                  </p>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.72rem", color: MUTED, margin: "0.22rem 0 0", textShadow: "0 0 12px rgba(255,255,255,1)" }}>
+                    Vice President Finance · CleverTap
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </section>
 
         {/* ── WHO THIS IS FOR ───────────────────────────────────────── */}
         <section style={{ backgroundColor: "transparent", padding: "6rem 0" }}>
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "0 5vw" }}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "3rem" }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1.5rem" }}>Who This Is For</span>
+              <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1.5rem" }}>Who This Is For</span>
               <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.4rem, 4vw, 3.8rem)", fontWeight: 800, color: INK, lineHeight: 1.1 }}>
                 Built for companies that<br /><em style={{ display: "inline-block", marginTop: "0.12em", fontStyle: "normal", color: RED }}>don't fit in one country.</em>
               </h2>
@@ -618,10 +672,21 @@ export default function GlobalMarketEntryPage() {
             <div className="cards-3col">
               {WHO.map((w, i) => (
                 <motion.div key={w.n} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                  style={{ position: "relative", borderLeft: `3px solid ${RED}`, padding: "2rem 1.75rem", backgroundColor: WHITE, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-                  <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: font.sans, fontSize: "6rem", fontWeight: 800, color: "rgba(140,26,43,0.08)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>{w.n}</span>
-                  <h3 style={{ fontFamily: font.sans, fontSize: "1.2rem", fontWeight: 700, color: INK, marginBottom: "0.85rem", lineHeight: 1.4, position: "relative" }}>{w.title}</h3>
-                  <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: MUTED, lineHeight: 1.75, position: "relative" }}>{w.body}</p>
+                  style={{
+                    position: "relative",
+                    borderLeft: `3px solid ${RED}`,
+                    borderTop: "1px solid rgba(255,255,255,0.85)",
+                    borderRight: "1px solid rgba(255,255,255,0.6)",
+                    borderBottom: "1px solid rgba(255,255,255,0.6)",
+                    padding: "2rem 1.75rem",
+                    backgroundColor: "rgba(255,255,255,0.32)",
+                    backdropFilter: "blur(22px) saturate(160%) brightness(1.04)",
+                    WebkitBackdropFilter: "blur(22px) saturate(160%) brightness(1.04)",
+                    borderRadius: "6px",
+                    boxShadow: "0 2px 20px rgba(28,23,18,0.06), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 0 1px rgba(255,255,255,0.5)",
+                  }}>
+                  <h3 style={{ fontFamily: font.sans, fontSize: "1.2rem", fontWeight: 700, color: INK, marginBottom: "0.85rem", lineHeight: 1.4 }}>{w.title}</h3>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: MUTED, lineHeight: 1.75 }}>{w.body}</p>
                 </motion.div>
               ))}
             </div>
@@ -638,6 +703,32 @@ export default function GlobalMarketEntryPage() {
             </motion.div>
             <div style={{ position: "relative" }}>
               <div className="steps-timeline-line-horiz" style={{ position: "absolute", top: 29, left: "12.5%", right: "12.5%", height: 1, backgroundColor: RED, zIndex: 0 }} />
+              {/* Animated red dot travels along the timeline and pauses at each step */}
+              <div style={{ position: "absolute", top: 29, left: "12.5%", right: "12.5%", height: 0, zIndex: 0, pointerEvents: "none" }}>
+                <motion.div
+                  style={{
+                    position: "absolute",
+                    top: -6,
+                    left: 0,
+                    marginLeft: -6,
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    backgroundColor: RED,
+                    boxShadow: "0 0 0 4px rgba(140,26,43,0.22), 0 0 14px rgba(140,26,43,0.55)",
+                  }}
+                  animate={{
+                    left: ["0%", "0%", "33.33%", "33.33%", "66.66%", "66.66%", "100%", "100%"],
+                  }}
+                  transition={{
+                    duration: 4,
+                    times: [0, 0.12, 0.32, 0.4, 0.6, 0.68, 0.88, 1],
+                    ease: ["linear", [0.4, 0, 0.2, 1], "linear", [0.4, 0, 0.2, 1], "linear", [0.4, 0, 0.2, 1], "linear"],
+                    repeat: Infinity,
+                    repeatDelay: 0.8,
+                  }}
+                />
+              </div>
               <div className="geo-regional-grid">
                 {STEPS.map((s, i) => (
                   <motion.div key={s.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -660,16 +751,13 @@ export default function GlobalMarketEntryPage() {
         {/* ── FAQ ───────────────────────────────────────────────────── */}
         <section style={{ padding: "0", background: "transparent", position: "relative" }}>
 
-          {/* Bold red top bar — editorial signal */}
-          <div style={{ height: 4, background: RED, width: "100%" }} />
-
           <div style={{ maxWidth: 1360, margin: "0 auto", padding: "5rem 5vw 7rem" }}>
 
             {/* Header — full width, text + CTA on same line */}
             <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem" }}>
               <div>
-                <span style={{ fontFamily: font.sans, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem", textShadow: "none" }}>Common Questions</span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1rem", textShadow: "none" }}>Common Questions</span>
                 <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.6rem, 4vw, 4.8rem)", fontWeight: 800, color: INK, lineHeight: 1.0, letterSpacing: "-0.035em", margin: 0, textShadow: "none" }}>
                   Before we interact,<br />
                   <em style={{ fontStyle: "normal", color: RED }}>some answers.</em>
@@ -744,22 +832,13 @@ export default function GlobalMarketEntryPage() {
 
             {/* LEFT — headline + trust row */}
             <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}>
-              <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: RED, display: "block", marginBottom: "1.5rem", textShadow: "none" }}>Start the Conversation</span>
-              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.6rem, 3.6vw, 4.4rem)", fontWeight: 800, color: "#fff", lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 0.1em", textShadow: "none" }}>
+              <span style={{ fontFamily: font.sans, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "#e8324a", display: "block", marginBottom: "1.5rem", textShadow: "0 0 20px rgba(232,50,74,0.5)" }}>Start the Conversation</span>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(3.6rem, 5.2vw, 7rem)", fontWeight: 800, color: "#fff", lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 0.05em", textShadow: "none" }}>
                 Tell us where<br />you're going.
               </h2>
-              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(2.6rem, 3.6vw, 4.4rem)", fontWeight: 800, color: RED, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 2.8rem", textShadow: "none" }}>
+              <h2 style={{ fontFamily: font.sans, fontSize: "clamp(3.6rem, 5.2vw, 7rem)", fontWeight: 800, color: "#e8324a", lineHeight: 1.06, letterSpacing: "-0.03em", margin: 0, textShadow: "none" }}>
                 We'll design<br />the structure.
               </h2>
-              {/* Trust micro-stats */}
-              <div style={{ display: "flex", gap: "2.5rem" }}>
-                {[["100+", "Market Entries"], ["12+", "Years Active"], ["4", "Jurisdictions"]].map(([n, l]) => (
-                  <div key={l}>
-                    <div style={{ fontFamily: font.sans, fontSize: "1.6rem", fontWeight: 800, color: "#fff", lineHeight: 1, letterSpacing: "-0.02em", textShadow: "none" }}>{n}</div>
-                    <div style={{ fontFamily: font.sans, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", marginTop: "0.3rem", textShadow: "none" }}>{l}</div>
-                  </div>
-                ))}
-              </div>
             </motion.div>
 
             {/* RIGHT — frosted glass Priya card */}
@@ -778,21 +857,21 @@ export default function GlobalMarketEntryPage() {
               {/* top label */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: RED, flexShrink: 0 }} />
-                <span style={{ fontFamily: font.sans, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", textShadow: "none" }}>Free 30-Minute Review</span>
+                <span style={{ fontFamily: font.sans, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", textShadow: "none" }}>Free 30-Minute Review</span>
               </div>
 
-              <p style={{ fontFamily: font.sans, fontSize: "1.05rem", color: "rgba(255,255,255,0.82)", lineHeight: 1.78, marginBottom: "2.25rem", textShadow: "none", fontWeight: 400 }}>
+              <p style={{ fontFamily: font.sans, fontSize: "1.25rem", color: "rgba(255,255,255,0.88)", lineHeight: 1.78, marginBottom: "2.25rem", textShadow: "none", fontWeight: 400 }}>
                 With a senior partner. No jargon, no pitch. We'll tell you honestly what we see.
               </p>
 
               {/* Priya */}
               <div style={{ display: "flex", alignItems: "center", gap: "1.1rem", marginBottom: "2.25rem", paddingBottom: "2.25rem", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-                <div style={{ width: 58, height: 58, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "2px solid rgba(140,26,43,0.5)", boxShadow: "0 0 0 3px rgba(140,26,43,0.15)" }}>
-                  <Image src="/team/priya.png" alt="Priya Dubey" width={58} height={58} style={{ objectFit: "cover", objectPosition: "center top", display: "block" }} />
+                <div style={{ width: 88, height: 88, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "2px solid rgba(140,26,43,0.5)", boxShadow: "0 0 0 3px rgba(140,26,43,0.15)" }}>
+                  <Image src="/team/priya.png" alt="Priya Dubey" width={88} height={88} style={{ objectFit: "cover", objectPosition: "center top", display: "block" }} />
                 </div>
                 <div>
-                  <p style={{ fontFamily: font.sans, fontWeight: 700, fontSize: "1rem", color: "#fff", margin: 0, textShadow: "none" }}>Priya Dubey</p>
-                  <p style={{ fontFamily: font.sans, fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", margin: "0.25rem 0 0", textShadow: "none" }}>Lead, Transaction Advisory</p>
+                  <p style={{ fontFamily: font.sans, fontWeight: 700, fontSize: "1.15rem", color: "#fff", margin: 0, textShadow: "none" }}>Priya Dubey</p>
+                  <p style={{ fontFamily: font.sans, fontSize: "0.88rem", color: "rgba(255,255,255,0.45)", margin: "0.25rem 0 0", textShadow: "none" }}>Lead, Transaction Advisory</p>
                 </div>
               </div>
 

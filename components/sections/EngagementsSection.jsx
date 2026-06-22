@@ -1154,7 +1154,8 @@ function EngagementModal({ eng, onClose, heroImg }) {
   )
 }
 
-const CARD_IMAGES = [
+export { EngagementModal, ENGAGEMENTS }
+export const CARD_IMAGES = [
   "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80",  // Dubai skyline — US AdTech UAE
   "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80", // Team collab — AI EdTech
   "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80", // Laptop/office — EU Footwear
