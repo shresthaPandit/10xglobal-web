@@ -189,6 +189,7 @@ export default function ClientTypesSection() {
           zIndex:        0,
         }}
         src="/videos/ct-bg.mp4"
+        poster="/videos/posters/ct-bg.webp"
       />
       {/* Dark overlay so content stays readable */}
       <div style={{

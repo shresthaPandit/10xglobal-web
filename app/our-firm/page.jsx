@@ -653,7 +653,7 @@ export default function OurFirmPage() {
 
               {/* Philosophy card */}
               <motion.div variants={fadeUp} style={{ position: "relative", overflow: "hidden", padding: "1.5rem 2rem 1.5rem", borderRadius: "2rem", border: "none", backgroundColor: RED, boxShadow: "0 8px 32px rgba(140,26,43,0.3), 0 2px 8px rgba(140,26,43,0.15)" }}>
-                <video autoPlay muted playsInline onCanPlay={e => { e.currentTarget.playbackRate = 0.5 }} onEnded={e => e.currentTarget.pause()} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", pointerEvents: "none" }}>
+                <video autoPlay muted playsInline poster="/videos/posters/card-bg.webp" onCanPlay={e => { e.currentTarget.playbackRate = 0.5 }} onEnded={e => e.currentTarget.pause()} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", pointerEvents: "none" }}>
                   <source src="/card-bg.mp4" type="video/mp4" />
                 </video>
                 <div style={{ position: "absolute", inset: 0, background: "rgba(140,26,43,0.68)", pointerEvents: "none" }} />

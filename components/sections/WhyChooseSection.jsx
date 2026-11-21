@@ -119,6 +119,7 @@ function ServiceCard({ service, index }) {
             autoPlay muted loop playsInline
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             src={video}
+            poster={video.replace("/videos/", "/videos/posters/").replace(".mp4", ".webp")}
           />
         </div>
 
